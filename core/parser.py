@@ -52,3 +52,34 @@ def load_data(file_path):
     except Exception as e:
         print(f"Ошибка при чтении файла: {e}")
         return None
+
+def format_manual_data(m: int, n: int, A_raw: list, b_raw: list, c_raw: list, d_raw: list, lam: float):
+    """
+    Форматирует данные, введенные пользователем вручную через интерфейс.
+    A_raw: 2D список (m x n)
+    b_raw: список (m)
+    c_raw: список (n)
+    d_raw: список (n)
+    """
+    try:
+        A = np.array(A_raw, dtype=float)
+        b = np.array(b_raw, dtype=float)
+        c = np.array(c_raw, dtype=float)
+        d = np.array(d_raw, dtype=float)
+
+        # Сортируем индексы по убыванию d_j 
+        indices = np.argsort(d)[::-1]
+        
+        return {
+            "m": m,
+            "n": n,
+            "A": A[:, indices],
+            "b": b,
+            "c": c[indices],
+            "d": d[indices],
+            "lambda": lam,
+            "original_indices": indices
+        }
+    except Exception as e:
+        print(f"Ошибка при форматировании введенных данных: {e}")
+        return None
