@@ -1,0 +1,4 @@
+pulp
+numpy
+tabulate
+PyQt6
