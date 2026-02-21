@@ -1,0 +1,10 @@
+# Core
+numpy
+pulp
+fastapi
+uvicorn[standard]
+pydantic
+
+# Desktop packaging (not needed on server)
+# pywebview
+# pyinstaller
