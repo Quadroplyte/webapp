@@ -325,4 +325,94 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     reader.readAsText(file);
   });
+
+  // ── Info Modal & Demo Data ──────────────────────────────
+  const infoBtn = document.getElementById('infoBtn');
+  const infoModal = document.getElementById('infoModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const demoDataBtn = document.getElementById('demoDataBtn');
+  const docLinkBtn = document.getElementById('docLinkBtn');
+
+  if (infoBtn && infoModal && closeModalBtn) {
+    infoBtn.addEventListener('click', () => {
+      infoModal.classList.remove('hidden');
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      infoModal.classList.add('hidden');
+    });
+
+    infoModal.addEventListener('click', (e) => {
+      if (e.target === infoModal) {
+        infoModal.classList.add('hidden');
+      }
+    });
+  }
+
+  if (docLinkBtn) {
+    docLinkBtn.addEventListener('click', () => {
+      infoModal.classList.add('hidden');
+      const docTab = document.querySelector('.nav-item[data-tab="Документация"]');
+      if (docTab) {
+        // Trigger click event on the documentation tab to run the existing navigation logic
+        docTab.click();
+      }
+    });
+  }
+
+  if (demoDataBtn) {
+    demoDataBtn.addEventListener('click', () => {
+      const demoContent = `3 5\n15 10 5 4 3\n27 18 12 6 6\n40 25 12 11 8\n20 39 48\n90 76 30 35 30\n40 20 14 12 10\n0.5`;
+
+      const lines = demoContent.split('\n').map(l => l.trim()).filter(l => l);
+      try {
+        const [mStr, nStr] = lines[0].split(/\s+/);
+        const m = parseInt(mStr);
+        const n = parseInt(nStr);
+
+        mInput.value = m;
+        nInput.value = n;
+        currentM = m;
+        currentN = n;
+
+        buildMatrix('matrixA_container', m, n, 'A');
+        buildMatrix('vectorB_container', 1, m, 'b');
+        buildMatrix('vectorC_container', 1, n, 'c');
+        buildMatrix('vectorD_container', 1, n, 'd');
+
+        // Fill A
+        for (let i = 0; i < m; i++) {
+          const vals = lines[1 + i].split(/\s+/).map(Number);
+          for (let j = 0; j < n; j++) {
+            document.getElementById(`A_${i}_${j}`).value = vals[j];
+          }
+        }
+
+        let lineIdx = 1 + m;
+        // Fill b
+        const bVals = lines[lineIdx++].split(/\s+/).map(Number);
+        for (let i = 0; i < m; i++) document.getElementById(`b_0_${i}`).value = bVals[i];
+
+        // Fill c
+        const cVals = lines[lineIdx++].split(/\s+/).map(Number);
+        for (let j = 0; j < n; j++) document.getElementById(`c_0_${j}`).value = cVals[j];
+
+        // Fill d
+        const dVals = lines[lineIdx++].split(/\s+/).map(Number);
+        for (let j = 0; j < n; j++) document.getElementById(`d_0_${j}`).value = dVals[j];
+
+        // Fill lam
+        lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
+
+        matricesContainer.classList.remove('hidden');
+        document.getElementById('dataFieldsWrapper').classList.remove('hidden');
+
+        // Hide modal
+        infoModal.classList.add('hidden');
+      } catch (err) {
+        console.error(err);
+        alert('Ошибка при установке демо-данных: ' + err.message);
+      }
+    });
+  }
 });

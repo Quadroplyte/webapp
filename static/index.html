@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Optimization | Enterprise Solution</title>
-    <link rel="stylesheet" href="/static/style.css?v=8">
+    <link rel="stylesheet" href="/static/style.css?v=12">
     <link
         href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -99,7 +99,21 @@
                                 </div>
                             </div>
                             <div class="config-col action-col">
-                                <h3>Импорт данных</h3>
+                                <h3
+                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    Импорт данных
+                                    <button id="infoBtn" type="button" class="icon-btn" title="Формат файла"
+                                        style="width: auto; height: 32px; padding: 0 12px; font-size: 0.9rem; gap: 6px; color: var(--salt-blue-main); text-transform: none; letter-spacing: normal;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                                        </svg>
+                                        Формат файла
+                                    </button>
+                                </h3>
                                 <label class="action-btn file-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -204,9 +218,8 @@
                                     style="font-size:1.2rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
                                     Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
                                     заданных бюджетных ограничениях для различных групп активов (ГИА).
-                                    Модель минимизирует риски, балансируя между суммарным временем взлома <b>(аддитивный
-                                        критерий)</b> и временем реакции самого слабого звена <b>(максиминный
-                                        критерий)</b> через коэффициент λ.
+                                    Модель минимизирует риски, балансируя между суммарным временем взлома и временем
+                                    реакции самого слабого звена через коэффициент λ.
                                 </p>
                             </div>
 
@@ -308,7 +321,51 @@ lambda</pre>
         </main>
     </div>
 
-    <script src="/static/script.js?v=8"></script>
+    <!-- Modal for Info -->
+    <div id="infoModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Формат файла импорта</h3>
+                <button id="closeModalBtn" class="icon-btn" style="width: 28px; height: 28px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0; margin-bottom: 0.75rem;">Каждая
+                    строка — одна запись, значения разделяются пробелами:</p>
+                <div class="scroll-wrapper"
+                    style="padding: 0.5rem; background: var(--sidebar-bg); border: 1px solid var(--panel-border); border-radius: 4px; margin-bottom: 1rem; max-width: 100%;">
+                    <pre style="margin: 0; font-size: 0.85rem; color: var(--text-main); font-family: monospace;">m n
+A[0,0] A[0,1] ... A[0,n-1]
+A[1,0] A[1,1] ... A[1,n-1]
+...
+b[0] b[1] ... b[m-1]
+c[0] c[1] ... c[n-1]
+d[0] d[1] ... d[n-1]
+lambda</pre>
+                </div>
+                <div style="display: flex; gap: 0.5rem; width: 100%;">
+                    <button id="docLinkBtn" class="action-btn" style="flex: 1; justify-content: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        Открыть документацию
+                    </button>
+                    <button id="demoDataBtn" class="action-btn primary" style="flex: 1; justify-content: center;">
+                        Демо-значения
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js?v=12"></script>
 </body>
 
 </html>
