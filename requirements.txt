@@ -2,7 +2,7 @@
 numpy
 pulp
 fastapi
-uvicorn[standard]
+uvicorn
 pydantic
 
 # Desktop packaging

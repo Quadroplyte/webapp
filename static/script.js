@@ -19,12 +19,64 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentN = 0;
 
   // ── Переключение навигации ───────────────────────────────
+  const sidebar = document.querySelector('.sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
   const sideNav = document.querySelector('.side-nav');
   const breadcrumb = document.querySelector('.breadcrumb');
+
+  // Sidebar Collapse (Desktop)
+  const updateSidebarIcon = () => {
+    const icon = sidebarToggle.querySelector('svg');
+    if (sidebar.classList.contains('collapsed')) {
+      icon.style.transform = 'rotate(180deg)';
+    } else {
+      icon.style.transform = 'rotate(0deg)';
+    }
+  };
+
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    updateSidebarIcon();
+  });
+
+  // Mobile Menu Logic
+  mobileMenuBtn.addEventListener('click', () => {
+    sidebar.classList.add('mobile-open');
+    sidebarBackdrop.classList.add('active');
+  });
+
+  const closeMobileMenu = () => {
+    sidebar.classList.remove('mobile-open');
+    sidebarBackdrop.classList.remove('active');
+  };
+
+  sidebarBackdrop.addEventListener('click', closeMobileMenu);
+
+  // Automatic Behavior on Resize
+  const handleResize = () => {
+    if (window.innerWidth < 1024) {
+      sidebar.classList.add('collapsed');
+    } else {
+      // On larger screens, remove the mobile-open state if browser was resized
+      closeMobileMenu();
+    }
+    updateSidebarIcon();
+  };
+
+  window.addEventListener('resize', handleResize);
+  // Initial check
+  handleResize();
 
   sideNav.addEventListener('click', (e) => {
     const clickedItem = e.target.closest('.nav-item');
     if (!clickedItem) return;
+
+    // On mobile, close menu after clicking a link
+    if (window.innerWidth < 1024) {
+      closeMobileMenu();
+    }
 
     // Update active state
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
