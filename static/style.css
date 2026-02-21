@@ -100,11 +100,16 @@ body {
     width: var(--sidebar-width);
     background-color: var(--sidebar-bg);
     border-right: 1px solid var(--sidebar-border);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.08);
+    /* Increased shadow opacity and spread */
+    z-index: 10;
     color: var(--text-main);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
-    transition: background-color 0.3s, border-color 0.3s;
+    overflow-x: hidden;
+    /* Clips internal button shadows from bleeding out */
+    transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .logo {
@@ -130,13 +135,14 @@ body {
 }
 
 .nav-item {
-    padding: 0.6rem 1.5rem;
-    margin: 0 0.5rem;
+    padding: 0.75rem 1.5rem;
+    margin: 0.2rem 0.75rem;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     color: var(--sidebar-text);
     font-weight: 500;
-    border-radius: 6px;
+    border-radius: 4px;
+    /* Slightly rounded, small radius */
     display: flex;
     align-items: center;
     gap: 12px;
@@ -161,8 +167,8 @@ body {
 .nav-item.active {
     background: var(--sidebar-active-bg);
     color: var(--text-main);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    /* Subtle lift instead of left border */
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12), 0 10px 30px rgba(0, 0, 0, 0.08);
+    /* Darkened the shadows */
 }
 
 /* User Profile at bottom */
@@ -351,6 +357,66 @@ input[type="text"]:focus {
     box-shadow: 0 0 0 1px var(--text-main);
 }
 
+/* Params Table */
+.params-table {
+    border: 1px solid var(--panel-border);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.params-table .input-row {
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+    border-bottom: 1px solid var(--panel-border);
+    justify-content: flex-start;
+}
+
+.params-table .input-row:last-child {
+    border-bottom: none;
+}
+
+.params-table .row-label {
+    flex: 1;
+    border-right: 1px solid var(--panel-border);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    background: var(--panel-bg);
+    min-width: 50%;
+}
+
+.params-table .row-label label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.params-table .row-value {
+    flex: 1;
+    padding: 0;
+    display: flex;
+    background: var(--panel-bg);
+}
+
+.params-table .row-value input {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    padding: 12px 16px;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.params-table .row-value input:focus {
+    box-shadow: none;
+    background-color: var(--sidebar-item-hover);
+}
+
 /* Modern Buttons */
 .action-btn {
     display: inline-flex;
@@ -363,7 +429,8 @@ input[type="text"]:focus {
     color: var(--text-main);
     cursor: pointer;
     font-weight: 500;
-    border-radius: 6px;
+    border-radius: 4px;
+    /* Slightly rounded, small radius */
     transition: all 0.2s ease;
     font-size: 0.9rem;
     font-family: inherit;
@@ -424,46 +491,70 @@ input[type="text"]:focus {
 .scroll-wrapper {
     overflow: auto;
     border: 1px solid var(--panel-border);
-    border-radius: 6px;
+    border-radius: 4px;
     margin-top: 0.75rem;
-    max-height: 400px;
-    max-width: 650px;
-    /* ~7 cells (80px each) + scrollbar space */
+    max-height: 202px;
+    /* 6 cells * 32px + 10px buffer for scrollbar/border allowances */
+    max-width: 366px;
+    /* 6 cells * 60px + scrollbar/border allowances */
+    background: var(--sidebar-bg);
 }
 
-/* Removing inline-grid gap, doing real borders for cells */
 .matrix-grid {
     display: inline-grid;
-    background: var(--panel-bg);
+    background: transparent;
     width: max-content;
+    gap: 0;
+    padding: 1px 0 0 1px;
+    /* Add padding only on top/left so that the negative margin borders are visible without adding extra space on bottom/right */
 }
 
 .matrix-cell {
-    width: 80px !important;
-    max-width: 80px !important;
-    text-align: right;
-    font-size: 14px;
-    padding: 8px 12px !important;
-    border-right: 1px solid var(--panel-border);
-    border-bottom: 1px solid var(--panel-border);
-    background: var(--panel-bg);
-    color: var(--text-main);
+    width: 60px !important;
+    min-width: 60px !important;
+    height: 32px !important;
+    text-align: right !important;
+    /* Right align numbers is standard for tables */
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 0 10px !important;
+    /* Add some padding so numbers don't touch edges */
+
+    /* Full border to create grid cells */
+    border: 1px solid var(--panel-border) !important;
+    margin: -1px 0 0 -1px !important;
+    /* Overlap borders */
+
+    background: var(--input-bg) !important;
+    color: var(--text-main) !important;
+
+    /* Make the input look like a flat container, overriding global defaults completely */
+    border-radius: 0 !important;
+    outline: none !important;
+    transition: background-color 0.2s, border-color 0.2s !important;
+
+    /* Hide number input spinners on webkit completely */
+    -webkit-appearance: none !important;
+    -moz-appearance: textfield !important;
+    appearance: textfield !important;
+    /* Critical for Firefox */
 }
 
-/* Inputs inside matrix cells */
-.matrix-cell input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    text-align: inherit;
-    font-size: inherit;
-    color: inherit;
-    outline: none;
-    padding: 0;
+/* Force hiding spinners in WebKit/Blink (Chrome/Safari/Edge) */
+.matrix-cell::-webkit-outer-spin-button,
+.matrix-cell::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+    display: none !important;
+    /* Critical to ensure they actually disappear */
 }
 
-.matrix-cell input:focus {
-    box-shadow: none;
+.matrix-cell:focus {
+    box-shadow: none !important;
+    background-color: var(--sidebar-item-hover) !important;
+    position: relative !important;
+    z-index: 1 !important;
+    border-color: var(--text-main) !important;
 }
 
 .vectors-column {

@@ -63,19 +63,24 @@
                     </div>
                     <div class="panel-body">
                         <div class="config-grid">
-                            <div class="config-col">
-                                <h3>Базовые значения</h3>
-                                <div class="input-row">
-                                    <label for="m_input">ГИА (m):</label>
-                                    <input type="number" id="m_input" min="1" value="3">
-                                </div>
-                                <div class="input-row">
-                                    <label for="n_input">СЗИ (n):</label>
-                                    <input type="number" id="n_input" min="1" value="4">
-                                </div>
-                                <div class="input-row">
-                                    <label for="lam_input">λ (Приоритет):</label>
-                                    <input type="number" id="lam_input" min="0" max="1" step="0.1" value="0.5">
+                            <div class="config-col params-table-col">
+                                <h3>БАЗОВЫЕ ЗНАЧЕНИЯ</h3>
+                                <div class="params-table">
+                                    <div class="input-row">
+                                        <div class="row-label"><label for="m_input">ГИА (m)</label></div>
+                                        <div class="row-value"><input type="number" id="m_input" min="1" value="3">
+                                        </div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><label for="n_input">СЗИ (n)</label></div>
+                                        <div class="row-value"><input type="number" id="n_input" min="1" value="4">
+                                        </div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><label for="lam_input">λ (Приоритет)</label></div>
+                                        <div class="row-value"><input type="number" id="lam_input" min="0" max="1"
+                                                step="0.1" value="0.5"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="config-col action-col">
