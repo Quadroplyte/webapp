@@ -186,7 +186,7 @@
                             <div class="result-card">
                                 <div class="result-card-label">Описание модели</div>
                                 <p
-                                    style="font-size:0.95rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
+                                    style="font-size:1.2rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
                                     Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
                                     заданных бюджетных ограничениях для различных групп активов (ГИА).
                                     Модель минимизирует риски, балансируя между суммарным временем взлома <b>(аддитивный
@@ -270,16 +270,22 @@ lambda</pre>
                     <div class="panel-header">
                         <h2>Настройки приложения</h2>
                     </div>
-                    <div class="panel-body">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h3>Темная тема</h3>
-                                <p>Переключить цветовую схему на темную</p>
+                    <div class="panel-body result-body">
+                        <div class="result-cards-area" style="gap: 1.25rem;">
+
+                            <div class="result-card"
+                                style="flex-direction: row; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div class="result-card-label">Темная тема</div>
+                                    <p style="font-size:1rem; color:var(--text-muted); margin-top:0.35rem;">Переключить
+                                        цветовую схему интерфейса</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="themeToggle">
+                                    <span class="slider"></span>
+                                </label>
                             </div>
-                            <label class="switch">
-                                <input type="checkbox" id="themeToggle">
-                                <span class="slider"></span>
-                            </label>
+
                         </div>
                     </div>
                 </section>

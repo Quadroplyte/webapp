@@ -45,27 +45,72 @@
     --topbar-height: 48px;
 }
 
-/* Dark Theme Overrides - Keeping structure ready for later */
+/* Dark Theme Overrides — Neutral gray tones, blue accent */
 [data-theme="dark"] {
-    --app-bg: #030712;
-    --panel-bg: #111827;
-    --panel-border: #1F2937;
-    --panel-header-bg: #111827;
-    --panel-header-border: #1F2937;
-    --text-main: #F9FAFB;
-    --text-muted: #9CA3AF;
-    --input-bg: #111827;
-    --input-border: #374151;
-    --sidebar-bg: #030712;
-    --sidebar-border: #1F2937;
-    --sidebar-text: #9CA3AF;
-    --sidebar-active-bg: #111827;
-    --sidebar-item-hover: #1F2937;
-    --topbar-bg: #111827;
-    --topbar-border: #1F2937;
-    --metric-bg: #111827;
-    --salt-blue-main: #F9FAFB;
-    --salt-blue-accent: #F9FAFB;
+    --app-bg: #141414;
+    --panel-bg: #1E1E1E;
+    --panel-border: #2D2D2D;
+    --panel-header-bg: #1E1E1E;
+    --panel-header-border: #2D2D2D;
+    --text-main: #E8E8E8;
+    --text-muted: #909090;
+    --input-bg: #252525;
+    --input-border: #3A3A3A;
+    --sidebar-bg: #181818;
+    --sidebar-border: #2D2D2D;
+    --sidebar-text: #909090;
+    --sidebar-active-bg: #252525;
+    --sidebar-item-hover: #252525;
+    --topbar-bg: #1E1E1E;
+    --topbar-border: #2D2D2D;
+    --metric-bg: #1E1E1E;
+
+    /* Blue accent in dark mode — muted pastel blue */
+    --salt-blue-main: #7AA2D4;
+    --salt-blue-accent: #7AA2D4;
+    --salt-success: #7AA2D4;
+    /* Use blue instead of green for selected SZI in dark mode */
+}
+
+/* Dark mode specific component overrides */
+[data-theme="dark"] .result-card {
+    background: #252525;
+    border-color: #2D2D2D;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .params-table {
+    border-color: #2D2D2D;
+}
+
+[data-theme="dark"] .params-table .input-row {
+    border-color: #2D2D2D;
+}
+
+[data-theme="dark"] .params-table .row-label {
+    background: #252525;
+    border-color: #2D2D2D;
+}
+
+[data-theme="dark"] .nav-item.active {
+    background: #252525;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .action-btn {
+    background: #252525;
+    border-color: #3A3A3A;
+}
+
+[data-theme="dark"] .action-btn:hover {
+    background: #2E2E2E;
+}
+
+[data-theme="dark"] code,
+[data-theme="dark"] .code-block {
+    background: #141414;
+    border-color: #2D2D2D;
+    color: #E8E8E8;
 }
 
 * {
@@ -473,6 +518,17 @@ input[type="text"]:focus {
     filter: brightness(0.9);
 }
 
+/* In dark mode, success button matches primary button style — muted blue like generate button */
+[data-theme="dark"] .action-btn.success {
+    background: var(--salt-blue-main);
+    color: var(--app-bg);
+    border-color: var(--salt-blue-main);
+}
+
+[data-theme="dark"] .action-btn.success:hover {
+    filter: brightness(1.1);
+}
+
 .action-col {
     display: flex;
     flex-direction: column;
@@ -585,8 +641,8 @@ input[type="text"]:focus {
 }
 
 .calculate-action {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.5rem;
 }
 
 /* Results Section */
@@ -612,6 +668,38 @@ input[type="text"]:focus {
 }
 
 .docs-panel .result-body {
+    flex: 1;
+}
+
+/* Larger text in docs panel */
+.docs-panel .result-card-label,
+.settings-panel .result-card-label {
+    font-size: 0.8rem;
+    /* Label caps stay compact */
+}
+
+.docs-panel .row-label,
+.docs-panel .row-label b {
+    font-size: 1.15rem;
+}
+
+.docs-panel .code-block,
+.docs-panel pre {
+    font-size: 1.05rem;
+}
+
+/* Settings Panel — same full-height gray layout as docs/result panels */
+.settings-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--topbar-height));
+}
+
+.settings-panel .panel-header {
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.settings-panel .result-body {
     flex: 1;
 }
 
