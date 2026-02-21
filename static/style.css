@@ -753,44 +753,6 @@ input[type="text"]:focus {
     color: var(--salt-success);
 }
 
-/* Keep old metrics-grid/metric-block for backward compat if any */
-.metrics-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.metric-block {
-    background: var(--panel-bg);
-    padding: 1rem 1.5rem;
-    border: 1px solid var(--panel-border);
-    border-radius: 8px;
-    flex: 1;
-    min-width: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.metric-block label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-.metric-block .value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-main);
-    line-height: 1.1;
-}
-
-.metric-block .value.highlight {
-    color: var(--salt-success);
-    /* Green for success results */
-}
 
 /* Vector X Display Refinement */
 .vector-display h3 {
@@ -825,26 +787,6 @@ input[type="text"]:focus {
     border-color: var(--text-main);
 }
 
-/* Settings Toggle Switch */
-.setting-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem 0;
-    max-width: 400px;
-}
-
-.setting-info h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-main);
-}
-
-.setting-info p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-}
 
 .switch {
     position: relative;
@@ -916,37 +858,6 @@ input:checked+.slider:before {
     background: #4B5563;
 }
 
-/* Docs Styles */
-.info-content {
-    line-height: 1.7;
-    color: var(--text-muted);
-    max-width: 800px;
-}
-
-.info-section {
-    margin-bottom: 2.5rem;
-}
-
-.info-section h3 {
-    color: var(--text-main);
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.docs-list {
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.docs-list li {
-    margin-bottom: 0.5rem;
-}
-
-.docs-list b {
-    color: var(--text-main);
-    font-weight: 600;
-}
 
 .code-block {
     background: var(--sidebar-item-hover);

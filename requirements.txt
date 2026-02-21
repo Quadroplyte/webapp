@@ -1,8 +1,10 @@
+# Core
 numpy
 pulp
 fastapi
 uvicorn
 pydantic
+
+# Desktop packaging
 pywebview
-tabulate
 pyinstaller

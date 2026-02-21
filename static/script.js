@@ -1,4 +1,9 @@
+/**
+ * SZI Optimization — Клиентская логика.
+ * Навигация, темизация, генерация матриц, решение задачи, импорт файлов.
+ */
 document.addEventListener('DOMContentLoaded', () => {
+  // ── DOM-ссылки ──────────────────────────────────────────
   const fileInput = document.getElementById('fileInput');
   const mInput = document.getElementById('m_input');
   const nInput = document.getElementById('n_input');
@@ -13,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentM = 0;
   let currentN = 0;
 
-  // Navigation switching (event delegation for cross-browser support)
+  // ── Переключение навигации ───────────────────────────────
   const sideNav = document.querySelector('.side-nav');
   const breadcrumb = document.querySelector('.breadcrumb');
 
@@ -52,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Theme Toggle Logic
+  // ── Темная тема ─────────────────────────────────────────
   const themeToggle = document.getElementById('themeToggle');
   const currentTheme = localStorage.getItem('theme');
 
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Build the grid inputs
+  // ── Построение сетки ввода ──────────────────────────────
   function buildMatrix(containerId, rows, cols, prefix, initVal = 0) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
@@ -94,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(grid);
   }
 
-  // Generator handler
+  // ── Генерация матрицы ───────────────────────────────────
   generateBtn.addEventListener('click', () => {
     currentM = parseInt(mInput.value);
     currentN = parseInt(nInput.value);
@@ -114,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     matricesContainer.classList.remove('hidden');
   });
 
-  // Solve handler
+  // ── Запуск расчёта ──────────────────────────────────────
   solveBtn.addEventListener('click', async () => {
     // Guard: require data before solving
     if (currentM <= 0 || currentN <= 0) {
@@ -207,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // File handling
+  // ── Импорт данных из файла ──────────────────────────────
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
