@@ -1,0 +1,7 @@
+numpy
+pulp
+fastapi
+uvicorn
+pydantic
+pywebview
+tabulate
