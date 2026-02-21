@@ -43,14 +43,22 @@ def solve(request: SolveRequest):
     except Exception as e:
         return {"success": False, "error": str(e)}
 
-# Ensure static folder exists
-os.makedirs("static", exist_ok=True)
+# Ensure static folder exists dynamically for PyInstaller package
+import sys
+if getattr(sys, 'frozen', False):
+    # PyInstaller creates a temp folder and stores path in _MEIPASS
+    base_dir = sys._MEIPASS
+else:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+static_dir = os.path.join(base_dir, "static")
+os.makedirs("static", exist_ok=True) # Create locally if doesn't exist just in case
+
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/")
 def read_root():
-    return FileResponse("static/index.html")
+    return FileResponse(os.path.join(static_dir, "index.html"))
 
 if __name__ == "__main__":
     # Run the server locally
