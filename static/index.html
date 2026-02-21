@@ -180,40 +180,88 @@
                     <div class="panel-header">
                         <h2>Документация и руководство</h2>
                     </div>
-                    <div class="panel-body info-content">
-                        <div class="info-section">
-                            <h3>Описание модели</h3>
-                            <p>Данная система предназначена для оптимального выбора средств защиты информации (СЗИ) при
-                                заданных бюджетных ограничениях для различных групп активов (ГИА).</p>
-                            <p><b>Математическая постановка:</b> Модель минимизирует риски, балансируя между суммарным
-                                временем взлома (аддитивный критерий) и временем реакции самого слабого звена
-                                (максиминный критерий) с помощью коэффициента λ.</p>
-                        </div>
+                    <div class="panel-body result-body">
+                        <div class="result-cards-area" style="gap: 1.25rem;">
 
-                        <div class="info-section">
-                            <h3>Параметры ввода</h3>
-                            <ul class="docs-list">
-                                <li><b>m</b> — количество групп активов (строки матрицы ограничений).</li>
-                                <li><b>n</b> — количество доступных СЗИ (столбцы).</li>
-                                <li><b>λ (Lambda)</b> — приоритет. 1.0 — фокус на общем времени защиты, 0.0 — на
-                                    скорости реакции.</li>
-                                <li><b>Матрица A</b> — стоимость внедрения СЗИ. Каждая ячейка A[i,j] — цена j-го СЗИ для
-                                    i-й группы.</li>
-                                <li><b>Вектор b</b> — лимит бюджета для каждой группы ГИА.</li>
-                                <li><b>Вектор c</b> — время взлома для каждого СЗИ.</li>
-                                <li><b>Вектор d</b> — время реакции для каждого СЗИ.</li>
-                            </ul>
-                        </div>
+                            <div class="result-card">
+                                <div class="result-card-label">Описание модели</div>
+                                <p
+                                    style="font-size:0.95rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
+                                    Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
+                                    заданных бюджетных ограничениях для различных групп активов (ГИА).
+                                    Модель минимизирует риски, балансируя между суммарным временем взлома <b>(аддитивный
+                                        критерий)</b> и временем реакции самого слабого звена <b>(максиминный
+                                        критерий)</b> через коэффициент λ.
+                                </p>
+                            </div>
 
-                        <div class="info-section">
-                            <h3>Импорт из файла (input.txt)</h3>
-                            <p>Файл должен быть в текстовом формате (.txt) со значениями через пробел:</p>
-                            <pre class="code-block">m n
-A (матрица m x n)
-b (вектор m)
-c (вектор n)
-d (вектор n)
+                            <div class="result-card">
+                                <div class="result-card-label">Параметры ввода</div>
+                                <div class="params-table" style="margin-top:0.75rem;">
+                                    <div class="input-row">
+                                        <div class="row-label"><b>m</b></div>
+                                        <div class="row-label" style="border-right:none;">Количество групп активов
+                                            (строки матрицы A)</div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><b>n</b></div>
+                                        <div class="row-label" style="border-right:none;">Количество доступных СЗИ
+                                            (столбцы)</div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><b>λ</b></div>
+                                        <div class="row-label" style="border-right:none;">Приоритет: 1.0 = фокус на
+                                            времени взлома, 0.0 = фокус на реакции</div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><b>Матрица A</b></div>
+                                        <div class="row-label" style="border-right:none;">Стоимость каждого СЗИ для
+                                            каждой ГИА (m × n)</div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><b>Вектор b</b></div>
+                                        <div class="row-label" style="border-right:none;">Бюджетный лимит для каждой ГИА
+                                        </div>
+                                    </div>
+                                    <div class="input-row">
+                                        <div class="row-label"><b>Вектор c</b></div>
+                                        <div class="row-label" style="border-right:none;">Время взлома для каждого СЗИ
+                                        </div>
+                                    </div>
+                                    <div class="input-row" style="border-bottom:none;">
+                                        <div class="row-label"><b>Вектор d</b></div>
+                                        <div class="row-label" style="border-right:none;">Время реакции для каждого СЗИ
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-card-label">Формат файла импорта (.txt)</div>
+                                <p style="font-size:0.85rem; color:var(--text-muted); margin:0.5rem 0;">Каждая строка —
+                                    одна запись, значения разделяются пробелами:</p>
+                                <pre class="code-block" style="margin-top:0.5rem;">m n
+A[0,0] A[0,1] ... A[0,n-1]
+A[1,0] A[1,1] ... A[1,n-1]
+...
+b[0] b[1] ... b[m-1]
+c[0] c[1] ... c[n-1]
+d[0] d[1] ... d[n-1]
 lambda</pre>
+                            </div>
+
+                            <div class="result-card">
+                                <div class="result-card-label">Пример файла (m=3, n=4)</div>
+                                <pre class="code-block" style="margin-top:0.5rem;">3 4
+10 20 15 25
+12 18 22 10
+8  16 20 30
+50 60 55
+30 40 35 45
+5  8  6  9
+0.5</pre>
+                            </div>
+
                         </div>
                     </div>
                 </section>

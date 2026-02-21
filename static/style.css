@@ -599,6 +599,22 @@ input[type="text"]:focus {
     border-bottom: 1px solid var(--panel-border);
 }
 
+/* Documentation Panel — same full-height gray layout as result panel */
+.docs-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--topbar-height));
+    /* Always fill full page height */
+}
+
+.docs-panel .panel-header {
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.docs-panel .result-body {
+    flex: 1;
+}
+
 .result-body {
     padding: 0 !important;
     /* Override panel-body padding */
