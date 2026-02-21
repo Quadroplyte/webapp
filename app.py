@@ -45,6 +45,8 @@ def solve(request: SolveRequest):
 
 # Ensure static folder exists dynamically for PyInstaller package
 import sys
+import os
+
 if getattr(sys, 'frozen', False):
     # PyInstaller creates a temp folder and stores path in _MEIPASS
     base_dir = sys._MEIPASS
@@ -52,8 +54,8 @@ else:
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
 static_dir = os.path.join(base_dir, "static")
-os.makedirs("static", exist_ok=True) # Create locally if doesn't exist just in case
 
+# Mount static files
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/")

@@ -13,33 +13,36 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentM = 0;
   let currentN = 0;
 
-  // Navigation switching
-  const navItems = document.querySelectorAll('.nav-item');
-  const mainSections = {
-    'Оптимизация': ['.config-panel', '#matricesContainer', '#resultContainer'],
-    'Документация': ['#docsPanel']
-  };
+  // Navigation switching (event delegation for cross-browser support)
+  const sideNav = document.querySelector('.side-nav');
+  const breadcrumb = document.querySelector('.breadcrumb');
 
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      navItems.forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
+  sideNav.addEventListener('click', (e) => {
+    const clickedItem = e.target.closest('.nav-item');
+    if (!clickedItem) return;
 
-      const text = item.innerText.trim();
+    // Update active state
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    clickedItem.classList.add('active');
 
-      // Hide all main containers
-      document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+    const tabName = clickedItem.getAttribute('data-tab');
 
-      if (text === 'Оптимизация') {
-        document.querySelector('.config-panel').classList.remove('hidden');
-        if (currentM > 0) document.getElementById('matricesContainer').classList.remove('hidden');
-        // results stay hidden until next solve
-      } else if (text === 'Документация') {
-        document.getElementById('docsPanel').classList.remove('hidden');
-      } else if (text === 'Настройки') {
-        document.getElementById('settingsPanel').classList.remove('hidden');
-      }
-    });
+    // Update breadcrumb
+    if (breadcrumb && tabName) {
+      breadcrumb.innerHTML = 'Система выбора СЗИ / <b>' + tabName + '</b>';
+    }
+
+    // Hide all main containers
+    document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+
+    if (tabName === 'Оптимизация') {
+      document.querySelector('.config-panel').classList.remove('hidden');
+      if (currentM > 0) document.getElementById('matricesContainer').classList.remove('hidden');
+    } else if (tabName === 'Документация') {
+      document.getElementById('docsPanel').classList.remove('hidden');
+    } else if (tabName === 'Настройки') {
+      document.getElementById('settingsPanel').classList.remove('hidden');
+    }
   });
 
   // Theme Toggle Logic
