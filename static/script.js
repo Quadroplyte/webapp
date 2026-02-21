@@ -32,16 +32,23 @@ document.addEventListener('DOMContentLoaded', () => {
       breadcrumb.innerHTML = 'Система выбора СЗИ / <b>' + tabName + '</b>';
     }
 
-    // Hide all main containers
-    document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+    // Show/hide the correct panels
+    const docsPanel = document.getElementById('docsPanel');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const optimizationPanels = [document.querySelector('.config-panel'), matricesContainer, resultContainer];
 
     if (tabName === 'Оптимизация') {
-      document.querySelector('.config-panel').classList.remove('hidden');
-      if (currentM > 0) document.getElementById('matricesContainer').classList.remove('hidden');
+      docsPanel.classList.add('hidden');
+      settingsPanel.classList.add('hidden');
+      optimizationPanels.forEach(p => p && p.classList.remove('hidden'));
     } else if (tabName === 'Документация') {
-      document.getElementById('docsPanel').classList.remove('hidden');
+      optimizationPanels.forEach(p => p && p.classList.add('hidden'));
+      settingsPanel.classList.add('hidden');
+      docsPanel.classList.remove('hidden');
     } else if (tabName === 'Настройки') {
-      document.getElementById('settingsPanel').classList.remove('hidden');
+      optimizationPanels.forEach(p => p && p.classList.add('hidden'));
+      docsPanel.classList.add('hidden');
+      settingsPanel.classList.remove('hidden');
     }
   });
 
@@ -102,12 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
     buildMatrix('vectorC_container', 1, currentN, 'c');
     buildMatrix('vectorD_container', 1, currentN, 'd');
 
+    // Show the data fields section
+    document.getElementById('dataFieldsWrapper').classList.remove('hidden');
     matricesContainer.classList.remove('hidden');
-    resultContainer.classList.add('hidden');
   });
 
   // Solve handler
   solveBtn.addEventListener('click', async () => {
+    // Guard: require data before solving
+    if (currentM <= 0 || currentN <= 0) {
+      const errorBox = document.getElementById('errorBox');
+      errorBox.innerText = 'Пожалуйста, сначала сгенерируйте матрицу или загрузите данные из файла.';
+      errorBox.classList.remove('hidden');
+      return;
+    }
+
     solveBtn.disabled = true;
     solveBtn.innerText = 'Вычисление...';
 
@@ -153,7 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await response.json();
 
-      resultContainer.classList.remove('hidden');
+      // Show the result cards area now that we have data
+      document.getElementById('resultCardsWrapper').classList.remove('hidden');
       if (result.success) {
         errorBox.classList.add('hidden');
         document.getElementById('res_f').innerText = result.optimal_f.toFixed(4);
@@ -242,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
 
         matricesContainer.classList.remove('hidden');
-        resultContainer.classList.add('hidden');
+        document.getElementById('dataFieldsWrapper').classList.remove('hidden');
 
       } catch (err) {
         console.error(err);
