@@ -8,9 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const mInput = document.getElementById('m_input');
   const nInput = document.getElementById('n_input');
   const lamInput = document.getElementById('lam_input');
-  const generateBtn = document.getElementById('generateBtn');
+  const generateTablesBtn = document.getElementById('generateTablesBtn');
   const solveBtn = document.getElementById('solveBtn');
+  const manualInputBtn = document.getElementById('manualInputBtn');
 
+  const dataInputPanel = document.getElementById('dataInputPanel');
+  const configPanel = document.getElementById('configPanel');
   const matricesContainer = document.getElementById('matricesContainer');
   const resultContainer = document.getElementById('resultContainer');
   const errorBox = document.getElementById('errorBox');
@@ -92,18 +95,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show/hide the correct panels
     const docsPanel = document.getElementById('docsPanel');
     const settingsPanel = document.getElementById('settingsPanel');
-    const optimizationPanels = [document.querySelector('.config-panel'), matricesContainer, resultContainer];
+    const optimizationView = document.getElementById('optimizationView');
 
     if (tabName === 'Оптимизация') {
       docsPanel.classList.add('hidden');
       settingsPanel.classList.add('hidden');
-      optimizationPanels.forEach(p => p && p.classList.remove('hidden'));
+      optimizationView.classList.remove('hidden');
     } else if (tabName === 'Документация') {
-      optimizationPanels.forEach(p => p && p.classList.add('hidden'));
+      optimizationView.classList.add('hidden');
       settingsPanel.classList.add('hidden');
       docsPanel.classList.remove('hidden');
     } else if (tabName === 'Настройки') {
-      optimizationPanels.forEach(p => p && p.classList.add('hidden'));
+      optimizationView.classList.add('hidden');
       docsPanel.classList.add('hidden');
       settingsPanel.classList.remove('hidden');
     }
@@ -111,11 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Темная тема ─────────────────────────────────────────
   const themeToggle = document.getElementById('themeToggle');
-  const currentTheme = localStorage.getItem('theme');
+  const currentTheme = localStorage.getItem('theme') || 'dark';
 
   if (currentTheme === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
     themeToggle.checked = true;
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeToggle.checked = false;
   }
 
   themeToggle.addEventListener('change', (e) => {
@@ -151,8 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(grid);
   }
 
+  // ── Ручной ввод ─────────────────────────────────────────
+  manualInputBtn.addEventListener('click', () => {
+    configPanel.classList.remove('hidden');
+  });
+
   // ── Генерация матрицы ───────────────────────────────────
-  generateBtn.addEventListener('click', () => {
+  generateTablesBtn.addEventListener('click', () => {
     currentM = parseInt(mInput.value);
     currentN = parseInt(nInput.value);
 
@@ -226,8 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await response.json();
 
-      // Show the result cards area now that we have data
+      // Show the result container and cards area now that we have data
+      resultContainer.classList.remove('hidden');
       document.getElementById('resultCardsWrapper').classList.remove('hidden');
+
       if (result.success) {
         errorBox.classList.add('hidden');
         document.getElementById('res_f').innerText = result.optimal_f.toFixed(4);
@@ -315,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fill lam
         lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
 
+        configPanel.classList.remove('hidden');
         matricesContainer.classList.remove('hidden');
         document.getElementById('dataFieldsWrapper').classList.remove('hidden');
 
@@ -404,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fill lam
         lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
 
+        configPanel.classList.remove('hidden');
         matricesContainer.classList.remove('hidden');
         document.getElementById('dataFieldsWrapper').classList.remove('hidden');
 

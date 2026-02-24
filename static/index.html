@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Optimization | Enterprise Solution</title>
-    <link rel="stylesheet" href="/static/style.css?v=14">
+    <link rel="stylesheet" href="/static/style.css?v=16">
     <link
         href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -72,49 +72,27 @@
             </header>
 
             <div class="workspace">
-                <section class="config-panel panel">
-                    <div class="panel-header">
-                        <h2>Конфигурация параметров</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div class="config-grid">
-                            <div class="config-col params-table-col">
-                                <h3>БАЗОВЫЕ ЗНАЧЕНИЯ</h3>
-                                <div class="params-table">
-                                    <div class="input-row">
-                                        <div class="row-label"><label for="m_input">ГИА (m)</label></div>
-                                        <div class="row-value"><input type="number" id="m_input" min="1" value="3">
-                                        </div>
-                                    </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><label for="n_input">СЗИ (n)</label></div>
-                                        <div class="row-value"><input type="number" id="n_input" min="1" value="4">
-                                        </div>
-                                    </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><label for="lam_input">λ (Приоритет)</label></div>
-                                        <div class="row-value"><input type="number" id="lam_input" min="0" max="1"
-                                                step="0.1" value="0.5"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="config-col action-col">
-                                <h3
-                                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                                    Импорт данных
-                                    <button id="infoBtn" type="button" class="icon-btn" title="Формат файла"
-                                        style="width: auto; height: 32px; padding: 0 12px; font-size: 0.9rem; gap: 6px; color: var(--salt-blue-main); text-transform: none; letter-spacing: normal;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <circle cx="12" cy="12" r="10" />
-                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                            <line x1="12" y1="17" x2="12.01" y2="17" />
-                                        </svg>
-                                        Формат файла
-                                    </button>
-                                </h3>
-                                <label class="action-btn file-btn">
+                <div id="optimizationView" class="optimization-view">
+                    <div id="leftColumnBg" class="left-column-bg"></div>
+                    <section id="dataInputPanel" class="data-input-panel panel">
+                        <div class="panel-header"
+                            style="display: flex; justify-content: space-between; align-items: center;">
+                            <h2>Ввод данных</h2>
+                            <button id="infoBtn" type="button" class="icon-btn" title="Формат файла"
+                                style="width: auto; height: 32px; padding: 0 12px; font-size: 0.9rem; gap: 6px; color: var(--salt-blue-main); text-transform: none; letter-spacing: normal;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                                </svg>
+                                Инфо о формате
+                            </button>
+                        </div>
+                        <div class="panel-body">
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <label class="action-btn primary file-btn" style="flex: 1; max-width: 250px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -125,85 +103,127 @@
                                     <input type="file" id="fileInput" accept=".txt">
                                     Загрузить из файла (.txt)
                                 </label>
-                                <button id="generateBtn" class="action-btn primary">
+
+                                <button id="manualInputBtn" class="action-btn" style="flex: 1; max-width: 250px;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
-                                        <circle cx="12" cy="12" r="10" />
-                                        <line x1="12" x2="12" y1="8" y2="16" />
-                                        <line x1="8" x2="16" y1="12" y2="12" />
+                                        <path d="M12 20h9" />
+                                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                                     </svg>
-                                    Сгенерировать сетку
+                                    Ручной ввод
                                 </button>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section id="matricesContainer" class="data-panel panel">
-                    <div class="panel-header">
-                        <h2>Матрицы и векторы данных</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div id="dataFieldsWrapper" class="hidden">
-                            <div class="data-group">
-                                <h3>Матрица A: Стоимость СЗИ для каждой ГИА</h3>
-                                <div class="scroll-wrapper" id="matrixA_container"></div>
-                            </div>
-
-                            <div class="vectors-column">
-                                <div class="data-group">
-                                    <h3>Вектор b (Бюджеты ГИА)</h3>
-                                    <div class="scroll-wrapper" id="vectorB_container"></div>
+                    <section id="configPanel" class="config-panel panel hidden">
+                        <div class="panel-header">
+                            <h2>Конфигурация параметров</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="config-grid">
+                                <div class="config-col params-table-col">
+                                    <h3>БАЗОВЫЕ ЗНАЧЕНИЯ</h3>
+                                    <div class="params-table">
+                                        <div class="input-row">
+                                            <div class="row-label"><label for="m_input">ГИА (m)</label></div>
+                                            <div class="row-value"><input type="number" id="m_input" min="1" value="3">
+                                            </div>
+                                        </div>
+                                        <div class="input-row">
+                                            <div class="row-label"><label for="n_input">СЗИ (n)</label></div>
+                                            <div class="row-value"><input type="number" id="n_input" min="1" value="4">
+                                            </div>
+                                        </div>
+                                        <div class="input-row">
+                                            <div class="row-label"><label for="lam_input">λ (Приоритет)</label></div>
+                                            <div class="row-value"><input type="number" id="lam_input" min="0" max="1"
+                                                    step="0.1" value="0.5"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="data-group">
-                                    <h3>Вектор c (Время взлома)</h3>
-                                    <div class="scroll-wrapper" id="vectorC_container"></div>
+                                <div class="config-col action-col">
+                                    <button id="generateTablesBtn" class="action-btn primary" style="margin-top: auto;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="12" x2="12" y1="8" y2="16" />
+                                            <line x1="8" x2="16" y1="12" y2="12" />
+                                        </svg>
+                                        Создать таблицы
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="matricesContainer" class="data-panel panel hidden">
+                        <div class="panel-header">
+                            <h2>Матрицы и векторы данных</h2>
+                        </div>
+                        <div class="panel-body">
+                            <div id="dataFieldsWrapper" class="hidden">
                                 <div class="data-group">
-                                    <h3>Вектор d (Время реакции)</h3>
-                                    <div class="scroll-wrapper" id="vectorD_container"></div>
+                                    <h3>Матрица A: Стоимость СЗИ для каждой ГИА</h3>
+                                    <div class="scroll-wrapper" id="matrixA_container"></div>
+                                </div>
+
+                                <div class="vectors-column">
+                                    <div class="data-group">
+                                        <h3>Вектор b (Бюджеты ГИА)</h3>
+                                        <div class="scroll-wrapper" id="vectorB_container"></div>
+                                    </div>
+                                    <div class="data-group">
+                                        <h3>Вектор c (Время взлома)</h3>
+                                        <div class="scroll-wrapper" id="vectorC_container"></div>
+                                    </div>
+                                    <div class="data-group">
+                                        <h3>Вектор d (Время реакции)</h3>
+                                        <div class="scroll-wrapper" id="vectorD_container"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="calculate-action">
-                            <button id="solveBtn" class="action-btn success">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polygon points="5 3 19 12 5 21 5 3" />
-                                </svg>
-                                Запустить расчет решения
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="resultContainer" class="result-panel panel">
-                    <div class="panel-header">
-                        <h2>Результаты расчетов</h2>
-                    </div>
-                    <div class="panel-body result-body">
-                        <div id="errorBox" class="error-notification hidden"></div>
-
-                        <div id="resultCardsWrapper" class="result-cards-area hidden">
-                            <div class="result-card">
-                                <div class="result-card-label">Оптимальное значение (F)</div>
-                                <div class="result-card-value" id="res_f">-</div>
-                            </div>
-                            <div class="result-card">
-                                <div class="result-card-label">Выбранные индексы СЗИ</div>
-                                <div class="result-card-value highlight" id="res_szi">-</div>
+                            <div class="calculate-action">
+                                <button id="solveBtn" class="action-btn success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="5 3 19 12 5 21 5 3" />
+                                    </svg>
+                                    Запустить расчет решения
+                                </button>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="vector-display hidden" style="display: none;">
-                            <h3>Результирующий вектор x</h3>
-                            <div id="res_x_container" class="x-grid"></div>
+                    <section id="resultContainer" class="result-panel panel">
+                        <div class="panel-header">
+                            <h2>Результаты расчетов</h2>
                         </div>
-                    </div>
-                </section>
+                        <div class="panel-body result-body">
+                            <div id="errorBox" class="error-notification hidden"></div>
+
+                            <div id="resultCardsWrapper" class="result-cards-area hidden">
+                                <div class="result-card">
+                                    <div class="result-card-label">Оптимальное значение (F)</div>
+                                    <div class="result-card-value" id="res_f">-</div>
+                                </div>
+                                <div class="result-card">
+                                    <div class="result-card-label">Выбранные индексы СЗИ</div>
+                                    <div class="result-card-value highlight" id="res_szi">-</div>
+                                </div>
+                            </div>
+
+                            <div class="vector-display hidden" style="display: none;">
+                                <h3>Результирующий вектор x</h3>
+                                <div id="res_x_container" class="x-grid"></div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
                 <section id="docsPanel" class="docs-panel panel hidden">
                     <div class="panel-header">
@@ -310,7 +330,8 @@ lambda</pre>
                                 style="flex-direction: row; align-items: center; justify-content: space-between;">
                                 <div>
                                     <div class="result-card-label"
-                                        style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Темная
+                                        style="font-size: 1.1rem; color: var(--text-main); font-weight: 600; text-transform: none;">
+                                        Темная
                                         тема</div>
                                     <p style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
                                         Переключить
@@ -373,7 +394,7 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/script.js?v=14"></script>
+    <script src="/static/script.js?v=16"></script>
 </body>
 
 </html>

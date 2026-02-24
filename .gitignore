@@ -3,6 +3,7 @@
 
 # IDE
 .vscode/
+.project_info
 
 # Build artifacts
 dist/
