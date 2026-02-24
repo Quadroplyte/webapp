@@ -440,9 +440,7 @@ body {
         display: flex !important;
     }
 
-    .breadcrumb {
-        font-size: 0.8rem;
-    }
+
 }
 
 .mobile-only {
