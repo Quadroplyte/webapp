@@ -346,7 +346,7 @@ body {
     /* In single column: fill remaining vertical space */
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 700px) {
     .optimization-view {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -399,7 +399,7 @@ body {
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 699px) {
     .sidebar {
         position: fixed;
         top: 0;

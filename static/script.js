@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Automatic Behavior on Resize
   const handleResize = () => {
-    if (window.innerWidth < 1201) {
+    if (window.innerWidth < 700) {
       sidebar.classList.add('collapsed');
     } else {
       // On larger screens, remove the mobile-open state if browser was resized
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!clickedItem) return;
 
     // On mobile, close menu after clicking a link
-    if (window.innerWidth < 1201) {
+    if (window.innerWidth < 700) {
       closeMobileMenu();
     }
 
