@@ -136,7 +136,7 @@
                         <div class="panel-body">
                             <div class="config-grid">
                                 <div class="config-col params-table-col">
-                                    <h3>БАЗОВЫЕ ЗНАЧЕНИЯ</h3>
+                                    <h3>Базовые значения</h3>
                                     <div class="params-table">
                                         <div class="input-row">
                                             <div class="row-label"><label for="m_input">ГИА (m)</label></div>
@@ -219,19 +219,7 @@
                             <div id="errorBox" class="error-notification hidden"></div>
 
                             <div id="resultCardsWrapper" class="result-cards-area hidden">
-                                <div class="result-card">
-                                    <div class="result-card-label">Оптимальное значение (F)</div>
-                                    <div class="result-card-value" id="res_f">-</div>
-                                </div>
-                                <div class="result-card">
-                                    <div class="result-card-label">Выбранные индексы СЗИ</div>
-                                    <div class="result-card-value highlight" id="res_szi">-</div>
-                                </div>
-                            </div>
-
-                            <div class="vector-display hidden" style="display: none;">
-                                <h3>Результирующий вектор x</h3>
-                                <div id="res_x_container" class="x-grid"></div>
+                                <!-- Cards will be generated here dynamically -->
                             </div>
                         </div>
                     </section>
@@ -300,7 +288,9 @@
                                 <div class="result-card-label"
                                     style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Формат файла
                                     импорта (.txt)</div>
-                                <p style="font-size: 1.05rem; color:var(--text-muted); margin:0.75rem 0;">Каждая строка
+                                <p
+                                    style="font-size: 1.15rem; color: var(--doc-special-text); font-weight: 500; margin:0.75rem 0; opacity: 0.95;">
+                                    Каждая строка
                                     —
                                     одна запись, значения разделяются пробелами:</p>
                                 <pre class="code-block" style="margin-top:0.5rem;">m n

@@ -127,27 +127,47 @@ def algorithm_step_4(data: dict, V: list):
     best_x = None
     best_F = -1.0
     lam = data["lambda"]
+    
+    all_results = []
 
     for x in V:
         f1 = sum(data["c"][j] * x[j] for j in range(len(x)))
         selected_d = [data["d"][j] for j in range(len(x)) if x[j] == 1]
         f2 = min(selected_d) if selected_d else 0.0
         f_total = lam * f1 + (1 - lam) * f2
+        
+        # Восстановить оригинальные индексы СЗИ (1-based)
+        original_szi = sorted(
+            int(data["original_indices"][i] + 1)
+            for i, val in enumerate(x)
+            if val == 1
+        )
+        
+        # Восстановить вектор x в оригинальном порядке
+        original_x = [0] * len(data["original_indices"])
+        for i, val in enumerate(x):
+            original_x[data["original_indices"][i]] = val
+            
+        all_results.append({
+            "vector_x": original_x,
+            "f": float(f_total),
+            "szi": original_szi
+        })
 
         if f_total > best_F:
             best_F = f_total
             best_x = x
 
-    # Восстановить оригинальные индексы СЗИ (1-based)
-    original_nums = []
+    # Восстановить оригинальные индексы СЗИ для лучшего (1-based)
+    best_original_nums = []
     if best_x is not None:
-        original_nums = sorted(
+        best_original_nums = sorted(
             int(data["original_indices"][i] + 1)
             for i, val in enumerate(best_x)
             if val == 1
         )
 
-    return best_x, best_F, original_nums
+    return best_x, best_F, best_original_nums, all_results
 
 
 # ── Основная функция (вызывается из API) ───────────────────
@@ -202,16 +222,21 @@ def solve_problem(
         V = algorithm_step_3(data, j0, V)
 
     # Шаг 4: Выбор лучшего
-    best_x, best_F, recommended_szi = algorithm_step_4(data, V)
+    best_x, best_F, recommended_szi, all_solutions = algorithm_step_4(data, V)
 
     # Восстановить вектор x в оригинальном порядке
     original_x = [0] * n
-    for i, val in enumerate(best_x):
-        original_x[indices[i]] = val
+    if best_x is not None:
+        for i, val in enumerate(best_x):
+            original_x[indices[i]] = val
+
+    # Сортируем все решения по убыванию F
+    all_solutions.sort(key=lambda item: item["f"], reverse=True)
 
     return {
         "success": True,
         "vector_x": original_x,
         "optimal_f": best_F,
         "recommended_szi": recommended_szi,
+        "all_solutions": all_solutions
     }

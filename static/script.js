@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Automatic Behavior on Resize
   const handleResize = () => {
-    if (window.innerWidth < 700) {
+    if (window.innerWidth < 900) {
       sidebar.classList.add('collapsed');
     } else {
       // On larger screens, remove the mobile-open state if browser was resized
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!clickedItem) return;
 
     // On mobile, close menu after clicking a link
-    if (window.innerWidth < 700) {
+    if (window.innerWidth < 900) {
       closeMobileMenu();
     }
 
@@ -243,27 +243,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (result.success) {
         errorBox.classList.add('hidden');
-        document.getElementById('res_f').innerText = result.optimal_f.toFixed(4);
-        document.getElementById('res_szi').innerText = result.recommended_szi.join(', ') || 'Нет';
 
-        // Draw x vector
-        const xContainer = document.getElementById('res_x_container');
-        xContainer.innerHTML = '';
-        result.vector_x.forEach((val, idx) => {
-          const box = document.createElement('div');
-          box.className = `x-box ${val === 1 ? 'active' : ''}`;
-          box.title = `СЗИ ${idx + 1}`;
-          box.innerText = val;
-          xContainer.appendChild(box);
+        const cardsWrapper = document.getElementById('resultCardsWrapper');
+        cardsWrapper.innerHTML = '';
+        cardsWrapper.classList.remove('hidden');
+
+        // result.all_solutions contains an array like:
+        // [{ vector_x: [1,0,1], f: 12.34, szi: [1,3] }, ...]
+
+        // Remove duplicates if any (algorithm might produce identical vectors)
+        const uniqueSolutions = [];
+        const seen = new Set();
+        result.all_solutions.forEach(sol => {
+          const key = sol.vector_x.join(',');
+          if (!seen.has(key)) {
+            seen.add(key);
+            uniqueSolutions.push(sol);
+          }
+        });
+
+        uniqueSolutions.forEach((sol, idx) => {
+          const card = document.createElement('div');
+          card.className = 'result-card solver-card';
+          if (idx === 0) {
+            card.classList.add('best-solution');
+          }
+
+          const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;';
+
+          card.innerHTML = `
+              <div style="padding: 0 0.75rem 0 1.5rem; border-bottom: 1px solid var(--panel-border); min-height: 3.75rem; display: flex; align-items: center;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; gap: 1.5rem; width: 100%;">
+                      <span style="font-size: 1.35rem; font-weight: 700; color: var(--text-main); line-height: 1.2; flex: 1; word-break: break-all;">
+                          Вектор x<sub style="${subStyle}">${idx + 1}</sub> [${sol.vector_x.join(', ')}]
+                      </span>
+                      ${idx === 0 ? '<span style="color:var(--salt-success); font-weight:700; font-size: 0.9rem; border: 1px solid var(--salt-success); padding: 4px 8px; border-radius: 4px; white-space: nowrap;">Лучший</span>' : '<span style="visibility: hidden; font-size: 0.9rem; padding: 4px 8px;">Лучший</span>'}
+                  </div>
+              </div>
+              <div style="display:flex; flex-wrap: wrap; background: var(--panel-border); gap: 1px;">
+                  <div style="flex: 1; min-width: 200px; padding: 1.25rem 1.5rem; background: var(--panel-bg);">
+                      <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.6rem;">Значение F(x<sub style="${subStyle}">${idx + 1}</sub>)</div>
+                      <div style="font-size: 1.85rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
+                  </div>
+                  <div style="flex: 2; min-width: 300px; padding: 1.25rem 1.5rem; background: var(--panel-bg);">
+                      <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.6rem;">Выбранные СЗИ</div>
+                      <div style="font-size: 1.65rem; font-weight: 700; color: var(--salt-blue-accent); line-height: 1.4; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : 'Нет'}</div>
+                  </div>
+              </div>
+          `;
+          cardsWrapper.appendChild(card);
         });
 
       } else {
         errorBox.innerText = result.error || 'Произошла неизвестная ошибка.';
         errorBox.classList.remove('hidden');
 
-        document.getElementById('res_f').innerText = '-';
-        document.getElementById('res_szi').innerText = '-';
-        document.getElementById('res_x_container').innerHTML = '';
+        document.getElementById('resultCardsWrapper').innerHTML = '';
       }
 
     } catch (err) {
