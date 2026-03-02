@@ -22,17 +22,18 @@ const translations = {
     // Config Panel
     config_params_title: "Конфигурация параметров",
     base_values_title: "Базовые значения",
-    label_m: "ГИА (m)",
-    label_n: "СЗИ (n)",
-    label_lam: "λ (Приоритет)",
+    label_m: "ГИА",
+    label_n: "СЗИ",
+    label_lam: "λ",
+    lambda_title: "Приоритет",
     create_tables_btn: "Создать таблицы",
 
     // Matrices Panel
     matrices_data_title: "Матрицы и векторы данных",
-    matrix_a_title: "Матрица A: Стоимость СЗИ для каждой ГИА",
-    vector_b_title: "Вектор b (Бюджеты ГИА)",
-    vector_c_title: "Вектор c (Время взлома)",
-    vector_d_title: "Вектор d (Время реакции)",
+    matrix_a_title: "Матрица A",
+    vector_b_title: "Вектор b",
+    vector_c_title: "Вектор c",
+    vector_d_title: "Вектор d",
     solve_btn: "Запустить расчет решения",
     solving_btn: "Вычисление...",
 
@@ -66,6 +67,10 @@ const translations = {
     import_format_title: "Формат файла импорта (.txt)",
     import_format_desc: "Каждая строка — одна запись, значения разделяются пробелами:",
     example_file_title: "Пример файла (m=3, n=4)",
+    example_guide_intro: "<b>Размерность:</b> В первой строке задаётся количество ГИА (m=3) и СЗИ (n=4).",
+    example_guide_matrix: "<b>Матрица A (3×4):</b> Каждое число — стоимость применения СЗИ для ГИА. Например, в первой строке число 20 означает, что второе СЗИ стоит 20 единиц для защиты первой ГИА.",
+    example_guide_vectors: "<b>Векторы параметров:</b> Далее идут три вектора: b (бюджеты для 3 ГИА), c (время взлома для 4 СЗИ) и d (время реакции для 4 СЗИ).",
+    example_guide_lambda: "<b>Коэффициент λ:</b> Последнее число (от 0.0 до 1.0). Чем выше λ, тем большее значение система придает фактору времени взлома. При λ=0.5 соблюдается баланс.",
 
     // Settings Panel
     settings_app_title: "Настройки приложения",
@@ -101,17 +106,18 @@ const translations = {
     // Config Panel
     config_params_title: "Parameters configuration",
     base_values_title: "Base values",
-    label_m: "Assets (m)",
-    label_n: "Prot. tools (n)",
-    label_lam: "λ (Priority)",
+    label_m: "Assets",
+    label_n: "Protection tools",
+    label_lam: "λ",
+    lambda_title: "Priority",
     create_tables_btn: "Create tables",
 
     // Matrices Panel
     matrices_data_title: "Data matrices and vectors",
-    matrix_a_title: "Matrix A: Protection tool cost for each Asset Group",
-    vector_b_title: "Vector b (Asset Budgets)",
-    vector_c_title: "Vector c (Hack time)",
-    vector_d_title: "Vector d (Reaction time)",
+    matrix_a_title: "Matrix A",
+    vector_b_title: "Vector b",
+    vector_c_title: "Vector c",
+    vector_d_title: "Vector d",
     solve_btn: "Run solution calculation",
     solving_btn: "Calculating...",
 
@@ -145,6 +151,10 @@ const translations = {
     import_format_title: "Import file format (.txt)",
     import_format_desc: "Each line is one record, values are space-separated:",
     example_file_title: "File example (m=3, n=4)",
+    example_guide_intro: "<b>Dimensions:</b> The first line specifies the number of Asset Groups (m=3) and Protection Tools (n=4).",
+    example_guide_matrix: "<b>Matrix A (3×4):</b> Each value is the cost of utilizing an IST for an AG. For example, '20' in the first row means the second tool costs 20 units for the first AG.",
+    example_guide_vectors: "<b>Parameter Vectors:</b> Next are three vectors: b (budgets for 3 AGs), c (hacking time for 4 ISTs), and d (reaction time for 4 ISTs).",
+    example_guide_lambda: "<b>Coefficient λ:</b> The final value (0.0 to 1.0). Higher λ means the system assigns greater importance to the hacking time risk factor. λ=0.5 means a balanced approach.",
 
     // Settings Panel
     settings_app_title: "Application settings",

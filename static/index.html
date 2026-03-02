@@ -140,7 +140,7 @@
                         <div class="panel-body">
                             <div class="config-grid">
                                 <div class="config-col params-table-col">
-                                    <h3 data-i18n="base_values_title">Базовые значения</h3>
+
                                     <div class="params-table">
                                         <div class="input-row">
                                             <div class="row-label"><label for="m_input" data-i18n="label_m">ГИА
@@ -153,12 +153,6 @@
                                                     (n)</label></div>
                                             <div class="row-value"><input type="number" id="n_input" min="1" value="4">
                                             </div>
-                                        </div>
-                                        <div class="input-row">
-                                            <div class="row-label"><label for="lam_input" data-i18n="label_lam">λ
-                                                    (Приоритет)</label></div>
-                                            <div class="row-value"><input type="number" id="lam_input" min="0" max="1"
-                                                    step="0.1" value="0.5"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -202,6 +196,22 @@
                                         <h3 data-i18n="vector_d_title">Вектор d (Время реакции)</h3>
                                         <div class="scroll-wrapper" id="vectorD_container"></div>
                                     </div>
+                                    <div class="data-group">
+                                        <h3 data-i18n="lambda_title">λ (Приоритет)</h3>
+                                        <div class="params-table" style="max-width: 200px;">
+                                            <div class="input-row" style="border-bottom: none;">
+                                                <div class="row-label"
+                                                    style="min-height: 32px; padding: 4px 12px; display: flex; justify-content: center; background: var(--input-bg);">
+                                                    <label for="lam_input" data-i18n="label_lam">λ</label>
+                                                </div>
+                                                <div class="row-value" style="background: var(--sidebar-bg);">
+                                                    <input type="number" id="lam_input" min="0" max="1" step="0.1"
+                                                        value="0.5"
+                                                        style="min-height: 32px; height: 32px; text-align: center; background: transparent;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -242,7 +252,7 @@
                             <div class="result-card">
                                 <div class="result-card-label" data-i18n="model_desc_title">Описание модели</div>
                                 <p data-i18n="model_desc_text"
-                                    style="font-size:1.2rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
+                                    style="color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
                                     Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
                                     заданных бюджетных ограничениях для различных групп активов (ГИА).
                                     Модель минимизирует риски, балансируя между суммарным временем взлома и временем
@@ -293,10 +303,10 @@
 
                             <div class="result-card">
                                 <div class="result-card-label" data-i18n="import_format_title"
-                                    style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Формат файла
+                                    style="color: var(--text-main); font-weight: 600;">Формат файла
                                     импорта (.txt)</div>
                                 <p data-i18n="import_format_desc"
-                                    style="font-size: 1.15rem; color: var(--doc-special-text); font-weight: 500; margin:0.75rem 0; opacity: 0.95;">
+                                    style="color: var(--text-main); font-weight: normal; margin:0.75rem 0; opacity: 0.95;">
                                     Каждая строка
                                     —
                                     одна запись, значения разделяются пробелами:</p>
@@ -312,9 +322,10 @@ lambda</pre>
 
                             <div class="result-card">
                                 <div class="result-card-label" data-i18n="example_file_title"
-                                    style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Пример файла
+                                    style="color: var(--text-main); font-weight: 600;">Пример файла
                                     (m=3, n=4)</div>
-                                <pre class="code-block" style="margin-top:0.5rem;">3 4
+                                <div style="display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                                    <pre class="code-block" style="margin: 0; flex: 0 0 160px; font-size: 1.2rem;">3 4
 10 20 15 25
 12 18 22 10
 8  16 20 30
@@ -322,6 +333,20 @@ lambda</pre>
 30 40 35 45
 5  8  6  9
 0.5</pre>
+                                    <div
+                                        style="flex: 1; display: flex; flex-direction: column; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--sidebar-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--salt-blue-main); border-radius: 6px;">
+                                        <p data-i18n="example_guide_intro" style="margin: 0;"></p>
+                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
+                                        </div>
+                                        <p data-i18n="example_guide_matrix" style="margin: 0;"></p>
+                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
+                                        </div>
+                                        <p data-i18n="example_guide_vectors" style="margin: 0;"></p>
+                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
+                                        </div>
+                                        <p data-i18n="example_guide_lambda" style="margin: 0;"></p>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -339,10 +364,9 @@ lambda</pre>
                                 style="flex-direction: row; align-items: center; justify-content: space-between;">
                                 <div>
                                     <div class="result-card-label" data-i18n="lang_title"
-                                        style="font-size: 1.1rem; color: var(--text-main); font-weight: 600; text-transform: none;">
+                                        style="color: var(--text-main); font-weight: 600; text-transform: none;">
                                         Язык интерфейса</div>
-                                    <p data-i18n="lang_desc"
-                                        style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
+                                    <p data-i18n="lang_desc" style="margin-top:0.35rem;">
                                         Выберите язык приложения</p>
                                 </div>
                                 <div class="lang-toggle-wrapper">
@@ -356,11 +380,10 @@ lambda</pre>
                                 style="flex-direction: row; align-items: center; justify-content: space-between;">
                                 <div>
                                     <div class="result-card-label" data-i18n="dark_theme_title"
-                                        style="font-size: 1.1rem; color: var(--text-main); font-weight: 600; text-transform: none;">
+                                        style="color: var(--text-main); font-weight: 600; text-transform: none;">
                                         Темная
                                         тема</div>
-                                    <p data-i18n="toggle_theme_desc"
-                                        style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
+                                    <p data-i18n="toggle_theme_desc" style="margin-top:0.35rem;">
                                         Переключить
                                         цветовую схему интерфейса</p>
                                 </div>
@@ -420,8 +443,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=26"></script>
-    <script src="/static/script.js?v=26"></script>
+    <script src="/static/lang.js?v=27"></script>
+    <script src="/static/script.js?v=27"></script>
 </body>
 
 </html>

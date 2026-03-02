@@ -121,12 +121,20 @@
 
 /* Specific styling for the configuration Panel */
 [data-theme="dark"] #configPanel .params-table .row-label {
-    background: #181818 !important;
+    background: var(--input-bg) !important;
 }
 
 [data-theme="dark"] #configPanel .params-table .row-value,
 [data-theme="dark"] #configPanel .params-table .row-value input {
-    background: #141414 !important;
+    background: var(--sidebar-bg) !important;
+}
+
+[data-theme="dark"] #configPanel .params-table .row-value input:focus {
+    background-color: var(--sidebar-item-hover) !important;
+}
+
+[data-theme="dark"] #settingsPanel p {
+    color: var(--text-muted) !important;
 }
 
 [data-theme="dark"] .nav-item.active {
@@ -607,6 +615,11 @@ input[type="text"]:focus {
     min-height: 38px;
     /* More compact for configuration view */
     padding: 4px 12px;
+    background: var(--input-bg);
+}
+
+#configPanel .params-table .row-value {
+    background: var(--sidebar-bg);
 }
 
 .params-table .row-label label {
@@ -858,8 +871,18 @@ input[type="text"]:focus {
 /* Larger text in docs panel */
 .docs-panel .result-card-label,
 .settings-panel .result-card-label {
-    font-size: 0.8rem;
-    /* Label caps stay compact */
+    font-size: 1.3rem;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.docs-panel p,
+.settings-panel p {
+    font-size: 1.3rem !important;
+    color: var(--text-main) !important;
+    font-weight: normal;
 }
 
 .docs-panel .row-label,
@@ -1125,8 +1148,8 @@ input:checked+.slider:before {
     border: 1px solid var(--panel-border);
     border-radius: 6px;
     padding: 2px;
-    width: 100px;
-    height: 34px;
+    width: 120px;
+    height: 40px;
     overflow: hidden;
 }
 
@@ -1152,7 +1175,7 @@ input:checked+.slider:before {
     border: none;
     background: transparent;
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     z-index: 2;
