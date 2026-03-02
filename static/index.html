@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SZI</title>
-    <link rel="stylesheet" href="/static/style.css?v=25">
+    <title>SZI Selection</title>
+    <link rel="stylesheet" href="/static/style.css?v=26">
     <link
         href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -16,8 +16,9 @@
     <div class="app-wrapper">
         <aside class="sidebar">
             <div class="logo">
-                <span class="logo-text"><b>Выбор</b> СЗИ</span>
-                <button id="sidebarToggle" class="icon-btn" title="Свернуть панель">
+                <span class="logo-text"><b data-i18n="app_title_bold">Выбор</b><span data-i18n="app_title_normal">
+                        СЗИ</span></span>
+                <button id="sidebarToggle" class="icon-btn" data-i18n-title="collapse_panel" title="Свернуть панель">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m15 18-6-6 6-6" />
@@ -33,7 +34,7 @@
                         <rect width="7" height="9" x="14" y="12" rx="1" />
                         <rect width="7" height="5" x="3" y="16" rx="1" />
                     </svg>
-                    <span>Оптимизация</span>
+                    <span data-i18n="opt_tab">Оптимизация</span>
                 </div>
                 <div class="nav-item" data-tab="Документация">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -44,7 +45,7 @@
                         <line x1="16" x2="8" y1="17" y2="17" />
                         <line x1="10" x2="8" y1="9" y2="9" />
                     </svg>
-                    <span>Документация</span>
+                    <span data-i18n="doc_tab">Документация</span>
                 </div>
                 <div class="nav-item" data-tab="Настройки">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -53,14 +54,15 @@
                             d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
                         <circle cx="12" cy="12" r="3" />
                     </svg>
-                    <span>Настройки</span>
+                    <span data-i18n="settings_tab">Настройки</span>
                 </div>
             </nav>
         </aside>
 
         <main class="content-area">
             <header class="top-bar">
-                <button id="mobileMenuBtn" class="icon-btn mobile-only" title="Открыть меню">
+                <button id="mobileMenuBtn" class="icon-btn mobile-only" data-i18n-title="open_menu"
+                    title="Открыть меню">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="4" x2="20" y1="12" y2="12" />
@@ -68,7 +70,8 @@
                         <line x1="4" x2="20" y1="18" y2="18" />
                     </svg>
                 </button>
-                <div class="breadcrumb">Система выбора СЗИ / <b>Оптимизация</b></div>
+                <div class="breadcrumb" id="breadcrumbDynamic"><span>Система выбора СЗИ / </span><b>Оптимизация</b>
+                </div>
             </header>
 
             <div class="workspace">
@@ -77,19 +80,20 @@
                     <section id="dataInputPanel" class="data-input-panel panel">
                         <div class="panel-header"
                             style="display: flex; justify-content: space-between; align-items: center;">
-                            <h2>Ввод данных</h2>
+                            <h2 data-i18n="data_input_title">Ввод данных</h2>
                             <div style="display: flex; gap: 0;">
                                 <button id="demoDataBtn" type="button" class="icon-btn"
-                                    title="Загрузить тестовые данные"
+                                    data-i18n-title="demo_data_title" title="Загрузить тестовые данные"
                                     style="width: auto; height: 32px; padding: 0 8px; font-size: 0.9rem; gap: 6px; color: var(--salt-blue-main); text-transform: none; letter-spacing: normal;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                                     </svg>
-                                    Демо-данные
+                                    <span data-i18n="demo_data_btn">Демо-данные</span>
                                 </button>
-                                <button id="infoBtn" type="button" class="icon-btn" title="Формат файла"
+                                <button id="infoBtn" type="button" class="icon-btn" data-i18n-title="file_format_title"
+                                    title="Формат файла"
                                     style="width: auto; height: 32px; padding: 0 8px; font-size: 0.9rem; gap: 6px; color: var(--salt-blue-main); text-transform: none; letter-spacing: normal;">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -98,7 +102,7 @@
                                         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                                         <line x1="12" y1="17" x2="12.01" y2="17" />
                                     </svg>
-                                    Инфо о формате
+                                    <span data-i18n="file_format_btn">Инфо о формате</span>
                                 </button>
                             </div>
                         </div>
@@ -113,7 +117,7 @@
                                         <line x1="12" x2="12" y1="3" y2="15" />
                                     </svg>
                                     <input type="file" id="fileInput" accept=".txt">
-                                    Загрузить из файла (.txt)
+                                    <span data-i18n="load_file_btn">Загрузить из файла (.txt)</span>
                                 </label>
 
                                 <button id="manualInputBtn" class="action-btn" style="flex: 1;">
@@ -123,7 +127,7 @@
                                         <path d="M12 20h9" />
                                         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                                     </svg>
-                                    Ручной ввод
+                                    <span data-i18n="manual_input_btn">Ручной ввод</span>
                                 </button>
                             </div>
                         </div>
@@ -131,25 +135,28 @@
 
                     <section id="configPanel" class="config-panel panel hidden">
                         <div class="panel-header">
-                            <h2>Конфигурация параметров</h2>
+                            <h2 data-i18n="config_params_title">Конфигурация параметров</h2>
                         </div>
                         <div class="panel-body">
                             <div class="config-grid">
                                 <div class="config-col params-table-col">
-                                    <h3>Базовые значения</h3>
+                                    <h3 data-i18n="base_values_title">Базовые значения</h3>
                                     <div class="params-table">
                                         <div class="input-row">
-                                            <div class="row-label"><label for="m_input">ГИА (m)</label></div>
+                                            <div class="row-label"><label for="m_input" data-i18n="label_m">ГИА
+                                                    (m)</label></div>
                                             <div class="row-value"><input type="number" id="m_input" min="1" value="3">
                                             </div>
                                         </div>
                                         <div class="input-row">
-                                            <div class="row-label"><label for="n_input">СЗИ (n)</label></div>
+                                            <div class="row-label"><label for="n_input" data-i18n="label_n">СЗИ
+                                                    (n)</label></div>
                                             <div class="row-value"><input type="number" id="n_input" min="1" value="4">
                                             </div>
                                         </div>
                                         <div class="input-row">
-                                            <div class="row-label"><label for="lam_input">λ (Приоритет)</label></div>
+                                            <div class="row-label"><label for="lam_input" data-i18n="label_lam">λ
+                                                    (Приоритет)</label></div>
                                             <div class="row-value"><input type="number" id="lam_input" min="0" max="1"
                                                     step="0.1" value="0.5"></div>
                                         </div>
@@ -164,7 +171,7 @@
                                             <line x1="12" x2="12" y1="8" y2="16" />
                                             <line x1="8" x2="16" y1="12" y2="12" />
                                         </svg>
-                                        Создать таблицы
+                                        <span data-i18n="create_tables_btn">Создать таблицы</span>
                                     </button>
                                 </div>
                             </div>
@@ -173,26 +180,26 @@
 
                     <section id="matricesContainer" class="data-panel panel hidden">
                         <div class="panel-header">
-                            <h2>Матрицы и векторы данных</h2>
+                            <h2 data-i18n="matrices_data_title">Матрицы и векторы данных</h2>
                         </div>
                         <div class="panel-body">
                             <div id="dataFieldsWrapper" class="hidden">
                                 <div class="data-group">
-                                    <h3>Матрица A: Стоимость СЗИ для каждой ГИА</h3>
+                                    <h3 data-i18n="matrix_a_title">Матрица A: Стоимость СЗИ для каждой ГИА</h3>
                                     <div class="scroll-wrapper" id="matrixA_container"></div>
                                 </div>
 
                                 <div class="vectors-column">
                                     <div class="data-group">
-                                        <h3>Вектор b (Бюджеты ГИА)</h3>
+                                        <h3 data-i18n="vector_b_title">Вектор b (Бюджеты ГИА)</h3>
                                         <div class="scroll-wrapper" id="vectorB_container"></div>
                                     </div>
                                     <div class="data-group">
-                                        <h3>Вектор c (Время взлома)</h3>
+                                        <h3 data-i18n="vector_c_title">Вектор c (Время взлома)</h3>
                                         <div class="scroll-wrapper" id="vectorC_container"></div>
                                     </div>
                                     <div class="data-group">
-                                        <h3>Вектор d (Время реакции)</h3>
+                                        <h3 data-i18n="vector_d_title">Вектор d (Время реакции)</h3>
                                         <div class="scroll-wrapper" id="vectorD_container"></div>
                                     </div>
                                 </div>
@@ -205,7 +212,7 @@
                                         stroke-linejoin="round">
                                         <polygon points="5 3 19 12 5 21 5 3" />
                                     </svg>
-                                    Запустить расчет решения
+                                    <span data-i18n="solve_btn">Запустить расчет решения</span>
                                 </button>
                             </div>
                         </div>
@@ -213,7 +220,7 @@
 
                     <section id="resultContainer" class="result-panel panel">
                         <div class="panel-header">
-                            <h2>Результаты расчетов</h2>
+                            <h2 data-i18n="results_title">Результаты расчетов</h2>
                         </div>
                         <div class="panel-body result-body">
                             <div id="errorBox" class="error-notification hidden"></div>
@@ -227,14 +234,14 @@
 
                 <section id="docsPanel" class="docs-panel panel hidden">
                     <div class="panel-header">
-                        <h2>Документация и руководство</h2>
+                        <h2 data-i18n="docs_guide_title">Документация и руководство</h2>
                     </div>
                     <div class="panel-body result-body">
                         <div class="result-cards-area" style="gap: 1.25rem;">
 
                             <div class="result-card">
-                                <div class="result-card-label">Описание модели</div>
-                                <p
+                                <div class="result-card-label" data-i18n="model_desc_title">Описание модели</div>
+                                <p data-i18n="model_desc_text"
                                     style="font-size:1.2rem; color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
                                     Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
                                     заданных бюджетных ограничениях для различных групп активов (ГИА).
@@ -244,51 +251,51 @@
                             </div>
 
                             <div class="result-card">
-                                <div class="result-card-label">Параметры ввода</div>
+                                <div class="result-card-label" data-i18n="input_params_title">Параметры ввода</div>
                                 <div class="params-table" style="margin-top:0.75rem;">
                                     <div class="input-row">
                                         <div class="row-label"><b>m</b></div>
-                                        <div class="row-label" style="border-right:none;">Количество групп активов
-                                            (строки матрицы A)</div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_m_desc">
+                                            Количество групп активов (строки матрицы A)</div>
                                     </div>
                                     <div class="input-row">
                                         <div class="row-label"><b>n</b></div>
-                                        <div class="row-label" style="border-right:none;">Количество доступных СЗИ
-                                            (столбцы)</div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_n_desc">
+                                            Количество доступных СЗИ (столбцы)</div>
                                     </div>
                                     <div class="input-row">
                                         <div class="row-label"><b>λ</b></div>
-                                        <div class="row-label" style="border-right:none;">Приоритет: 1.0 = фокус на
-                                            времени взлома, 0.0 = фокус на реакции</div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_lam_desc">
+                                            Приоритет: 1.0 = фокус на времени взлома, 0.0 = фокус на реакции</div>
                                     </div>
                                     <div class="input-row">
-                                        <div class="row-label"><b>Матрица A</b></div>
-                                        <div class="row-label" style="border-right:none;">Стоимость каждого СЗИ для
-                                            каждой ГИА (m × n)</div>
+                                        <div class="row-label"><b data-i18n="matrix_a_title">Матрица A</b></div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_a_desc">
+                                            Стоимость каждого СЗИ для каждой ГИА (m × n)</div>
                                     </div>
                                     <div class="input-row">
-                                        <div class="row-label"><b>Вектор b</b></div>
-                                        <div class="row-label" style="border-right:none;">Бюджетный лимит для каждой ГИА
-                                        </div>
+                                        <div class="row-label"><b data-i18n="vector_b_title">Вектор b</b></div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_b_desc">
+                                            Бюджетный лимит для каждой ГИА</div>
                                     </div>
                                     <div class="input-row">
-                                        <div class="row-label"><b>Вектор c</b></div>
-                                        <div class="row-label" style="border-right:none;">Время взлома для каждого СЗИ
-                                        </div>
+                                        <div class="row-label"><b data-i18n="vector_c_title">Вектор c</b></div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_c_desc">Время
+                                            взлома для каждого СЗИ</div>
                                     </div>
                                     <div class="input-row" style="border-bottom:none;">
-                                        <div class="row-label"><b>Вектор d</b></div>
-                                        <div class="row-label" style="border-right:none;">Время реакции для каждого СЗИ
-                                        </div>
+                                        <div class="row-label"><b data-i18n="vector_d_title">Вектор d</b></div>
+                                        <div class="row-label" style="border-right:none;" data-i18n="param_d_desc">Время
+                                            реакции для каждого СЗИ</div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="result-card">
-                                <div class="result-card-label"
+                                <div class="result-card-label" data-i18n="import_format_title"
                                     style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Формат файла
                                     импорта (.txt)</div>
-                                <p
+                                <p data-i18n="import_format_desc"
                                     style="font-size: 1.15rem; color: var(--doc-special-text); font-weight: 500; margin:0.75rem 0; opacity: 0.95;">
                                     Каждая строка
                                     —
@@ -304,7 +311,7 @@ lambda</pre>
                             </div>
 
                             <div class="result-card">
-                                <div class="result-card-label"
+                                <div class="result-card-label" data-i18n="example_file_title"
                                     style="font-size: 1.1rem; color: var(--text-main); font-weight: 600;">Пример файла
                                     (m=3, n=4)</div>
                                 <pre class="code-block" style="margin-top:0.5rem;">3 4
@@ -323,7 +330,7 @@ lambda</pre>
 
                 <section id="settingsPanel" class="settings-panel panel hidden">
                     <div class="panel-header">
-                        <h2>Настройки приложения</h2>
+                        <h2 data-i18n="settings_app_title">Настройки приложения</h2>
                     </div>
                     <div class="panel-body result-body">
                         <div class="result-cards-area" style="gap: 1.25rem;">
@@ -331,11 +338,29 @@ lambda</pre>
                             <div class="result-card"
                                 style="flex-direction: row; align-items: center; justify-content: space-between;">
                                 <div>
-                                    <div class="result-card-label"
+                                    <div class="result-card-label" data-i18n="lang_title"
+                                        style="font-size: 1.1rem; color: var(--text-main); font-weight: 600; text-transform: none;">
+                                        Язык интерфейса</div>
+                                    <p data-i18n="lang_desc"
+                                        style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
+                                        Выберите язык приложения</p>
+                                </div>
+                                <div class="lang-toggle-wrapper">
+                                    <div class="lang-toggle-bg"></div>
+                                    <button class="lang-toggle-btn active" data-lang="ru">RU</button>
+                                    <button class="lang-toggle-btn" data-lang="en">EN</button>
+                                </div>
+                            </div>
+
+                            <div class="result-card"
+                                style="flex-direction: row; align-items: center; justify-content: space-between;">
+                                <div>
+                                    <div class="result-card-label" data-i18n="dark_theme_title"
                                         style="font-size: 1.1rem; color: var(--text-main); font-weight: 600; text-transform: none;">
                                         Темная
                                         тема</div>
-                                    <p style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
+                                    <p data-i18n="toggle_theme_desc"
+                                        style="font-size:1.05rem; color:var(--text-muted); margin-top:0.35rem;">
                                         Переключить
                                         цветовую схему интерфейса</p>
                                 </div>
@@ -356,7 +381,8 @@ lambda</pre>
     <div id="infoModal" class="modal-overlay hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Формат файла импорта</h3>
+                <h3 data-i18n="modal_import_title" style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Формат
+                    файла импорта</h3>
                 <button id="closeModalBtn" class="icon-btn" style="width: 28px; height: 28px;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -366,7 +392,8 @@ lambda</pre>
                 </button>
             </div>
             <div class="modal-body">
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0; margin-bottom: 0.75rem;">Каждая
+                <p data-i18n="import_format_desc"
+                    style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0; margin-bottom: 0.75rem;">Каждая
                     строка — одна запись, значения разделяются пробелами:</p>
                 <div class="scroll-wrapper"
                     style="padding: 0.5rem; background: var(--sidebar-bg); border: 1px solid var(--panel-border); border-radius: 4px; margin-bottom: 1rem; max-width: 100%;">
@@ -386,14 +413,15 @@ lambda</pre>
                             <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
                             <polyline points="14 2 14 8 20 8" />
                         </svg>
-                        Открыть документацию
+                        <span data-i18n="open_docs_btn">Открыть документацию</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="/static/script.js?v=25"></script>
+    <script src="/static/lang.js?v=26"></script>
+    <script src="/static/script.js?v=26"></script>
 </body>
 
 </html>

@@ -40,7 +40,7 @@
     --salt-error: #EF4444;
 
     --best-card-border: #10B981;
-    --best-card-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+    --best-card-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
     --doc-special-text: var(--text-main);
     --config-input-bg: #F3F4F6;
 
@@ -77,7 +77,7 @@
     /* Use blue instead of green for selected SZI in dark mode */
 
     --best-card-border: #7AA2D4;
-    --best-card-shadow: 0 0 15px rgba(122, 162, 212, 0.35);
+    --best-card-shadow: 0 0 25px rgba(122, 162, 212, 0.55);
     --doc-special-text: #FFFFFF;
     --config-input-bg: #141414;
 }
@@ -1115,4 +1115,57 @@ input:checked+.slider:before {
 
 .modal-body {
     padding: 1.25rem;
+}
+
+/* Language Toggle Custom Switch */
+.lang-toggle-wrapper {
+    position: relative;
+    display: flex;
+    background: var(--input-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 2px;
+    width: 100px;
+    height: 34px;
+    overflow: hidden;
+}
+
+.lang-toggle-bg {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 2px);
+    height: calc(100% - 4px);
+    background: var(--salt-blue-main);
+    border-radius: 4px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+    z-index: 1;
+}
+
+[data-theme="light"] .lang-toggle-bg {
+    background: #111827;
+    /* Darker in light mode for contrast */
+}
+
+.lang-toggle-btn {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-toggle-btn.active {
+    color: var(--app-bg);
+}
+
+.lang-toggle-wrapper[data-lang="en"] .lang-toggle-bg {
+    transform: translateX(100%);
 }

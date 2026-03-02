@@ -1,0 +1,200 @@
+const translations = {
+  ru: {
+    // Sidebar & Header
+    app_title_bold: "Выбор",
+    app_title_normal: " СЗИ",
+    collapse_panel: "Свернуть панель",
+    opt_tab: "Оптимизация",
+    doc_tab: "Документация",
+    settings_tab: "Настройки",
+    open_menu: "Открыть меню",
+    breadcrumb_prefix: "Система выбора СЗИ / ",
+
+    // Input Panel
+    data_input_title: "Ввод данных",
+    demo_data_title: "Загрузить тестовые данные",
+    demo_data_btn: "Демо-данные",
+    file_format_title: "Формат файла",
+    file_format_btn: "Инфо о формате",
+    load_file_btn: "Загрузить из файла (.txt)",
+    manual_input_btn: "Ручной ввод",
+
+    // Config Panel
+    config_params_title: "Конфигурация параметров",
+    base_values_title: "Базовые значения",
+    label_m: "ГИА (m)",
+    label_n: "СЗИ (n)",
+    label_lam: "λ (Приоритет)",
+    create_tables_btn: "Создать таблицы",
+
+    // Matrices Panel
+    matrices_data_title: "Матрицы и векторы данных",
+    matrix_a_title: "Матрица A: Стоимость СЗИ для каждой ГИА",
+    vector_b_title: "Вектор b (Бюджеты ГИА)",
+    vector_c_title: "Вектор c (Время взлома)",
+    vector_d_title: "Вектор d (Время реакции)",
+    solve_btn: "Запустить расчет решения",
+    solving_btn: "Вычисление...",
+
+    // Results Panel
+    results_title: "Результаты расчетов",
+    err_dimensions: "Размеры должны быть больше 0!",
+    err_no_data: "Пожалуйста, сначала сгенерируйте матрицу или загрузите данные из файла.",
+    err_unknown: "Произошла неизвестная ошибка.",
+    err_server: "Ошибка запроса к серверу.",
+    err_invalid_file: "Неверный формат файла",
+    err_read_file: "Ошибка при чтении файла: ",
+    err_demo_data: "Ошибка при установке демо-данных: ",
+    vector_x: "Вектор x",
+    best_solution: "Лучший",
+    val_fx: "Значение F(x",
+    chosen_szi: "Выбранные СЗИ",
+    none: "Нет",
+
+    // Docs Panel
+    docs_guide_title: "Документация и руководство",
+    model_desc_title: "Описание модели",
+    model_desc_text: "Система предназначена для оптимального выбора средств защиты информации (СЗИ) при заданных бюджетных ограничениях для различных групп активов (ГИА). Модель минимизирует риски, балансируя между суммарным временем взлома и временем реакции самого слабого звена через коэффициент λ.",
+    input_params_title: "Параметры ввода",
+    param_m_desc: "Количество групп активов (строки матрицы A)",
+    param_n_desc: "Количество доступных СЗИ (столбцы)",
+    param_lam_desc: "Приоритет: 1.0 = фокус на времени взлома, 0.0 = фокус на реакции",
+    param_a_desc: "Стоимость каждого СЗИ для каждой ГИА (m × n)",
+    param_b_desc: "Бюджетный лимит для каждой ГИА",
+    param_c_desc: "Время взлома для каждого СЗИ",
+    param_d_desc: "Время реакции для каждого СЗИ",
+    import_format_title: "Формат файла импорта (.txt)",
+    import_format_desc: "Каждая строка — одна запись, значения разделяются пробелами:",
+    example_file_title: "Пример файла (m=3, n=4)",
+
+    // Settings Panel
+    settings_app_title: "Настройки приложения",
+    dark_theme_title: "Темная тема",
+    toggle_theme_desc: "Переключить цветовую схему интерфейса",
+    lang_title: "Язык интерфейса",
+    lang_desc: "Выберите язык приложения",
+
+    // Modal
+    modal_import_title: "Формат файла импорта",
+    open_docs_btn: "Открыть документацию"
+  },
+  en: {
+    // Sidebar & Header
+    app_title_bold: "IST ",
+    app_title_normal: "Selection",
+    collapse_panel: "Collapse panel",
+    opt_tab: "Optimization",
+    doc_tab: "Documentation",
+    settings_tab: "Settings",
+    open_menu: "Open menu",
+    breadcrumb_prefix: "IST Selection System / ",
+
+    // Input Panel
+    data_input_title: "Data input",
+    demo_data_title: "Load test data",
+    demo_data_btn: "Demo data",
+    file_format_title: "File format",
+    file_format_btn: "Format info",
+    load_file_btn: "Load from file (.txt)",
+    manual_input_btn: "Manual input",
+
+    // Config Panel
+    config_params_title: "Parameters configuration",
+    base_values_title: "Base values",
+    label_m: "Assets (m)",
+    label_n: "Prot. tools (n)",
+    label_lam: "λ (Priority)",
+    create_tables_btn: "Create tables",
+
+    // Matrices Panel
+    matrices_data_title: "Data matrices and vectors",
+    matrix_a_title: "Matrix A: Protection tool cost for each Asset Group",
+    vector_b_title: "Vector b (Asset Budgets)",
+    vector_c_title: "Vector c (Hack time)",
+    vector_d_title: "Vector d (Reaction time)",
+    solve_btn: "Run solution calculation",
+    solving_btn: "Calculating...",
+
+    // Results Panel
+    results_title: "Calculation results",
+    err_dimensions: "Dimensions must be greater than 0!",
+    err_no_data: "Please generate a matrix or load data from a file first.",
+    err_unknown: "An unknown error occurred.",
+    err_server: "Server request error.",
+    err_invalid_file: "Invalid file format",
+    err_read_file: "Error reading file: ",
+    err_demo_data: "Error setting demo data: ",
+    vector_x: "Vector x",
+    best_solution: "Best",
+    val_fx: "Value of F(x",
+    chosen_szi: "Chosen protection tools",
+    none: "None",
+
+    // Docs Panel
+    docs_guide_title: "Documentation and guide",
+    model_desc_title: "Model description",
+    model_desc_text: "The system is designed for the optimal selection of information security tools (IST) subject to budget constraints for various asset groups (AG). The model minimizes risks, balancing total hacking time and reaction time of the weakest link via the λ coefficient.",
+    input_params_title: "Input parameters",
+    param_m_desc: "Number of asset groups (rows of matrix A)",
+    param_n_desc: "Number of available protection tools (columns)",
+    param_lam_desc: "Priority: 1.0 = focus on hack time, 0.0 = focus on reaction",
+    param_a_desc: "Cost of each protection tool for each asset group (m × n)",
+    param_b_desc: "Budget limit for each asset group",
+    param_c_desc: "Hack time for each protection tool",
+    param_d_desc: "Reaction time for each protection tool",
+    import_format_title: "Import file format (.txt)",
+    import_format_desc: "Each line is one record, values are space-separated:",
+    example_file_title: "File example (m=3, n=4)",
+
+    // Settings Panel
+    settings_app_title: "Application settings",
+    dark_theme_title: "Dark theme",
+    toggle_theme_desc: "Toggle interface color scheme",
+    lang_title: "Interface language",
+    lang_desc: "Select application language",
+
+    // Modal
+    modal_import_title: "Import file format",
+    open_docs_btn: "Open documentation"
+  }
+};
+
+let currentLang = localStorage.getItem('appLang') || 'ru';
+
+function setLanguage(lang) {
+  if (translations[lang]) {
+    currentLang = lang;
+    localStorage.setItem('appLang', lang);
+    updatePageLanguage();
+  }
+}
+
+function t(key) {
+  return translations[currentLang][key] || key;
+}
+
+function updatePageLanguage() {
+  document.documentElement.lang = currentLang;
+
+  // Update elements with data-i18n
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.innerHTML = t(key);
+  });
+
+  // Update titles of elements with data-i18n-title
+  const titleElements = document.querySelectorAll('[data-i18n-title]');
+  titleElements.forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    el.title = t(key);
+  });
+
+  // Fire custom event so script.js can update things like breadcrumbs
+  window.dispatchEvent(new CustomEvent('languageChanged', { detail: currentLang }));
+}
+
+// Initial update
+document.addEventListener('DOMContentLoaded', () => {
+  updatePageLanguage();
+});
