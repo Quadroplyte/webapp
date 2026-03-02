@@ -53,22 +53,22 @@
 /* Dark Theme Overrides — Neutral gray tones, blue accent */
 [data-theme="dark"] {
     --app-bg: #141414;
-    --panel-bg: #1E1E1E;
+    --panel-bg: #181818;
     --panel-border: #2D2D2D;
-    --panel-header-bg: #1E1E1E;
+    --panel-header-bg: #181818;
     --panel-header-border: #2D2D2D;
     --text-main: #E8E8E8;
     --text-muted: #909090;
     --input-bg: #252525;
     --input-border: #3A3A3A;
-    --sidebar-bg: #181818;
+    --sidebar-bg: #1E1E1E;
     --sidebar-border: #2D2D2D;
     --sidebar-text: #909090;
-    --sidebar-active-bg: #252525;
-    --sidebar-item-hover: #252525;
-    --topbar-bg: #1E1E1E;
+    --sidebar-active-bg: #2D2D2D;
+    --sidebar-item-hover: #2D2D2D;
+    --topbar-bg: #181818;
     --topbar-border: #2D2D2D;
-    --metric-bg: #1E1E1E;
+    --metric-bg: #181818;
 
     /* Blue accent in dark mode — muted pastel blue */
     --salt-blue-main: #7AA2D4;
@@ -84,7 +84,7 @@
 
 /* Dark mode specific component overrides */
 [data-theme="dark"] .result-card {
-    background: #252525;
+    background: #1E1E1E;
     border-color: #2D2D2D;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
@@ -138,17 +138,17 @@
 }
 
 [data-theme="dark"] .nav-item.active {
-    background: #252525;
+    background: #2D2D2D;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35), 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="dark"] .action-btn {
-    background: #252525;
+    background: #1E1E1E;
     border-color: #3A3A3A;
 }
 
 [data-theme="dark"] .action-btn:hover {
-    background: #2E2E2E;
+    background: #262626;
 }
 
 [data-theme="dark"] code,
@@ -574,8 +574,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"]:focus,
 input[type="text"]:focus {
-    border-color: var(--text-main);
-    box-shadow: 0 0 0 1px var(--text-main);
+    border-color: var(--salt-success);
+    box-shadow: 0 0 0 1px var(--salt-success);
 }
 
 /* Params Table */
@@ -811,7 +811,7 @@ input[type="text"]:focus {
     background-color: var(--sidebar-item-hover) !important;
     position: relative !important;
     z-index: 1 !important;
-    border-color: var(--text-main) !important;
+    border-color: var(--salt-success) !important;
 }
 
 .vectors-column {
@@ -913,7 +913,7 @@ input[type="text"]:focus {
 .result-body {
     padding: 0 !important;
     /* Override panel-body padding */
-    background: var(--sidebar-bg);
+    background: var(--panel-bg);
     flex: 1;
     /* Fill remaining space to the bottom */
     display: flex;

@@ -219,7 +219,9 @@ def solve_problem(
     # Шаги 2–3: Генерация кандидатов (если λ ≠ 1)
     if lam != 1.0:
         j0 = algorithm_step_2(x0)
-        V = algorithm_step_3(data, j0, V)
+        V = algorithm_step_3(data, j0, [])
+        if not V:
+            V = [x0]
 
     # Шаг 4: Выбор лучшего
     best_x, best_F, recommended_szi, all_solutions = algorithm_step_4(data, V)
