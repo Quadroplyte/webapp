@@ -7,7 +7,7 @@
 - `solver.py`: Ядро проекта — реализация алгоритмов оптимизации.
 - `main_window.py`: Код для создания настольного окна (pywebview), которое запускает FastAPI внутри себя.
 - `static/`: Папка с фронтендом (index.html, style.css, script.js, lang.js).
-- `proj_info/`: Контекстная информация о проекте (данная папка).
+- `.proj_info/`: Контекстная информация о проекте (данная папка).
 - `requirements.txt`: Зависимости для разработки и десктопной версии.
 - `requirements-server.txt`: Зависимости для серверного деплоя (без тяжелых библиотек для графики).
 
@@ -22,3 +22,34 @@
 - **Семантические токены**: Все цвета привязаны к функциональным именам (`--color-bg-base`, `--color-accent-main`, `--color-text-muted`), а не к конкретным оттенкам.
 - **Поддержка тем**: Темы переключаются через атрибут `data-theme` на элементе `<html>`. Добавление новой темы требует только переопределения набора переменных в CSS.
 - **Адаптивность**: Стили оптимизированы для десктопного использования с высокой плотностью информации.
+
+### Глобальный фон
+Фон задан через `--app-gradient` как `radial-gradient(ellipse at bottom right, ...)` и применён к `body` с `background-attachment: fixed`. Поверх наложена точечная сетка (`--dot-grid-color`). Все панели и секции имеют `background: transparent`, чтобы градиент просвечивал.
+
+### Glassmorphism
+Основные UI-компоненты используют glassmorphism:
+- **Glass Pill Nav** (`.glass-pill-nav`): полупрозрачные rounded-pill контейнеры с `backdrop-filter: blur(16px)` для навигации, выбора языка и темы.
+- **Pill Slider** (`.pill-slider`): скользящий стеклянный индикатор, позиция и ширина управляются через JS-функцию `updatePillSlider()`.
+- **Glass Toggle** (`.glass-toggle`): тумблер с стеклянной дорожкой и круглым knob. При `checked` дорожка заливается зелёным.
+- **Glass Cards** (`.settings-glass-card`): карточки с `backdrop-filter: blur(20px)`, `border-radius: 16px`, полупрозрачным фоном. Hover-эффекты отключены — карточки статичные.
+
+## Структура фронтенда
+
+### index.html
+- **Шапка**: Заголовок приложения + три glass-pill группы (навигация, язык, тема).
+- **Оптимизация**: Форма ввода, конфигурация параметров, матрицы, кнопка расчёта, отображение результатов.
+- **Справка**: Glassmorphic карточки с описанием модели, параметрами ввода, форматом импорта и примером файла. Центрирование через `.settings-center-wrap` + `.docs-cards-list` (max-width: 960px).
+- **Настройки**: Две glass-карточки — выбор языка (glass pill) и тумблер темы (glass toggle). Центрирование через `.settings-center-wrap` + `.settings-cards-list` (max-width: 480px).
+
+### script.js
+- `updatePillSlider(container)`: Универсальная функция для позиционирования pill slider по активному элементу.
+- Все sliders пересчитываются при: клике на элемент, смене языка (`languageChanged` event), смене темы, загрузке страницы (`requestAnimationFrame`).
+- Тема управляется через pill selector в шапке и glass toggle в настройках — оба синхронизированы.
+
+### style.css (модульная структура)
+Главный `style.css` импортирует 5 модулей через `@import`:
+- **`css/variables.css`** — CSS-переменные, `@font-face`, семантические токены, `:root` и `[data-theme="dark"]` overrides.
+- **`css/layout.css`** — Reset, `body`, app wrapper, header, workspace grid, panels, `.hidden`.
+- **`css/glass.css`** — Glass pill nav, pill slider, pill items, glass toggle (тумблер с зелёным `checked`).
+- **`css/components.css`** — Config grid, inputs, params table, matrix cells, buttons, scrollbar, code blocks, modals, legacy switch.
+- **`css/pages.css`** — Settings glass cards, docs cards/params/guide, result cards, candidates, vector display.

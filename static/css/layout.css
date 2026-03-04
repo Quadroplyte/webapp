@@ -1,0 +1,212 @@
+/* ========================================
+   LAYOUT
+   Base reset, body, app wrapper, header, workspace, grid, panels
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 75%;
+  /* Ultra compact scale */
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:
+    radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 30px 30px,
+    var(--app-gradient);
+  background-attachment: fixed, fixed;
+  color: var(--text-main);
+  font-size: 13px;
+  /* Slightly smaller base font */
+  line-height: 1.5;
+  transition: color 0.3s;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Header */
+/* App Header - Minimalist Style with Left Logo / Right Controls */
+.app-header {
+  background: transparent;
+  border-bottom: none;
+  padding: 2.5rem 2rem;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main-title {
+  font-family: 'Roboto Flex', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-variation-settings:
+    "slnt" -10,
+    "wdth" 151,
+    "wght" 822,
+    "GRAD" -26,
+    "XTRA" 124,
+    "XOPN" 603,
+    "YOPN" 79,
+    "YTAS" 854,
+    "YTDE" -270,
+    "YTFI" 738,
+    "YTLC" 570,
+    "YTUC" 760;
+}
+
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.optimization-view {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  flex: 1;
+  width: 100%;
+}
+
+.left-column-bg {
+  display: block;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  background: transparent;
+  border-right: 1px solid var(--panel-border);
+  min-width: 440px;
+  max-width: 440px;
+}
+
+.text-link-btn {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--salt-blue-main) !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  padding: 0 8px;
+  transition: opacity 0.2s;
+}
+
+.text-link-btn:hover {
+  opacity: 0.7;
+}
+
+.config-grid {
+  width: 440px;
+  max-width: 440px;
+}
+
+.data-input-panel {
+  grid-column: 1;
+  grid-row: 1;
+  border-right: 1px solid var(--panel-border);
+  width: 440px;
+}
+
+.config-panel {
+  grid-column: 1;
+  grid-row: 2;
+  border-right: 1px solid var(--panel-border);
+  width: 440px;
+}
+
+.data-panel {
+  grid-column: 1;
+  grid-row: 3;
+  border-right: 1px solid var(--panel-border);
+  border-bottom: none !important;
+  width: 440px;
+}
+
+.result-panel {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  border-bottom: none;
+  align-self: stretch;
+  min-height: 100%;
+}
+
+.docs-panel,
+.settings-panel {
+  grid-column: 1 / -1;
+  background: transparent;
+}
+
+.settings-panel {
+  border-bottom: none;
+}
+
+/* Panels (Now sections defined by hairline borders) */
+.panel {
+  background: transparent;
+  border-bottom: 1px solid var(--panel-border);
+  transition: border-color 0.3s;
+}
+
+.panel-header {
+  padding: 0.75rem 1.25rem 0.6rem 1.25rem;
+}
+
+.panel-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+}
+
+.panel-body {
+  padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+.hidden {
+  display: none !important;
+}

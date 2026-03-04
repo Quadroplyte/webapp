@@ -1,0 +1,519 @@
+/* ========================================
+   COMPONENTS
+   Config grid, inputs, params table, matrices, buttons,
+   scrollbar, code blocks, modals, old switch/toggle
+   ======================================== */
+
+/* Config Grid */
+.config-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.config-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.config-col h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  justify-content: space-between;
+}
+
+.input-row label {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+input[type="number"],
+input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid var(--input-border);
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  border-radius: 6px;
+  width: 100%;
+  max-width: 250px;
+  outline: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Hide number input spin buttons */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  border-color: var(--salt-success);
+  box-shadow: 0 0 0 1px var(--salt-success);
+}
+
+/* Params Table */
+.params-table {
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.params-table .input-row {
+  display: flex;
+  align-items: stretch;
+  margin: 0;
+  border-bottom: 1px solid var(--panel-border);
+  justify-content: flex-end;
+}
+
+.params-table .input-row:last-child {
+  border-bottom: none;
+}
+
+.params-table .row-label {
+  flex: 1;
+  border-right: 1px solid var(--panel-border);
+  min-height: 48px;
+  /* High enough for wrapping in docs */
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  background: var(--panel-bg);
+  width: 50%;
+}
+
+#configPanel .params-table .row-label {
+  min-height: 38px;
+  /* More compact for configuration view */
+  padding: 4px 12px;
+  background: var(--input-bg);
+}
+
+#configPanel .params-table .row-value {
+  background: var(--sidebar-bg);
+}
+
+.params-table .row-label label {
+  font-weight: 600;
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+.params-table .row-value {
+  flex: 1;
+  padding: 0;
+  display: flex;
+  background: var(--config-input-bg);
+  /* Use same background as input */
+  width: 50%;
+}
+
+.params-table .row-value input {
+  width: 100%;
+  max-width: none;
+  border: none;
+  border-radius: 0;
+  padding: 0 12px;
+  height: auto;
+  min-height: 48px;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-align: right;
+  border-left: 1px solid var(--panel-border);
+}
+
+#configPanel .params-table .row-value input {
+  min-height: 38px;
+  /* Match label height in config panel */
+}
+
+.params-table .row-value input:focus {
+  box-shadow: none;
+  background-color: var(--sidebar-item-hover);
+}
+
+/* Modern Buttons */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--input-border);
+  background: var(--panel-bg);
+  color: var(--text-main);
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 4px;
+  /* Slightly rounded, small radius */
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.action-btn:hover {
+  background: var(--sidebar-item-hover);
+}
+
+.action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Primary Button (Black) */
+.action-btn.primary {
+  background: var(--salt-blue-main);
+  color: var(--app-bg);
+  /* Inverse */
+  border-color: var(--salt-blue-main);
+}
+
+.action-btn.primary:hover {
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+}
+
+/* Success Button (Green accent) */
+.action-btn.success {
+  background: var(--salt-success);
+  color: #ffffff;
+  border-color: var(--salt-success);
+}
+
+.action-btn.success:hover {
+  filter: brightness(0.9);
+}
+
+/* In dark mode, success button matches primary button style — muted blue like generate button */
+[data-theme="dark"] .action-btn.success {
+  background: var(--salt-blue-main);
+  color: var(--app-bg);
+  border-color: var(--salt-blue-main);
+}
+
+[data-theme="dark"] .action-btn.success:hover {
+  filter: brightness(1.1);
+}
+
+.action-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.file-btn {
+  width: 100%;
+}
+
+.file-btn input {
+  display: none;
+}
+
+#generateTablesBtn {
+  width: 100%;
+}
+
+/* Data Tables & Matrices (Hairline grid lines) */
+.scroll-wrapper {
+  overflow: auto;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  margin-top: 0.75rem;
+  max-height: 202px;
+  /* 6 cells * 32px + 10px buffer for scrollbar/border allowances */
+  width: 100%;
+  max-width: 100%;
+  background: var(--sidebar-bg);
+}
+
+.matrix-grid {
+  display: inline-grid;
+  background: transparent;
+  width: max-content;
+  gap: 0;
+  padding: 1px 0 0 1px;
+  /* Add padding only on top/left so that the negative margin borders are visible without adding extra space on bottom/right */
+}
+
+.matrix-cell {
+  width: 60px !important;
+  min-width: 60px !important;
+  height: 32px !important;
+  text-align: right !important;
+  /* Right align numbers is standard for tables */
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  padding: 0 10px !important;
+  /* Add some padding so numbers don't touch edges */
+
+  /* Full border to create grid cells */
+  border: 1px solid var(--panel-border) !important;
+  margin: -1px 0 0 -1px !important;
+  /* Overlap borders */
+
+  background: var(--input-bg) !important;
+  color: var(--text-main) !important;
+
+  /* Make the input look like a flat container, overriding global defaults completely */
+  border-radius: 0 !important;
+  outline: none !important;
+  transition: background-color 0.2s, border-color 0.2s !important;
+
+  /* Hide number input spinners on webkit completely */
+  -webkit-appearance: none !important;
+  -moz-appearance: textfield !important;
+  appearance: textfield !important;
+  /* Critical for Firefox */
+}
+
+/* Force hiding spinners in WebKit/Blink (Chrome/Safari/Edge) */
+.matrix-cell::-webkit-outer-spin-button,
+.matrix-cell::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+  display: none !important;
+  /* Critical to ensure they actually disappear */
+}
+
+.matrix-cell:focus {
+  box-shadow: none !important;
+  background-color: var(--sidebar-item-hover) !important;
+  position: relative !important;
+  z-index: 1 !important;
+  border-color: var(--salt-success) !important;
+}
+
+.vectors-column {
+  display: flex;
+  flex-direction: column;
+  /* Reverted to stack vertically as before */
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 100%;
+}
+
+.data-group {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.data-group h3 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.calculate-action {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+#solveBtn {
+  width: 100%;
+}
+
+/* Old Switch (legacy) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--input-border);
+  transition: .3s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: var(--color-text-on-accent);
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+input:checked+.slider {
+  background-color: var(--color-success);
+  /* Semantic switch color */
+}
+
+input:checked+.slider:before {
+  transform: translateX(20px);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+}
+
+
+.code-block {
+  background: var(--sidebar-item-hover);
+  padding: 1.5rem;
+  border-radius: 6px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 13px;
+  margin-top: 1rem;
+  white-space: pre-wrap;
+  color: var(--text-main);
+  border: 1px solid var(--panel-border);
+}
+
+.error-notification {
+  background: var(--color-bg-alt);
+  border-left: 4px solid var(--color-error);
+  color: var(--color-error);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--shadow-md);
+}
+
+.modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--panel-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 1.25rem;
+}
+
+/* Language Toggle Custom Switch (legacy) */
+.lang-toggle-wrapper {
+  position: relative;
+  display: flex;
+  background: var(--input-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 2px;
+  width: 120px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.lang-toggle-bg {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  height: calc(100% - 4px);
+  background: var(--salt-blue-main);
+  border-radius: 4px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
+  z-index: 1;
+}
+
+[data-theme="light"] .lang-toggle-bg {
+  background: var(--color-accent-main);
+  /* Darker in light mode for contrast */
+}
+
+.lang-toggle-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lang-toggle-btn.active {
+  color: var(--app-bg);
+}
+
+.lang-toggle-wrapper[data-lang="en"] .lang-toggle-bg {
+  transform: translateX(100%);
+}
