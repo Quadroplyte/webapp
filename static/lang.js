@@ -1,11 +1,10 @@
 const translations = {
   ru: {
     // Sidebar & Header
-    app_title_bold: "Выбор",
-    app_title_normal: " СЗИ",
+    app_title: "Внедрение оптимальной<br>совокупности СЗИ",
     collapse_panel: "Свернуть панель",
     opt_tab: "Оптимизация",
-    doc_tab: "Документация",
+    doc_tab: "Справка",
     settings_tab: "Настройки",
     open_menu: "Открыть меню",
     breadcrumb_prefix: "Система выбора СЗИ / ",
@@ -58,7 +57,7 @@ const translations = {
     candidates_title: "Кандидаты",
 
     // Docs Panel
-    docs_guide_title: "Документация и руководство",
+    docs_guide_title: "Справка и руководство",
     model_desc_title: "Описание модели",
     model_desc_text: "Система предназначена для оптимального выбора средств защиты информации (СЗИ) при заданных бюджетных ограничениях для различных групп активов (ГИА). Модель минимизирует риски, балансируя между суммарным временем взлома и временем реакции самого слабого звена через коэффициент λ.",
     input_params_title: "Параметры ввода",
@@ -72,8 +71,6 @@ const translations = {
     import_format_title: "Формат файла импорта (.txt)",
     import_format_desc: "Каждая строка — одна запись, значения разделяются пробелами:",
     example_file_title: "Пример файла (m=3, n=4)",
-    example_guide_intro: "<b>Размерность:</b> В первой строке задаётся количество ГИА (m=3) и СЗИ (n=4).",
-    example_guide_matrix: "<b>Матрица A (3×4):</b> Каждое число — стоимость применения СЗИ для ГИА. Например, в первой строке число 20 означает, что второе СЗИ стоит 20 единиц для защиты первой ГИА.",
     example_guide_vectors: "<b>Векторы параметров:</b> Далее идут три вектора: b (бюджеты для 3 ГИА), c (время взлома для 4 СЗИ) и d (время реакции для 4 СЗИ).",
     example_guide_lambda: "<b>Коэффициент λ:</b> Последнее число (от 0.0 до 1.0). Чем выше λ, тем большее значение система придает фактору времени взлома. При λ=0.5 соблюдается баланс.",
 
@@ -86,18 +83,17 @@ const translations = {
 
     // Modal
     modal_import_title: "Формат файла импорта",
-    open_docs_btn: "Открыть документацию"
+    open_docs_btn: "Открыть справку"
   },
   en: {
     // Sidebar & Header
-    app_title_bold: "IST ",
-    app_title_normal: "Selection",
+    app_title: "Implementation of<br>Optimal ISS",
     collapse_panel: "Collapse panel",
     opt_tab: "Optimization",
-    doc_tab: "Documentation",
+    doc_tab: "Help",
     settings_tab: "Settings",
     open_menu: "Open menu",
-    breadcrumb_prefix: "IST Selection System / ",
+    breadcrumb_prefix: "ISS Selection System / ",
     lang_ru_short: "RU",
     lang_en_short: "EN",
     theme_dark: "dark",
@@ -139,31 +135,28 @@ const translations = {
     err_invalid_file: "Invalid file format",
     err_read_file: "Error reading file: ",
     err_demo_data: "Error setting demo data: ",
-    vector_x: "Vector x",
-    best_solution: "Best",
     val_fx: "Value of F(x",
-    chosen_szi: "Chosen protection tools",
+    chosen_szi: "Chosen ISS",
     none: "None",
     candidates_title: "Candidates",
 
     // Docs Panel
-    docs_guide_title: "Documentation and guide",
-    model_desc_title: "Model description",
-    model_desc_text: "The system is designed for the optimal selection of information security tools (IST) subject to budget constraints for various asset groups (AG). The model minimizes risks, balancing total hacking time and reaction time of the weakest link via the λ coefficient.",
+    docs_guide_title: "Help and Guide",
+    model_desc_text: "The system is designed for the optimal selection of information security solutions (ISS) subject to budget constraints for various asset groups (AG). The model minimizes risks, balancing total hacking time and reaction time of the weakest link via the λ coefficient.",
     input_params_title: "Input parameters",
     param_m_desc: "Number of asset groups (rows of matrix A)",
-    param_n_desc: "Number of available protection tools (columns)",
+    param_n_desc: "Number of available ISS (columns)",
     param_lam_desc: "Priority: 1.0 = focus on hack time, 0.0 = focus on reaction",
-    param_a_desc: "Cost of each protection tool for each asset group (m × n)",
+    param_a_desc: "Cost of each ISS for each asset group (m × n)",
     param_b_desc: "Budget limit for each asset group",
-    param_c_desc: "Hack time for each protection tool",
-    param_d_desc: "Reaction time for each protection tool",
+    param_c_desc: "Hack time for each ISS",
+    param_d_desc: "Reaction time for each ISS",
     import_format_title: "Import file format (.txt)",
     import_format_desc: "Each line is one record, values are space-separated:",
     example_file_title: "File example (m=3, n=4)",
-    example_guide_intro: "<b>Dimensions:</b> The first line specifies the number of Asset Groups (m=3) and Protection Tools (n=4).",
-    example_guide_matrix: "<b>Matrix A (3×4):</b> Each value is the cost of utilizing an IST for an AG. For example, '20' in the first row means the second tool costs 20 units for the first AG.",
-    example_guide_vectors: "<b>Parameter Vectors:</b> Next are three vectors: b (budgets for 3 AGs), c (hacking time for 4 ISTs), and d (reaction time for 4 ISTs).",
+    example_guide_intro: "<b>Dimensions:</b> The first line specifies the number of Asset Groups (m=3) and ISS (n=4).",
+    example_guide_matrix: "<b>Matrix A (3×4):</b> Each value is the cost of utilizing an ISS for an AG. For example, '20' in the first row means the second tool costs 20 units for the first AG.",
+    example_guide_vectors: "<b>Parameter Vectors:</b> Next are three vectors: b (budgets for 3 AGs), c (hacking time for 4 ISS), and d (reaction time for 4 ISS).",
     example_guide_lambda: "<b>Coefficient λ:</b> The final value (0.0 to 1.0). Higher λ means the system assigns greater importance to the hacking time risk factor. λ=0.5 means a balanced approach.",
 
     // Settings Panel

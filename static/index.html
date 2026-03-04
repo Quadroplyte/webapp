@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Selection</title>
-    <link rel="stylesheet" href="/static/style.css?v=30">
+    <link rel="stylesheet" href="/static/style.css?v=43">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -14,40 +14,44 @@
         <main class="content-area">
             <header class="app-header">
                 <div class="header-container">
-                    <div class="header-controls-row">
-                        <div class="lang-switcher">
-                            <span class="lang-item active" data-lang="ru" data-i18n="lang_ru_short">РУ</span>
-                            <span class="lang-item" data-lang="en" data-i18n="lang_en_short">АНГ</span>
-                        </div>
-
+                    <div class="header-logo">
+                        <h1 class="main-title" data-i18n="app_title">Внедрение оптимальной<br>совокупности СЗИ</h1>
+                    </div>
+                    <div class="header-right">
                         <nav class="top-nav">
                             <span class="nav-item active" data-tab="Оптимизация">
                                 <span data-i18n="opt_tab">Оптимизация</span>
                             </span>
-                            <span class="nav-item" data-tab="Документация">
-                                <span data-i18n="doc_tab">Документация</span>
+                            <span class="nav-item" data-tab="Справка">
+                                <span data-i18n="doc_tab">Справка</span>
                             </span>
                             <span class="nav-item" data-tab="Настройки">
                                 <span data-i18n="settings_tab">Настройки</span>
                             </span>
                         </nav>
 
-                        <div class="theme-switcher">
-                            <button id="themeDropdownBtn" class="theme-trigger">
-                                <span id="currentThemeName" data-i18n="theme_dark">Темная</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="m6 9 6 6 6-6" />
-                                </svg>
-                            </button>
-                            <div id="themeDropdown" class="theme-menu hidden">
-                                <div class="theme-option" data-theme="dark" data-i18n="theme_dark">Темная</div>
-                                <div class="theme-option" data-theme="light" data-i18n="theme_light">Светлая</div>
+                        <div class="header-controls">
+                            <div class="lang-switcher">
+                                <span class="lang-item active" data-lang="ru" data-i18n="lang_ru_short">РУ</span>
+                                <span class="lang-item" data-lang="en" data-i18n="lang_en_short">АНГ</span>
+                            </div>
+
+                            <div class="theme-switcher">
+                                <button id="themeDropdownBtn" class="theme-trigger">
+                                    <span id="currentThemeName" data-i18n="theme_dark">Темная</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="m6 9 6 6 6-6" />
+                                    </svg>
+                                </button>
+                                <div id="themeDropdown" class="theme-menu hidden">
+                                    <div class="theme-option" data-theme="light" data-i18n="theme_light">Светлая</div>
+                                    <div class="theme-option" data-theme="dark" data-i18n="theme_dark">Темная</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <h1 class="main-title">Внедрение оптимальной совокупности СЗИ</h1>
                 </div>
             </header>
 
@@ -427,8 +431,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=29"></script>
-    <script src="/static/script.js?v=32"></script>
+    <script src="/static/lang.js?v=33"></script>
+    <script src="/static/script.js?v=34"></script>
 </body>
 
 </html>

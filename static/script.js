@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
       docsPanel.classList.add('hidden');
       settingsPanel.classList.add('hidden');
       optimizationView.classList.remove('hidden');
-    } else if (tabName === 'Документация') {
+    } else if (tabName === 'Справка') {
       optimizationView.classList.add('hidden');
       settingsPanel.classList.add('hidden');
       docsPanel.classList.remove('hidden');
