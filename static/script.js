@@ -78,42 +78,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Переключение навигации ───────────────────────────────
-  const sideNav = document.querySelector('.side-nav');
-  const breadcrumb = document.getElementById('breadcrumbDynamic');
+  const topNav = document.querySelector('.top-nav');
 
   // ── Язык ────────────────────────────────────────────────
-  const langToggleWrapper = document.querySelector('.lang-toggle-wrapper');
+  const langItems = document.querySelectorAll('.lang-item');
   const langBtns = document.querySelectorAll('.lang-toggle-btn');
+  const langToggleWrapper = document.querySelector('.lang-toggle-wrapper');
 
   const updateLangUI = (lang) => {
-    if (langToggleWrapper) langToggleWrapper.setAttribute('data-lang', lang);
-    langBtns.forEach(btn => {
-      if (btn.getAttribute('data-lang') === lang) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+    // Header items
+    langItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-lang') === lang);
     });
+    // Settings panel items
+    langBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    if (langToggleWrapper) langToggleWrapper.setAttribute('data-lang', lang);
   };
 
-  // Set initial UI state
   updateLangUI(currentLang);
 
+  const handleLangChange = (selectedLang) => {
+    if (selectedLang !== currentLang) {
+      setLanguage(selectedLang);
+      updateLangUI(selectedLang);
+    }
+  };
+
+  langItems.forEach(item => {
+    item.addEventListener('click', () => handleLangChange(item.getAttribute('data-lang')));
+  });
+
   langBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const selectedLang = btn.getAttribute('data-lang');
-      if (selectedLang !== currentLang) {
-        setLanguage(selectedLang);
-        updateLangUI(selectedLang);
-      }
-    });
+    btn.addEventListener('click', () => handleLangChange(btn.getAttribute('data-lang')));
   });
 
   // Removed mobile menu logic
 
   // Removed resize check for mobile
 
-  sideNav.addEventListener('click', (e) => {
+  topNav.addEventListener('click', (e) => {
     const clickedItem = e.target.closest('.nav-item');
     if (!clickedItem) return;
 
@@ -125,16 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const tabName = clickedItem.getAttribute('data-tab');
 
-    // Update breadcrumb
-    if (breadcrumb && tabName) {
-      const tabKeys = {
-        'Оптимизация': 'opt_tab',
-        'Документация': 'doc_tab',
-        'Настройки': 'settings_tab'
-      };
-      const tKey = tabKeys[tabName] || tabName;
-      breadcrumb.innerHTML = '<span>' + t('breadcrumb_prefix') + '</span><b><span data-i18n="' + tKey + '">' + t(tKey) + '</span></b>';
-    }
+    // Breadcrumb logic removed
 
     // Show/hide the correct panels
     const docsPanel = document.getElementById('docsPanel');
@@ -157,26 +153,56 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Темная тема ─────────────────────────────────────────
+  const themeTrigger = document.getElementById('themeDropdownBtn');
+  const themeMenu = document.getElementById('themeDropdown');
+  const themeOptions = document.querySelectorAll('.theme-option');
   const themeToggle = document.getElementById('themeToggle');
+
   const currentTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
 
-  if (currentTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeToggle.checked = true;
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeToggle.checked = false;
-  }
-
-  themeToggle.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
+  const updateThemeUI = (theme) => {
+    const themeNameEl = document.getElementById('currentThemeName');
+    if (themeNameEl) {
+      themeNameEl.setAttribute('data-i18n', 'theme_' + theme);
     }
+    // Dropdown options
+    themeOptions.forEach(opt => {
+      opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
+    });
+    // Settings panel switch
+    if (themeToggle) {
+      themeToggle.checked = (theme === 'dark');
+    }
+  };
+
+  updateThemeUI(currentTheme);
+
+  const handleThemeChange = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateThemeUI(theme);
+    if (typeof updatePageLanguage === 'function') updatePageLanguage();
+  };
+
+  themeTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu.classList.toggle('hidden');
   });
+
+  document.addEventListener('click', () => {
+    themeMenu.classList.add('hidden');
+  });
+
+  themeOptions.forEach(opt => {
+    opt.addEventListener('click', () => handleThemeChange(opt.getAttribute('data-theme')));
+  });
+
+  if (themeToggle) {
+    themeToggle.addEventListener('change', (e) => {
+      handleThemeChange(e.target.checked ? 'dark' : 'light');
+    });
+  }
 
   // ── Построение сетки ввода ──────────────────────────────
   function buildMatrix(containerId, rows, cols, prefix, initVal = 0) {
@@ -486,18 +512,6 @@ document.addEventListener('DOMContentLoaded', () => {
       renderResultCards(lastSolutions);
     }
 
-    // Breadcrumb needs update if active
-    const activeTab = document.querySelector('.nav-item.active');
-    if (activeTab && breadcrumb) {
-      const tabName = activeTab.getAttribute('data-tab');
-      const tabKeys = {
-        'Оптимизация': 'opt_tab',
-        'Документация': 'doc_tab',
-        'Настройки': 'settings_tab'
-      };
-      const tKey = tabKeys[tabName] || tabName;
-      breadcrumb.innerHTML = '<span>' + t('breadcrumb_prefix') + '</span><b><span data-i18n="' + tKey + '">' + t(tKey) + '</span></b>';
-    }
   });
 
 });

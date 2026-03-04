@@ -9,6 +9,10 @@ const translations = {
     settings_tab: "Настройки",
     open_menu: "Открыть меню",
     breadcrumb_prefix: "Система выбора СЗИ / ",
+    lang_ru_short: "РУ",
+    lang_en_short: "АНГ",
+    theme_dark: "темная",
+    theme_light: "светлая",
 
     // Input Panel
     data_input_title: "Ввод данных",
@@ -94,6 +98,10 @@ const translations = {
     settings_tab: "Settings",
     open_menu: "Open menu",
     breadcrumb_prefix: "IST Selection System / ",
+    lang_ru_short: "RU",
+    lang_en_short: "EN",
+    theme_dark: "dark",
+    theme_light: "light",
 
     // Input Panel
     data_input_title: "Data input",
@@ -182,7 +190,8 @@ function setLanguage(lang) {
 }
 
 function t(key) {
-  return translations[currentLang][key] || key;
+  const langData = translations[currentLang] || translations['ru'];
+  return langData[key] || key;
 }
 
 function updatePageLanguage() {
