@@ -77,62 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Pill Slider Helper ────────────────────────────────────
+  function updatePillSlider(container) {
+    const slider = container.querySelector('.pill-slider');
+    const activeItem = container.querySelector('.pill-item.active');
+    if (!slider || !activeItem) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+    const offset = itemRect.left - containerRect.left - 4; // 4px padding
+
+    slider.style.width = itemRect.width + 'px';
+    slider.style.transform = `translateX(${offset}px)`;
+  }
+
   // ── Переключение навигации ───────────────────────────────
   const topNav = document.querySelector('.top-nav');
-
-  // ── Язык ────────────────────────────────────────────────
-  const langItems = document.querySelectorAll('.lang-item');
-  const langBtns = document.querySelectorAll('.lang-toggle-btn');
-  const langToggleWrapper = document.querySelector('.lang-toggle-wrapper');
-
-  const updateLangUI = (lang) => {
-    // Header items
-    langItems.forEach(item => {
-      item.classList.toggle('active', item.getAttribute('data-lang') === lang);
-    });
-    // Settings panel items
-    langBtns.forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-    });
-    if (langToggleWrapper) langToggleWrapper.setAttribute('data-lang', lang);
-  };
-
-  updateLangUI(currentLang);
-
-  const handleLangChange = (selectedLang) => {
-    if (selectedLang !== currentLang) {
-      setLanguage(selectedLang);
-      updateLangUI(selectedLang);
-    }
-  };
-
-  langItems.forEach(item => {
-    item.addEventListener('click', () => handleLangChange(item.getAttribute('data-lang')));
-  });
-
-  langBtns.forEach(btn => {
-    btn.addEventListener('click', () => handleLangChange(btn.getAttribute('data-lang')));
-  });
-
-  // Removed mobile menu logic
-
-  // Removed resize check for mobile
 
   topNav.addEventListener('click', (e) => {
     const clickedItem = e.target.closest('.nav-item');
     if (!clickedItem) return;
 
-    // Mobile logic removed
-
-    // Update active state
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     clickedItem.classList.add('active');
+    updatePillSlider(topNav);
 
     const tabName = clickedItem.getAttribute('data-tab');
 
-    // Breadcrumb logic removed
-
-    // Show/hide the correct panels
     const docsPanel = document.getElementById('docsPanel');
     const settingsPanel = document.getElementById('settingsPanel');
     const optimizationView = document.getElementById('optimizationView');
@@ -152,27 +123,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // ── Язык ────────────────────────────────────────────────
+  const langSwitcher = document.querySelector('.lang-switcher');
+  const settingsLangPill = document.querySelector('.settings-lang-pill');
+  const langItems = document.querySelectorAll('.lang-item');
+
+  const updateLangUI = (lang) => {
+    langItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-lang') === lang);
+    });
+    updatePillSlider(langSwitcher);
+    if (settingsLangPill) updatePillSlider(settingsLangPill);
+  };
+
+  updateLangUI(currentLang);
+
+  const handleLangChange = (selectedLang) => {
+    if (selectedLang !== currentLang) {
+      setLanguage(selectedLang);
+      updateLangUI(selectedLang);
+    }
+  };
+
+  langItems.forEach(item => {
+    item.addEventListener('click', () => handleLangChange(item.getAttribute('data-lang')));
+  });
+
   // ── Темная тема ─────────────────────────────────────────
-  const themeTrigger = document.getElementById('themeDropdownBtn');
-  const themeMenu = document.getElementById('themeDropdown');
-  const themeOptions = document.querySelectorAll('.theme-option');
-  const themeToggle = document.getElementById('themeToggle');
+  const themePill = document.querySelector('.theme-switcher-pill');
+  const themePillItems = document.querySelectorAll('.theme-pill-item');
+  const settingsThemeToggle = document.getElementById('settingsThemeToggle');
 
   const currentTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
 
   const updateThemeUI = (theme) => {
-    const themeNameEl = document.getElementById('currentThemeName');
-    if (themeNameEl) {
-      themeNameEl.setAttribute('data-i18n', 'theme_' + theme);
-    }
-    // Dropdown options
-    themeOptions.forEach(opt => {
-      opt.classList.toggle('active', opt.getAttribute('data-theme') === theme);
+    // Header pill
+    themePillItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-theme') === theme);
     });
-    // Settings panel switch
-    if (themeToggle) {
-      themeToggle.checked = (theme === 'dark');
+    if (themePill) updatePillSlider(themePill);
+
+    // Settings toggle
+    if (settingsThemeToggle) {
+      settingsThemeToggle.checked = (theme === 'dark');
     }
   };
 
@@ -183,26 +177,34 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
     updateThemeUI(theme);
     if (typeof updatePageLanguage === 'function') updatePageLanguage();
+    // Recalculate pill sliders after theme change
+    requestAnimationFrame(() => {
+      updatePillSlider(topNav);
+      updatePillSlider(langSwitcher);
+      if (themePill) updatePillSlider(themePill);
+      if (settingsLangPill) updatePillSlider(settingsLangPill);
+    });
   };
 
-  themeTrigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    themeMenu.classList.toggle('hidden');
+  // Header pill click
+  themePillItems.forEach(item => {
+    item.addEventListener('click', () => handleThemeChange(item.getAttribute('data-theme')));
   });
 
-  document.addEventListener('click', () => {
-    themeMenu.classList.add('hidden');
-  });
-
-  themeOptions.forEach(opt => {
-    opt.addEventListener('click', () => handleThemeChange(opt.getAttribute('data-theme')));
-  });
-
-  if (themeToggle) {
-    themeToggle.addEventListener('change', (e) => {
+  // Settings toggle change
+  if (settingsThemeToggle) {
+    settingsThemeToggle.addEventListener('change', (e) => {
       handleThemeChange(e.target.checked ? 'dark' : 'light');
     });
   }
+
+  // ── Initial slider positions ────────────────────────────
+  requestAnimationFrame(() => {
+    updatePillSlider(topNav);
+    updatePillSlider(langSwitcher);
+    if (themePill) updatePillSlider(themePill);
+    if (settingsLangPill) updatePillSlider(settingsLangPill);
+  });
 
   // ── Построение сетки ввода ──────────────────────────────
   function buildMatrix(containerId, rows, cols, prefix, initVal = 0) {
@@ -512,6 +514,13 @@ document.addEventListener('DOMContentLoaded', () => {
       renderResultCards(lastSolutions);
     }
 
+    // Recalculate pill sliders after text widths change
+    requestAnimationFrame(() => {
+      updatePillSlider(topNav);
+      updatePillSlider(langSwitcher);
+      if (themePill) updatePillSlider(themePill);
+      if (settingsLangPill) updatePillSlider(settingsLangPill);
+    });
   });
 
 });

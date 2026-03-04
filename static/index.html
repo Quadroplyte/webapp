@@ -18,37 +18,33 @@
                         <h1 class="main-title" data-i18n="app_title">Внедрение оптимальной<br>совокупности СЗИ</h1>
                     </div>
                     <div class="header-right">
-                        <nav class="top-nav">
-                            <span class="nav-item active" data-tab="Оптимизация">
+                        <nav class="glass-pill-nav top-nav">
+                            <div class="pill-slider nav-slider"></div>
+                            <span class="pill-item nav-item" data-tab="Оптимизация">
                                 <span data-i18n="opt_tab">Оптимизация</span>
                             </span>
-                            <span class="nav-item" data-tab="Справка">
+                            <span class="pill-item nav-item" data-tab="Справка">
                                 <span data-i18n="doc_tab">Справка</span>
                             </span>
-                            <span class="nav-item" data-tab="Настройки">
+                            <span class="pill-item nav-item active" data-tab="Настройки">
                                 <span data-i18n="settings_tab">Настройки</span>
                             </span>
                         </nav>
 
                         <div class="header-controls">
-                            <div class="lang-switcher">
-                                <span class="lang-item active" data-lang="ru" data-i18n="lang_ru_short">РУ</span>
-                                <span class="lang-item" data-lang="en" data-i18n="lang_en_short">АНГ</span>
+                            <div class="glass-pill-nav lang-switcher">
+                                <div class="pill-slider lang-slider"></div>
+                                <span class="pill-item lang-item active" data-lang="ru"
+                                    data-i18n="lang_ru_short">РУ</span>
+                                <span class="pill-item lang-item" data-lang="en" data-i18n="lang_en_short">АНГ</span>
                             </div>
 
-                            <div class="theme-switcher">
-                                <button id="themeDropdownBtn" class="theme-trigger">
-                                    <span id="currentThemeName" data-i18n="theme_dark">Темная</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="m6 9 6 6 6-6" />
-                                    </svg>
-                                </button>
-                                <div id="themeDropdown" class="theme-menu hidden">
-                                    <div class="theme-option" data-theme="light" data-i18n="theme_light">Светлая</div>
-                                    <div class="theme-option" data-theme="dark" data-i18n="theme_dark">Темная</div>
-                                </div>
+                            <div class="glass-pill-nav theme-switcher-pill">
+                                <div class="pill-slider theme-slider"></div>
+                                <span class="pill-item theme-pill-item" data-theme="light"
+                                    data-i18n="theme_light">Светлая</span>
+                                <span class="pill-item theme-pill-item active" data-theme="dark"
+                                    data-i18n="theme_dark">Темная</span>
                             </div>
                         </div>
                     </div>
@@ -57,7 +53,7 @@
 
 
             <div class="workspace">
-                <div id="optimizationView" class="optimization-view">
+                <div id="optimizationView" class="optimization-view hidden">
                     <div id="leftColumnBg" class="left-column-bg"></div>
                     <section id="dataInputPanel" class="data-input-panel panel">
                         <div class="panel-header"
@@ -231,16 +227,15 @@
                 </div>
 
                 <section id="docsPanel" class="docs-panel panel hidden">
-                    <div class="panel-header">
-                        <h2 data-i18n="docs_guide_title">Документация и руководство</h2>
-                    </div>
-                    <div class="panel-body result-body">
-                        <div class="result-cards-area" style="gap: 1.25rem;">
 
-                            <div class="result-card">
-                                <div class="result-card-label" data-i18n="model_desc_title">Описание модели</div>
-                                <p data-i18n="model_desc_text"
-                                    style="color:var(--text-main); margin-top:0.5rem; line-height:1.7;">
+                    <div class="settings-center-wrap">
+                        <div class="docs-cards-list">
+
+                            <!-- Model description -->
+                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                                <div class="settings-card-title" data-i18n="model_desc_title">Описание модели</div>
+                                <p class="settings-card-desc" data-i18n="model_desc_text"
+                                    style="margin-top: 0.5rem; line-height: 1.7;">
                                     Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
                                     заданных бюджетных ограничениях для различных групп активов (ГИА).
                                     Модель минимизирует риски, балансируя между суммарным временем взлома и временем
@@ -248,57 +243,56 @@
                                 </p>
                             </div>
 
-                            <div class="result-card">
-                                <div class="result-card-label" data-i18n="input_params_title">Параметры ввода</div>
-                                <div class="params-table" style="margin-top:0.75rem;">
-                                    <div class="input-row">
-                                        <div class="row-label"><b>m</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_m_desc">
-                                            Количество групп активов (строки матрицы A)</div>
+                            <!-- Input parameters -->
+                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                                <div class="settings-card-title" data-i18n="input_params_title">Параметры ввода</div>
+                                <div class="docs-params-list">
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name">m</span>
+                                        <span class="docs-param-desc" data-i18n="param_m_desc">Количество групп активов
+                                            (строки матрицы A)</span>
                                     </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><b>n</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_n_desc">
-                                            Количество доступных СЗИ (столбцы)</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name">n</span>
+                                        <span class="docs-param-desc" data-i18n="param_n_desc">Количество доступных СЗИ
+                                            (столбцы)</span>
                                     </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><b>λ</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_lam_desc">
-                                            Приоритет: 1.0 = фокус на времени взлома, 0.0 = фокус на реакции</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name">λ</span>
+                                        <span class="docs-param-desc" data-i18n="param_lam_desc">Приоритет: 1.0 = фокус
+                                            на времени взлома, 0.0 = фокус на реакции</span>
                                     </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><b data-i18n="matrix_a_title">Матрица A</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_a_desc">
-                                            Стоимость каждого СЗИ для каждой ГИА (m × n)</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name" data-i18n="matrix_a_title">Матрица A</span>
+                                        <span class="docs-param-desc" data-i18n="param_a_desc">Стоимость каждого СЗИ для
+                                            каждой ГИА (m × n)</span>
                                     </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><b data-i18n="vector_b_title">Вектор b</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_b_desc">
-                                            Бюджетный лимит для каждой ГИА</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name" data-i18n="vector_b_title">Вектор b</span>
+                                        <span class="docs-param-desc" data-i18n="param_b_desc">Бюджетный лимит для
+                                            каждой ГИА</span>
                                     </div>
-                                    <div class="input-row">
-                                        <div class="row-label"><b data-i18n="vector_c_title">Вектор c</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_c_desc">Время
-                                            взлома для каждого СЗИ</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name" data-i18n="vector_c_title">Вектор c</span>
+                                        <span class="docs-param-desc" data-i18n="param_c_desc">Время взлома для каждого
+                                            СЗИ</span>
                                     </div>
-                                    <div class="input-row" style="border-bottom:none;">
-                                        <div class="row-label"><b data-i18n="vector_d_title">Вектор d</b></div>
-                                        <div class="row-label" style="border-right:none;" data-i18n="param_d_desc">Время
-                                            реакции для каждого СЗИ</div>
+                                    <div class="docs-param-row">
+                                        <span class="docs-param-name" data-i18n="vector_d_title">Вектор d</span>
+                                        <span class="docs-param-desc" data-i18n="param_d_desc">Время реакции для каждого
+                                            СЗИ</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="result-card">
-                                <div class="result-card-label" data-i18n="import_format_title"
-                                    style="color: var(--text-main); font-weight: 600;">Формат файла
-                                    импорта (.txt)</div>
-                                <p data-i18n="import_format_desc"
-                                    style="color: var(--text-main); font-weight: normal; margin:0.75rem 0; opacity: 0.95;">
-                                    Каждая строка
-                                    —
-                                    одна запись, значения разделяются пробелами:</p>
-                                <pre class="code-block" style="margin-top:0.5rem;">m n
+                            <!-- Import format -->
+                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                                <div class="settings-card-title" data-i18n="import_format_title">Формат файла импорта
+                                    (.txt)</div>
+                                <p class="settings-card-desc" data-i18n="import_format_desc"
+                                    style="margin-top: 0.35rem;">
+                                    Каждая строка — одна запись, значения разделяются пробелами:</p>
+                                <pre class="code-block" style="margin-top: 0.75rem;">m n
 A[0,0] A[0,1] ... A[0,n-1]
 A[1,0] A[1,1] ... A[1,n-1]
 ...
@@ -308,12 +302,12 @@ d[0] d[1] ... d[n-1]
 lambda</pre>
                             </div>
 
-                            <div class="result-card">
-                                <div class="result-card-label" data-i18n="example_file_title"
-                                    style="color: var(--text-main); font-weight: 600;">Пример файла
-                                    (m=3, n=4)</div>
-                                <div style="display: flex; gap: 2.5rem; flex-wrap: wrap; margin-top: 1rem;">
-                                    <pre class="code-block" style="margin: 0; flex: 0 0 160px; font-size: 1.2rem;">3 4
+                            <!-- Example file -->
+                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                                <div class="settings-card-title" data-i18n="example_file_title">Пример файла (m=3, n=4)
+                                </div>
+                                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
+                                    <pre class="code-block" style="margin: 0; flex: 0 0 160px; font-size: 1.1rem;">3 4
 10 20 15 25
 12 18 22 10
 8  16 20 30
@@ -321,17 +315,13 @@ lambda</pre>
 30 40 35 45
 5  8  6  9
 0.5</pre>
-                                    <div
-                                        style="flex: 1; display: flex; flex-direction: column; gap: 1rem; padding: 1.25rem 1.5rem; background: var(--sidebar-bg); border: 1px solid var(--panel-border); border-left: 4px solid var(--salt-blue-main); border-radius: 6px;">
+                                    <div class="docs-example-guide">
                                         <p data-i18n="example_guide_intro" style="margin: 0;"></p>
-                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
-                                        </div>
+                                        <div class="docs-guide-divider"></div>
                                         <p data-i18n="example_guide_matrix" style="margin: 0;"></p>
-                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
-                                        </div>
+                                        <div class="docs-guide-divider"></div>
                                         <p data-i18n="example_guide_vectors" style="margin: 0;"></p>
-                                        <div style="height: 1px; background: var(--panel-border); margin: 0.25rem 0;">
-                                        </div>
+                                        <div class="docs-guide-divider"></div>
                                         <p data-i18n="example_guide_lambda" style="margin: 0;"></p>
                                     </div>
                                 </div>
@@ -341,43 +331,34 @@ lambda</pre>
                     </div>
                 </section>
 
-                <section id="settingsPanel" class="settings-panel panel hidden">
-                    <div class="panel-header">
-                        <h2 data-i18n="settings_app_title">Настройки приложения</h2>
-                    </div>
-                    <div class="panel-body result-body">
-                        <div class="result-cards-area" style="gap: 1.25rem;">
+                <section id="settingsPanel" class="settings-panel panel">
 
-                            <div class="result-card"
-                                style="flex-direction: row; align-items: center; justify-content: space-between;">
-                                <div>
-                                    <div class="result-card-label" data-i18n="lang_title"
-                                        style="color: var(--text-main); font-weight: 600; text-transform: none;">
-                                        Язык интерфейса</div>
-                                    <p data-i18n="lang_desc" style="margin-top:0.35rem;">
-                                        Выберите язык приложения</p>
+                    <div class="settings-center-wrap">
+                        <div class="settings-cards-list">
+
+                            <div class="settings-glass-card">
+                                <div class="settings-card-info">
+                                    <div class="settings-card-title" data-i18n="lang_title">Язык интерфейса</div>
+                                    <p class="settings-card-desc" data-i18n="lang_desc">Выберите язык приложения</p>
                                 </div>
-                                <div class="lang-toggle-wrapper">
-                                    <div class="lang-toggle-bg"></div>
-                                    <button class="lang-toggle-btn active" data-lang="ru">RU</button>
-                                    <button class="lang-toggle-btn" data-lang="en">EN</button>
+                                <div class="glass-pill-nav settings-lang-pill">
+                                    <div class="pill-slider settings-lang-slider"></div>
+                                    <span class="pill-item lang-item active" data-lang="ru">RU</span>
+                                    <span class="pill-item lang-item" data-lang="en">EN</span>
                                 </div>
                             </div>
 
-                            <div class="result-card"
-                                style="flex-direction: row; align-items: center; justify-content: space-between;">
-                                <div>
-                                    <div class="result-card-label" data-i18n="dark_theme_title"
-                                        style="color: var(--text-main); font-weight: 600; text-transform: none;">
-                                        Темная
-                                        тема</div>
-                                    <p data-i18n="toggle_theme_desc" style="margin-top:0.35rem;">
-                                        Переключить
-                                        цветовую схему интерфейса</p>
+                            <div class="settings-glass-card">
+                                <div class="settings-card-info">
+                                    <div class="settings-card-title" data-i18n="dark_theme_title">Темная тема</div>
+                                    <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить цветовую
+                                        схему интерфейса</p>
                                 </div>
-                                <label class="switch">
-                                    <input type="checkbox" id="themeToggle">
-                                    <span class="slider"></span>
+                                <label class="glass-toggle">
+                                    <input type="checkbox" class="theme-toggle-input" id="settingsThemeToggle">
+                                    <span class="glass-toggle-track">
+                                        <span class="glass-toggle-knob"></span>
+                                    </span>
                                 </label>
                             </div>
 
