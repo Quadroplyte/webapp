@@ -70,17 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
       bestWrapper.appendChild(createCard(bestSolution, true));
     }
 
-    // 2. Показываем полный список x_s в нижнем блоке
+    // 2. Показываем список x_s в нижнем блоке (исключая x_0)
     solutions.forEach((sol) => {
+      if (sol.s_index === 0) return; // Пропускаем x_0, он уже сверху
       allWrapper.appendChild(createCard(sol, false));
     });
   }
 
   // ── Переключение навигации ───────────────────────────────
-  const sidebar = document.querySelector('.sidebar');
-  const sidebarToggle = document.getElementById('sidebarToggle');
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-  const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
   const sideNav = document.querySelector('.side-nav');
   const breadcrumb = document.getElementById('breadcrumbDynamic');
 
@@ -112,57 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Sidebar Collapse (Desktop)
-  const updateSidebarIcon = () => {
-    const icon = sidebarToggle.querySelector('svg');
-    if (sidebar.classList.contains('collapsed')) {
-      icon.style.transform = 'rotate(180deg)';
-    } else {
-      icon.style.transform = 'rotate(0deg)';
-    }
-  };
+  // Removed mobile menu logic
 
-  sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
-    updateSidebarIcon();
-  });
-
-  // Mobile Menu Logic
-  mobileMenuBtn.addEventListener('click', () => {
-    sidebar.classList.add('mobile-open');
-    sidebarBackdrop.classList.add('active');
-  });
-
-  const closeMobileMenu = () => {
-    sidebar.classList.remove('mobile-open');
-    sidebarBackdrop.classList.remove('active');
-  };
-
-  sidebarBackdrop.addEventListener('click', closeMobileMenu);
-
-  // Automatic Behavior on Resize
-  const handleResize = () => {
-    if (window.innerWidth < 900) {
-      sidebar.classList.add('collapsed');
-    } else {
-      // On larger screens, remove the mobile-open state if browser was resized
-      closeMobileMenu();
-    }
-    updateSidebarIcon();
-  };
-
-  window.addEventListener('resize', handleResize);
-  // Initial check
-  handleResize();
+  // Removed resize check for mobile
 
   sideNav.addEventListener('click', (e) => {
     const clickedItem = e.target.closest('.nav-item');
     if (!clickedItem) return;
 
-    // On mobile, close menu after clicking a link
-    if (window.innerWidth < 900) {
-      closeMobileMenu();
-    }
+    // Mobile logic removed
 
     // Update active state
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -346,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (candidatesHeader) candidatesHeader.classList.remove('hidden');
         if (candidatesBody) candidatesBody.classList.remove('hidden');
 
-        // result.all_solutions contains an array
+        // The user wants to see all candidate vectors, even if they are identical.
         lastSolutions = result.all_solutions;
         renderResultCards(lastSolutions);
 

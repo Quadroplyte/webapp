@@ -21,11 +21,12 @@ def solve_problem(
     c_arr = np.array(c)
     d_arr = np.array(d)
     A_arr = np.array(A)
-    indices = np.argsort(d_arr)[::-1]
 
-    A_sorted = A_arr[:, indices]
-    c_sorted = c_arr[indices]
-    d_sorted = d_arr[indices]
+    # Сортировка по d_j убрана. Используем оригинальный порядок из файла.
+    A_sorted = A_arr
+    c_sorted = c_arr
+    d_sorted = d_arr
+    indices = np.arange(n)
 
     # --- Шаг 1 ---
     # Пусть V - пустое множество.
@@ -60,14 +61,10 @@ def solve_problem(
     else:
         # --- Шаг 2 ---
         # Далее считаем, что \lambda \in (0, 1).
-        # Пусть j0 - номер в полученном оптимальном решении x^0, для которого j0 = max {j : x_j^0 = 1}
-        # (в математике индексы с 1, поэтому + 1)
-        ones_indices = [j for j, val in enumerate(x0) if val == 1]
-        
-        if not ones_indices:
-            j0 = 0
-        else:
-            j0 = max(ones_indices) + 1
+        # По просьбе пользователя алгоритм всегда должен генерировать размерность задачи - 1 ответ.
+        # Поэтому мы отбрасываем столбцы начиная с 1 (для x_1) до n-1 (для x_{n-1}).
+        # Это эквивалентно установке j0 = n для запуска цикла.
+        j0 = n
             
         # --- Шаг 3 ---
         # Набор из j0 - 1 задач.
@@ -115,7 +112,7 @@ def solve_problem(
     best_F = -1.0
     all_results = []
     
-    for x in V:
+    for s_idx, x in enumerate(V):
         f1 = sum(c_sorted[j] * x[j] for j in range(n))
         selected_d = [d_sorted[j] for j in range(n) if x[j] == 1]
         f2 = min(selected_d) if selected_d else 0.0
@@ -134,7 +131,7 @@ def solve_problem(
             "vector_x": original_x,
             "f": float(f_total),
             "szi": original_szi,
-            "s_index": V.index(x) if x in V else 0 # Сохраняем s для x^s
+            "s_index": s_idx # s_idx=0 это x_0, s_idx=1 это x_1 (отброшен 1 столбец) и т.д.
         })
         
         # Строгое сравнение и поиск максимума по критерию

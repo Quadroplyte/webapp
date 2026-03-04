@@ -29,7 +29,7 @@ const translations = {
     create_tables_btn: "Создать таблицы",
 
     // Matrices Panel
-    matrices_data_title: "Матрицы и векторы данных",
+    matrices_data_title: "Ограничения",
     matrix_a_title: "Матрица A",
     vector_b_title: "Вектор b",
     vector_c_title: "Вектор c",
@@ -51,7 +51,7 @@ const translations = {
     val_fx: "Значение F(x",
     chosen_szi: "Выбранные СЗИ",
     none: "Нет",
-    candidates_title: "Кандидаты (все наборы xₛ)",
+    candidates_title: "Кандидаты",
 
     // Docs Panel
     docs_guide_title: "Документация и руководство",
@@ -114,7 +114,7 @@ const translations = {
     create_tables_btn: "Create tables",
 
     // Matrices Panel
-    matrices_data_title: "Data matrices and vectors",
+    matrices_data_title: "Constraints",
     matrix_a_title: "Matrix A",
     vector_b_title: "Vector b",
     vector_c_title: "Vector c",
@@ -136,7 +136,7 @@ const translations = {
     val_fx: "Value of F(x",
     chosen_szi: "Chosen protection tools",
     none: "None",
-    candidates_title: "Candidates (all sets xₛ)",
+    candidates_title: "Candidates",
 
     // Docs Panel
     docs_guide_title: "Documentation and guide",

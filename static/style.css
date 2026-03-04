@@ -379,116 +379,59 @@ body {
 }
 
 .optimization-view {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto 1fr;
+}
+
+.left-column-bg {
+    display: block;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    background: var(--panel-bg);
+    border-right: 1px solid var(--panel-border);
+    min-width: 440px;
+    max-width: 440px;
+}
+
+.config-grid {
+    width: 440px;
+    max-width: 440px;
+}
+
+.data-input-panel {
+    grid-column: 1;
+    grid-row: 1;
+    border-right: 1px solid var(--panel-border);
+}
+
+.config-panel {
+    grid-column: 1;
+    grid-row: 2;
+    border-right: 1px solid var(--panel-border);
+}
+
+.data-panel {
+    grid-column: 1;
+    grid-row: 3;
+    border-right: 1px solid var(--panel-border);
+    border-bottom: none !important;
 }
 
 .result-panel {
-    flex: 1;
-    /* In single column: fill remaining vertical space */
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    border-bottom: none;
+    align-self: stretch;
+    min-height: 100%;
 }
 
-@media (min-width: 900px) {
-    .optimization-view {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto auto 1fr;
-    }
-
-    .left-column-bg {
-        display: block;
-        grid-column: 1;
-        grid-row: 1 / span 3;
-        background: var(--panel-bg);
-        border-right: 1px solid var(--panel-border);
-        min-width: 450px;
-    }
-
-    .config-grid {
-        max-width: 500px;
-    }
-
-    .data-input-panel {
-        grid-column: 1;
-        grid-row: 1;
-        border-right: 1px solid var(--panel-border);
-    }
-
-    .config-panel {
-        grid-column: 1;
-        grid-row: 2;
-        border-right: 1px solid var(--panel-border);
-    }
-
-    .data-panel {
-        grid-column: 1;
-        grid-row: 3;
-        border-right: 1px solid var(--panel-border);
-        border-bottom: none;
-    }
-
-    .result-panel {
-        grid-column: 2;
-        grid-row: 1 / span 3;
-        border-bottom: none;
-        align-self: stretch;
-        min-height: 100%;
-    }
-
-    .docs-panel,
-    .settings-panel {
-        grid-column: 1 / -1;
-    }
+.docs-panel,
+.settings-panel {
+    grid-column: 1 / -1;
 }
 
-@media (max-width: 899px) {
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: auto;
-        transform: translateY(-100%);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        border-right: none;
-        border-bottom: 1px solid var(--sidebar-border);
-    }
-
-    .sidebar.mobile-open {
-        transform: translateY(0);
-    }
-
-    .sidebar.collapsed {
-        width: 100%;
-        /* Disable horizontal collapse in mobile dropdown */
-    }
-
-    .sidebar.collapsed .logo-text,
-    .sidebar.collapsed .nav-item span {
-        display: block;
-    }
-
-    #sidebarToggle {
-        display: none;
-        /* Hide toggle inside drawer on mobile */
-    }
-
-    .top-bar {
-        padding: 0 1rem;
-    }
-
-    .mobile-only {
-        display: flex !important;
-    }
-
-
-}
-
-.mobile-only {
-    display: none;
-}
+/* Removed mobile media queries */
 
 /* Panels (Now sections defined by hairline borders) */
 .panel {
@@ -739,7 +682,7 @@ input[type="text"]:focus {
     display: none;
 }
 
-#generateBtn {
+#generateTablesBtn {
     width: 100%;
 }
 
@@ -751,8 +694,8 @@ input[type="text"]:focus {
     margin-top: 0.75rem;
     max-height: 202px;
     /* 6 cells * 32px + 10px buffer for scrollbar/border allowances */
-    max-width: 366px;
-    /* 6 cells * 60px + scrollbar/border allowances */
+    width: 100%;
+    max-width: 100%;
     background: var(--sidebar-bg);
 }
 
@@ -824,8 +767,10 @@ input[type="text"]:focus {
 
 .data-group {
     flex: 1;
-    min-width: 200px;
-    max-width: 100%;
+    min-width: 440px;
+    width: 440px;
+    max-width: 440px;
+    /* Fixed 440px as requested */
     overflow: hidden;
 }
 
@@ -839,6 +784,10 @@ input[type="text"]:focus {
 .calculate-action {
     margin-top: 0.75rem;
     padding-top: 0.5rem;
+}
+
+#solveBtn {
+    width: 100%;
 }
 
 /* Results Section */
@@ -921,7 +870,7 @@ input[type="text"]:focus {
 #resultContainer {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - var(--topbar-height));
+    height: calc(100vh - var(--topbar-height));
 }
 
 #resultContainer .result-body:first-of-type {
