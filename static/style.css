@@ -403,12 +403,14 @@ body {
     grid-column: 1;
     grid-row: 1;
     border-right: 1px solid var(--panel-border);
+    width: 440px;
 }
 
 .config-panel {
     grid-column: 1;
     grid-row: 2;
     border-right: 1px solid var(--panel-border);
+    width: 440px;
 }
 
 .data-panel {
@@ -416,6 +418,7 @@ body {
     grid-row: 3;
     border-right: 1px solid var(--panel-border);
     border-bottom: none !important;
+    width: 440px;
 }
 
 .result-panel {
@@ -767,10 +770,8 @@ input[type="text"]:focus {
 
 .data-group {
     flex: 1;
-    min-width: 440px;
-    width: 440px;
-    max-width: 440px;
-    /* Fixed 440px as requested */
+    width: 100%;
+    max-width: 100%;
     overflow: hidden;
 }
 
