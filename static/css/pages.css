@@ -3,22 +3,11 @@
    Results, candidates, settings, docs
    ======================================== */
 
-/* Results Section */
-.result-panel {
-  display: flex;
-  flex-direction: column;
-}
-
-.result-panel .panel-header {
-  border-bottom: 1px solid var(--panel-border);
-}
-
-/* Documentation Panel — same full-height gray layout as result panel */
+/* Documentation Panel */
 .docs-panel {
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--topbar-height));
-  /* Always fill full page height */
 }
 
 .docs-panel .panel-header {
@@ -160,7 +149,6 @@
   max-width: 960px;
 }
 
-/* Docs cards are static — no hover effect */
 .docs-panel .settings-glass-card:hover {
   transform: none;
 }
@@ -258,38 +246,13 @@
   flex: 1;
 }
 
+/* ========== RESULTS ========== */
+
 .result-body {
   padding: 0 !important;
   background: transparent;
   display: flex;
   flex-direction: column;
-}
-
-/* By default, result-body doesn't scroll scroll unless specified */
-
-#resultContainer {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - var(--topbar-height));
-}
-
-#resultContainer .result-body:first-of-type {
-  flex: 0 0 auto;
-  min-height: fit-content;
-  /* Ensure it stays tall enough for one card */
-  overflow: visible !important;
-}
-
-#resultContainer .candidates-body {
-  flex: 1 1 0;
-  /* Take all remaining space */
-  overflow-y: auto;
-  /* ONLY the candidates section scrolls */
-  border-top: 1px solid var(--panel-border);
-}
-
-.candidates-header {
-  border-top: 1px solid var(--panel-border);
 }
 
 .result-cards-area {

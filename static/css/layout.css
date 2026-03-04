@@ -105,21 +105,107 @@ body {
 }
 
 .optimization-view {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto 1fr;
+  display: flex;
   flex: 1;
   width: 100%;
+  gap: 1.25rem;
+  padding: 0 1.5rem 1.5rem 1.5rem;
+  align-items: flex-start;
 }
 
-.left-column-bg {
-  display: block;
-  grid-column: 1;
-  grid-row: 1 / span 3;
-  background: transparent;
-  border-right: 1px solid var(--panel-border);
+/* Two columns — left is fixed width, right fills remaining space */
+.opt-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 440px;
   min-width: 440px;
-  max-width: 440px;
+  flex-shrink: 0;
+}
+
+.opt-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+  /* Sticky so results stay visible when scrolling left col */
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 120px);
+}
+
+/* Glass island cards for optimization page */
+.opt-glass-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .opt-glass-card {
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.opt-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.25rem 0.6rem 1.25rem;
+}
+
+.opt-card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+}
+
+.opt-card-body {
+  padding: 0 1.25rem 1.25rem 1.25rem;
+}
+
+/* Result card — auto-sizes to fit content */
+.opt-result-card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.opt-result-card .result-body {
+  flex: 1;
+}
+
+/* Candidates card — fills remaining height and scrolls */
+.opt-candidates-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.opt-candidates-card .candidates-body {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .text-link-btn {
@@ -141,43 +227,12 @@ body {
 }
 
 .config-grid {
-  width: 440px;
-  max-width: 440px;
-}
-
-.data-input-panel {
-  grid-column: 1;
-  grid-row: 1;
-  border-right: 1px solid var(--panel-border);
-  width: 440px;
-}
-
-.config-panel {
-  grid-column: 1;
-  grid-row: 2;
-  border-right: 1px solid var(--panel-border);
-  width: 440px;
-}
-
-.data-panel {
-  grid-column: 1;
-  grid-row: 3;
-  border-right: 1px solid var(--panel-border);
-  border-bottom: none !important;
-  width: 440px;
-}
-
-.result-panel {
-  grid-column: 2;
-  grid-row: 1 / span 3;
-  border-bottom: none;
-  align-self: stretch;
-  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
 }
 
 .docs-panel,
 .settings-panel {
-  grid-column: 1 / -1;
   background: transparent;
 }
 

@@ -318,16 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const bestWrapper = document.getElementById('bestResultWrapper');
       const allWrapper = document.getElementById('allCandidatesWrapper');
-      const candidatesHeader = document.querySelector('.candidates-header');
-      const candidatesBody = document.querySelector('.candidates-body');
+      const candidatesContainer = document.getElementById('candidatesContainer');
 
       if (result.success) {
         errorBox.classList.add('hidden');
 
         bestWrapper.classList.remove('hidden');
         allWrapper.classList.remove('hidden');
-        if (candidatesHeader) candidatesHeader.classList.remove('hidden');
-        if (candidatesBody) candidatesBody.classList.remove('hidden');
+        if (candidatesContainer) candidatesContainer.classList.remove('hidden');
 
         // The user wants to see all candidate vectors, even if they are identical.
         lastSolutions = result.all_solutions;
@@ -338,8 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorBox.classList.remove('hidden');
         bestWrapper.classList.add('hidden');
         allWrapper.classList.add('hidden');
-        if (candidatesHeader) candidatesHeader.classList.add('hidden');
-        if (candidatesBody) candidatesBody.classList.add('hidden');
+        if (candidatesContainer) candidatesContainer.classList.add('hidden');
       }
 
     } catch (err) {
