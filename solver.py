@@ -1,244 +1,159 @@
 """
-Решатель задачи выбора СЗИ (средств защиты информации).
+Решатель задачи выбора СЗИ.
 
-Алгоритм решает многокритериальную задачу о рюкзаке с двумя критериями:
-  1. Суммарное время взлома (аддитивный критерий, вектор c)
-  2. Время реакции самого слабого звена (максиминный критерий, вектор d)
-
-Критерии объединяются через коэффициент λ (lambda).
+В точности реализует алгоритм из документации:
+1. Шаг 1: Нахождение вектора x^0. Помещение в множество V.
+2. Шаг 2: Нахождение j0.
+3. Шаг 3: Набор из j0 - 1 задач о ранце. Получение x^s, приведение к n-мерному вектору и помещение в V.
+4. Шаг 4: Выбор оптимального решения из V.
 """
 
-from typing import List, Optional, Dict, Any
-
+from typing import Dict, Any
 import numpy as np
 import pulp
-
-
-# ── Шаг 0: Базовый решатель рюкзака ────────────────────────
-
-def solve_knapsack_pulp(
-    c: list, A: list, b: list
-) -> Optional[List[int]]:
-    """
-    Решает задачу о рюкзаке методом целочисленного программирования.
-
-    Args:
-        c: Коэффициенты целевой функции (вектор длины n).
-        A: Матрица ограничений (m × n).
-        b: Правые части ограничений (вектор длины m).
-
-    Returns:
-        Бинарный вектор решения или None, если оптимум не найден.
-    """
-    n = len(c)
-    m = len(A)
-
-    prob = pulp.LpProblem("Knapsack_Problem", pulp.LpMaximize)
-    x = [pulp.LpVariable(f"x_{j}", cat=pulp.LpBinary) for j in range(n)]
-
-    prob += pulp.lpSum([c[j] * x[j] for j in range(n)])
-
-    for i in range(m):
-        prob += pulp.lpSum([A[i][j] * x[j] for j in range(n)]) <= b[i]
-
-    prob.solve(pulp.PULP_CBC_CMD(msg=False))
-
-    if pulp.LpStatus[prob.status] == "Optimal":
-        results = []
-        for j in range(n):
-            val = pulp.value(x[j])
-            results.append(int(round(val)) if isinstance(val, (float, int)) else 0)
-        return results
-
-    return None
-
-
-# ── Шаг 1: Начальное решение ───────────────────────────────
-
-def algorithm_step_1(data: dict):
-    """Находит начальное решение x0 задачи о рюкзаке (без учёта d)."""
-    x0 = solve_knapsack_pulp(data["c"], data["A"], data["b"])
-    if x0 is None:
-        return None, None
-    return x0, [x0]
-
-
-# ── Шаг 2: Определение порога ──────────────────────────────
-
-def algorithm_step_2(x0: List[int]) -> int:
-    """
-    Находит j0 — индекс последнего выбранного СЗИ в отсортированном порядке.
-    Возвращает математический индекс (с 1).
-    """
-    indices_with_one = [i for i, val in enumerate(x0) if val == 1]
-    if not indices_with_one:
-        return 0
-    return max(indices_with_one) + 1
-
-
-# ── Шаг 3: Генерация множества кандидатов ──────────────────
-
-def algorithm_step_3(data: dict, j0: int, V: list) -> list:
-    """
-    Генерирует дополнительных кандидатов, постепенно сужая пространство
-    поиска и учитывая баланс между критериями c и d.
-    """
-    n, m = data["n"], data["m"]
-    c, d, A, b, lam = data["c"], data["d"], data["A"], data["b"], data["lambda"]
-
-    for s in range(1, j0):
-        num_vars = j0 - s
-
-        prob = pulp.LpProblem(f"Knapsack_s_{s}", pulp.LpMaximize)
-        x = [pulp.LpVariable(f"x_{j}", cat=pulp.LpBinary) for j in range(num_vars)]
-
-        # Комбинированная целевая функция
-        objective = pulp.lpSum([lam * c[j] * x[j] for j in range(num_vars - 1)])
-        last_idx = num_vars - 1
-        last_term = (lam * c[last_idx] + (1 - lam) * d[last_idx]) * x[last_idx]
-        prob += objective + last_term
-
-        for i in range(m):
-            prob += pulp.lpSum([A[i][j] * x[j] for j in range(num_vars)]) <= b[i]
-
-        prob.solve(pulp.PULP_CBC_CMD(msg=False))
-
-        if pulp.LpStatus[prob.status] == "Optimal":
-            xs_partial = []
-            for j in range(num_vars):
-                val = pulp.value(x[j])
-                clean_val = float(val) if isinstance(val, (int, float)) else 0.0
-                xs_partial.append(int(round(clean_val)))
-            V.append(xs_partial + [0] * (n - num_vars))
-
-    return V
-
-
-# ── Шаг 4: Выбор лучшего решения ──────────────────────────
-
-def algorithm_step_4(data: dict, V: list):
-    """
-    Из множества кандидатов V выбирает решение с наибольшим
-    значением комбинированной целевой функции F.
-
-    Returns:
-        (best_x, best_F, recommended_szi_indices)
-    """
-    best_x = None
-    best_F = -1.0
-    lam = data["lambda"]
-    
-    all_results = []
-
-    for x in V:
-        f1 = sum(data["c"][j] * x[j] for j in range(len(x)))
-        selected_d = [data["d"][j] for j in range(len(x)) if x[j] == 1]
-        f2 = min(selected_d) if selected_d else 0.0
-        f_total = lam * f1 + (1 - lam) * f2
-        
-        # Восстановить оригинальные индексы СЗИ (1-based)
-        original_szi = sorted(
-            int(data["original_indices"][i] + 1)
-            for i, val in enumerate(x)
-            if val == 1
-        )
-        
-        # Восстановить вектор x в оригинальном порядке
-        original_x = [0] * len(data["original_indices"])
-        for i, val in enumerate(x):
-            original_x[data["original_indices"][i]] = val
-            
-        all_results.append({
-            "vector_x": original_x,
-            "f": float(f_total),
-            "szi": original_szi
-        })
-
-        if f_total > best_F:
-            best_F = f_total
-            best_x = x
-
-    # Восстановить оригинальные индексы СЗИ для лучшего (1-based)
-    best_original_nums = []
-    if best_x is not None:
-        best_original_nums = sorted(
-            int(data["original_indices"][i] + 1)
-            for i, val in enumerate(best_x)
-            if val == 1
-        )
-
-    return best_x, best_F, best_original_nums, all_results
-
-
-# ── Основная функция (вызывается из API) ───────────────────
 
 def solve_problem(
     m: int, n: int, A: list, b: list, c: list, d: list, lam: float
 ) -> Dict[str, Any]:
-    """
-    Полный цикл решения задачи выбора СЗИ.
-
-    Args:
-        m:   Количество групп информационных активов (ГИА).
-        n:   Количество доступных СЗИ.
-        A:   Матрица стоимости (m × n).
-        b:   Бюджетные ограничения (длина m).
-        c:   Время взлома для каждого СЗИ (длина n).
-        d:   Время реакции для каждого СЗИ (длина n).
-        lam: Коэффициент λ ∈ [0, 1].
-
-    Returns:
-        Словарь с полями: success, vector_x, optimal_f, recommended_szi.
-    """
-    # Предварительная сортировка по убыванию d_j
+    # Предварительно данные сортируются по убыванию значения d_j.
+    # Это позволяет корректно применять математику для j_0 - s и брать минимум
     b_arr = np.array(b)
     c_arr = np.array(c)
     d_arr = np.array(d)
     A_arr = np.array(A)
     indices = np.argsort(d_arr)[::-1]
 
-    data = {
-        "m": m,
-        "n": n,
-        "A": A_arr[:, indices],
-        "b": b_arr,
-        "c": c_arr[indices],
-        "d": d_arr[indices],
-        "lambda": lam,
-        "original_indices": indices,
-    }
+    A_sorted = A_arr[:, indices]
+    c_sorted = c_arr[indices]
+    d_sorted = d_arr[indices]
 
-    # Шаг 1: Начальное решение
-    x0, V = algorithm_step_1(data)
-    if x0 is None:
+    # --- Шаг 1 ---
+    # Пусть V - пустое множество.
+    V = []
+    
+    # Решить однокритериальную многомерную задачу о ранце с аддитивным критерием (c)
+    prob0 = pulp.LpProblem("Step_1_Knapsack", pulp.LpMaximize)
+    x0_vars = [pulp.LpVariable(f"x0_{j}", cat=pulp.LpBinary) for j in range(n)]
+    
+    prob0 += pulp.lpSum([c_sorted[j] * x0_vars[j] for j in range(n)])
+    
+    for i in range(m):
+        prob0 += pulp.lpSum([A_sorted[i][j] * x0_vars[j] for j in range(n)]) <= b_arr[i]
+        
+    prob0.solve(pulp.PULP_CBC_CMD(msg=False))
+    
+    if pulp.LpStatus[prob0.status] != "Optimal":
         return {
             "success": False,
-            "error": "Решение не найдено. Проверьте входные данные и бюджеты.",
+            "error": "Решение базовой задачи не найдено. Проверьте входные данные и бюджеты.",
         }
+        
+    # Получить оптимальное решение - n-мерный булевый вектор x^0
+    x0 = [int(round(float(pulp.value(var)))) for var in x0_vars]
+    
+    # Поместим его в множество V
+    V.append(x0)
+    
+    # Если \lambda = 1, то вектор x^0 будет оптимальным решением. В этом случае алгоритм окончен.
+    if lam == 1.0:
+        pass # Алгоритм окончен, переходим к формированию ответа
+    else:
+        # --- Шаг 2 ---
+        # Далее считаем, что \lambda \in (0, 1).
+        # Пусть j0 - номер в полученном оптимальном решении x^0, для которого j0 = max {j : x_j^0 = 1}
+        # (в математике индексы с 1, поэтому + 1)
+        ones_indices = [j for j, val in enumerate(x0) if val == 1]
+        
+        if not ones_indices:
+            j0 = 0
+        else:
+            j0 = max(ones_indices) + 1
+            
+        # --- Шаг 3 ---
+        # Набор из j0 - 1 задач.
+        # Решить последовательно j0 - 1 задач о ранце.
+        for s in range(1, j0):
+            # Число СЗИ в s-ой задаче: j0 - s.
+            num_vars = j0 - s
+            
+            prob_s = pulp.LpProblem(f"Knapsack_s_{s}", pulp.LpMaximize)
+            xs_vars = [pulp.LpVariable(f"xs_{j}", cat=pulp.LpBinary) for j in range(num_vars)]
+            
+            # Введем критерии:
+            # F^(s)(x) = sum(lam*c[j]*x[j]) (от 1 до j0-s-1) + (lam*c[j0-s] + (1-lam)*d[j0-s])*x[j0-s]
+            # В Python индексы от 0 до num_vars - 1. 
+            # num_vars - 1 соответствует математическому индексу (j0 - s)
+            objective = pulp.lpSum([lam * c_sorted[j] * xs_vars[j] for j in range(num_vars - 1)])
+            
+            last_idx = num_vars - 1
+            objective += (lam * c_sorted[last_idx] + (1 - lam) * d_sorted[last_idx]) * xs_vars[last_idx]
+            
+            prob_s += objective
+            
+            # Финансовые ограничения: A_s x <= b
+            for i in range(m):
+                # A_s получается вычеркиванием последних столбцов
+                prob_s += pulp.lpSum([A_sorted[i][j] * xs_vars[j] for j in range(num_vars)]) <= b_arr[i]
+                
+            prob_s.solve(pulp.PULP_CBC_CMD(msg=False))
+            
+            if pulp.LpStatus[prob_s.status] == "Optimal":
+                # Получить оптимальное решение - (j0 - s)-мерный булевый вектор x^s
+                xs = [int(round(float(pulp.value(var)))) for var in xs_vars]
+                
+                # Привести его к n-мерному булеву вектору, дополнив отсутствующие компоненты справа нулями
+                xs_n = xs + [0] * (n - num_vars)
+                
+                # Поместить в множество V
+                V.append(xs_n)
 
-    # Шаги 2–3: Генерация кандидатов (если λ ≠ 1)
-    if lam != 1.0:
-        j0 = algorithm_step_2(x0)
-        V = algorithm_step_3(data, j0, [])
-        if not V:
-            V = [x0]
-
-    # Шаг 4: Выбор лучшего
-    best_x, best_F, recommended_szi, all_solutions = algorithm_step_4(data, V)
-
-    # Восстановить вектор x в оригинальном порядке
-    original_x = [0] * n
-    if best_x is not None:
-        for i, val in enumerate(best_x):
+    # --- Шаг 4 ---
+    # В итоге множество V будет содержать n-мерные векторы (<= j0).
+    # Методом полного перебора выбрать из них оптимальный вектор для критерия F(x).
+    
+    best_x = None
+    best_F = -1.0
+    all_results = []
+    
+    for x in V:
+        f1 = sum(c_sorted[j] * x[j] for j in range(n))
+        selected_d = [d_sorted[j] for j in range(n) if x[j] == 1]
+        f2 = min(selected_d) if selected_d else 0.0
+        
+        f_total = lam * f1 + (1 - lam) * f2
+        
+        # Восстановить оригинальные индексы СЗИ (1-based), так как мы возвращаем их для отображения
+        original_szi = sorted(int(indices[i] + 1) for i, val in enumerate(x) if val == 1)
+        
+        # Восстановить вектор x в оригинальном порядке (до сортировки)
+        original_x = [0] * n
+        for i, val in enumerate(x):
             original_x[indices[i]] = val
+            
+        all_results.append({
+            "vector_x": original_x,
+            "f": float(f_total),
+            "szi": original_szi,
+            "s_index": V.index(x) if x in V else 0 # Сохраняем s для x^s
+        })
+        
+        # Строгое сравнение и поиск максимума по критерию
+        if f_total > best_F:
+            best_F = f_total
+            best_x = original_x
 
-    # Сортируем все решения по убыванию F
-    all_solutions.sort(key=lambda item: item["f"], reverse=True)
+    # Восстановить оригинальные индексы СЗИ для лучшего найденного результата
+    best_original_nums = []
+    if best_x is not None:
+        best_original_nums = sorted(i + 1 for i, val in enumerate(best_x) if val == 1)
+
+    # УДАЛЕНО: all_results.sort(key=lambda item: item["f"], reverse=True)
+    # Теперь список идет в порядке: x^0, x^1, x^2...
 
     return {
         "success": True,
-        "vector_x": original_x,
+        "vector_x": best_x,
         "optimal_f": best_F,
-        "recommended_szi": recommended_szi,
-        "all_solutions": all_solutions
+        "recommended_szi": best_original_nums,
+        "all_solutions": all_results
     }

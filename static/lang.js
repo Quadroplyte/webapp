@@ -51,6 +51,7 @@ const translations = {
     val_fx: "Значение F(x",
     chosen_szi: "Выбранные СЗИ",
     none: "Нет",
+    candidates_title: "Кандидаты (все наборы xₛ)",
 
     // Docs Panel
     docs_guide_title: "Документация и руководство",
@@ -135,6 +136,7 @@ const translations = {
     val_fx: "Value of F(x",
     chosen_szi: "Chosen protection tools",
     none: "None",
+    candidates_title: "Candidates (all sets xₛ)",
 
     // Docs Panel
     docs_guide_title: "Documentation and guide",

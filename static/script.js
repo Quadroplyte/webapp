@@ -23,40 +23,56 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastSolutions = null;
 
   function renderResultCards(solutions) {
-    const cardsWrapper = document.getElementById('resultCardsWrapper');
-    cardsWrapper.innerHTML = '';
-    cardsWrapper.classList.remove('hidden');
+    const bestWrapper = document.getElementById('bestResultWrapper');
+    const allWrapper = document.getElementById('allCandidatesWrapper');
+    if (!bestWrapper || !allWrapper) return;
 
-    solutions.forEach((sol, idx) => {
+    bestWrapper.innerHTML = '';
+    allWrapper.innerHTML = '';
+    bestWrapper.classList.remove('hidden');
+    allWrapper.classList.remove('hidden');
+
+    const maxF = Math.max(...solutions.map(s => s.f));
+    const bestSolution = solutions.find(s => s.f === maxF);
+
+    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;';
+
+    const createCard = (sol, isBestHighlight) => {
       const card = document.createElement('div');
       card.className = 'result-card solver-card';
-      if (idx === 0) {
-        card.classList.add('best-solution');
-      }
-
-      const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;';
+      if (isBestHighlight) card.classList.add('best-solution');
 
       card.innerHTML = `
-          <div style="padding: 0 0.75rem 0 1.5rem; border-bottom: 1px solid var(--panel-border); min-height: 3.75rem; display: flex; align-items: center;">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap: 1.5rem; width: 100%;">
-                  <span style="font-size: 1.35rem; font-weight: 700; color: var(--text-main); line-height: 1.2; flex: 1; word-break: break-all;">
-                      ${t('vector_x')}<sub style="${subStyle}">${idx + 1}</sub> [${sol.vector_x.join(', ')}]
+          <div style="padding: 0.6rem 0.75rem 0.6rem 1.25rem; border-bottom: 1px solid var(--panel-border); min-height: 3.2rem; display: flex; align-items: center;">
+              <div style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
+                  ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 0.85rem; border: 1.5px solid var(--best-card-border); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
+                  <span style="font-size: 1.2rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
+                      ${t('vector_x')}<sub style="${subStyle}">${sol.s_index}</sub> [${sol.vector_x.join(', ')}]
                   </span>
-                  ${idx === 0 ? '<span style="color:var(--salt-success); font-weight:700; font-size: 0.9rem; border: 1px solid var(--salt-success); padding: 4px 8px; border-radius: 4px; white-space: nowrap;">' + t('best_solution') + '</span>' : '<span style="visibility: hidden; font-size: 0.9rem; padding: 4px 8px;">' + t('best_solution') + '</span>'}
               </div>
           </div>
           <div style="display:flex; flex-wrap: wrap; background: var(--panel-border); gap: 1px;">
-              <div style="flex: 1; min-width: 200px; padding: 1.25rem 1.5rem; background: var(--panel-bg);">
-                  <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.6rem;">${t('val_fx')}<sub style="${subStyle}">${idx + 1}</sub>)</div>
-                  <div style="font-size: 1.85rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
+              <div style="flex: 1; min-width: 170px; padding: 0.8rem 1.25rem; background: var(--panel-bg);">
+                  <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index}</sub>)</div>
+                  <div style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
               </div>
-              <div style="flex: 2; min-width: 300px; padding: 1.25rem 1.5rem; background: var(--panel-bg);">
-                  <div style="font-size: 1.15rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.6rem;">${t('chosen_szi')}</div>
-                  <div style="font-size: 1.65rem; font-weight: 700; color: var(--salt-blue-accent); line-height: 1.4; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
+              <div style="flex: 2; min-width: 280px; padding: 0.8rem 1.25rem; background: var(--panel-bg);">
+                  <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('chosen_szi')}</div>
+                  <div style="font-size: 1.5rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
               </div>
           </div>
       `;
-      cardsWrapper.appendChild(card);
+      return card;
+    };
+
+    // 1. Показываем лучший вариант в верхнем блоке
+    if (bestSolution) {
+      bestWrapper.appendChild(createCard(bestSolution, true));
+    }
+
+    // 2. Показываем полный список x_s в нижнем блоке
+    solutions.forEach((sol) => {
+      allWrapper.appendChild(createCard(sol, false));
     });
   }
 
@@ -314,39 +330,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const result = await response.json();
 
-      // Show the result container and cards area now that we have data
+      // Show the result container
       resultContainer.classList.remove('hidden');
-      document.getElementById('resultCardsWrapper').classList.remove('hidden');
+
+      const bestWrapper = document.getElementById('bestResultWrapper');
+      const allWrapper = document.getElementById('allCandidatesWrapper');
+      const candidatesHeader = document.querySelector('.candidates-header');
+      const candidatesBody = document.querySelector('.candidates-body');
 
       if (result.success) {
         errorBox.classList.add('hidden');
 
-        const cardsWrapper = document.getElementById('resultCardsWrapper');
-        cardsWrapper.innerHTML = '';
-        cardsWrapper.classList.remove('hidden');
+        bestWrapper.classList.remove('hidden');
+        allWrapper.classList.remove('hidden');
+        if (candidatesHeader) candidatesHeader.classList.remove('hidden');
+        if (candidatesBody) candidatesBody.classList.remove('hidden');
 
-        // result.all_solutions contains an array like:
-        // [{ vector_x: [1,0,1], f: 12.34, szi: [1,3] }, ...]
-
-        // Remove duplicates if any (algorithm might produce identical vectors)
-        const uniqueSolutions = [];
-        const seen = new Set();
-        result.all_solutions.forEach(sol => {
-          const key = sol.vector_x.join(',');
-          if (!seen.has(key)) {
-            seen.add(key);
-            uniqueSolutions.push(sol);
-          }
-        });
-
-        lastSolutions = uniqueSolutions;
+        // result.all_solutions contains an array
+        lastSolutions = result.all_solutions;
         renderResultCards(lastSolutions);
 
       } else {
         errorBox.innerText = result.error || t('err_unknown');
         errorBox.classList.remove('hidden');
-
-        document.getElementById('resultCardsWrapper').innerHTML = '';
+        bestWrapper.classList.add('hidden');
+        allWrapper.classList.add('hidden');
+        if (candidatesHeader) candidatesHeader.classList.add('hidden');
+        if (candidatesBody) candidatesBody.classList.add('hidden');
       }
 
     } catch (err) {

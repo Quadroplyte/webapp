@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Selection</title>
-    <link rel="stylesheet" href="/static/style.css?v=26">
+    <link rel="stylesheet" href="/static/style.css?v=30">
     <link
         href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -230,13 +230,21 @@
 
                     <section id="resultContainer" class="result-panel panel">
                         <div class="panel-header">
-                            <h2 data-i18n="results_title">Результаты расчетов</h2>
+                            <h2 data-i18n="results_title">Лучшее решение</h2>
                         </div>
                         <div class="panel-body result-body">
                             <div id="errorBox" class="error-notification hidden"></div>
+                            <div id="bestResultWrapper" class="result-cards-area hidden">
+                                <!-- Best card here -->
+                            </div>
+                        </div>
 
-                            <div id="resultCardsWrapper" class="result-cards-area hidden">
-                                <!-- Cards will be generated here dynamically -->
+                        <div class="panel-header candidates-header hidden">
+                            <h2 data-i18n="candidates_title">Все наборы xₛ</h2>
+                        </div>
+                        <div class="panel-body result-body candidates-body hidden">
+                            <div id="allCandidatesWrapper" class="result-cards-area">
+                                <!-- All xs cards here -->
                             </div>
                         </div>
                     </section>
@@ -443,8 +451,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=27"></script>
-    <script src="/static/script.js?v=27"></script>
+    <script src="/static/lang.js?v=29"></script>
+    <script src="/static/script.js?v=32"></script>
 </body>
 
 </html>
