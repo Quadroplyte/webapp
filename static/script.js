@@ -53,12 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
                   </span>
               </div>
           </div>
-          <div style="display:flex; flex-wrap: wrap; background: var(--panel-border); gap: 1px;">
-              <div style="flex: 1; min-width: 170px; padding: 0.8rem 1.25rem; background: var(--panel-bg);">
+          <div class="card-bottom-row">
+              <div>
                   <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index}</sub>)</div>
                   <div style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
               </div>
-              <div style="flex: 2; min-width: 280px; padding: 0.8rem 1.25rem; background: var(--panel-bg);">
+              <div>
                   <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('chosen_szi')}</div>
                   <div style="font-size: 1.5rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
               </div>

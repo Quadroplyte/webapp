@@ -91,8 +91,8 @@
   padding: 1.25rem 1.75rem;
   border-radius: 16px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.65),
-      rgba(255, 255, 255, 0.35));
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0.15));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
@@ -288,7 +288,7 @@
 }
 
 .result-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.15));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -329,6 +329,36 @@ html[data-no-blur] .result-card {
 .result-card.solver-card {
   padding: 0;
   gap: 0;
+}
+
+.card-bottom-row {
+  display: flex;
+  flex-wrap: wrap;
+  background: transparent;
+  border-top: 1px solid var(--panel-border);
+}
+
+.card-bottom-row>div {
+  padding: 0.8rem 1.25rem;
+  background: var(--card-inner-bg);
+}
+
+.card-bottom-row>div:first-child {
+  flex: 1;
+  min-width: 170px;
+  border-right: 1px solid var(--panel-border);
+}
+
+.card-bottom-row>div:last-child {
+  flex: 2;
+  min-width: 280px;
+}
+
+@media (max-width: 480px) {
+  .card-bottom-row>div:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--panel-border);
+  }
 }
 
 .result-card.best-solution {

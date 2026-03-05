@@ -75,6 +75,9 @@
   --doc-special-text: var(--text-main);
   --config-input-bg: var(--color-bg-alt);
 
+  --card-inner-bg: rgba(255, 255, 255, 0.2);
+  --card-inner-divider: rgba(255, 255, 255, 0.3);
+
   /* Global Background Gradient */
   --app-gradient: radial-gradient(ellipse at bottom right, #BFDBFE 0%, #BFDBFE 20%, #FCE7F3 55%, #E2E4EA 85%, #D1D3D9 100%);
   --dot-grid-color: rgba(0, 0, 0, 0.16);
@@ -114,6 +117,9 @@
   --best-card-shadow: 0 0 25px var(--color-best-shadow);
   /* keep text-on-accent WHITE for nav pill active states */
   --color-text-on-accent: #E8E8E8;
+
+  --card-inner-bg: rgba(0, 0, 0, 0.25);
+  --card-inner-divider: rgba(0, 0, 0, 0.35);
 
   /* Global Background Gradient */
   --app-gradient: radial-gradient(ellipse at bottom right, #2C200B 0%, #2C200B 15%, #101D30 55%, #1C1C1C 85%, #141414 100%);

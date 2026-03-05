@@ -42,7 +42,7 @@ input[type="number"],
 input[type="text"] {
   padding: 6px 12px;
   border: 1px solid rgba(255, 255, 255, 0.4);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.2));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--text-main);
@@ -74,8 +74,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 input[type="number"]:focus,
 input[type="text"]:focus {
-  border-color: rgba(255, 255, 255, 0.7);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+  border-color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
 }
 
 [data-theme="dark"] input[type="number"]:focus,
@@ -91,7 +91,7 @@ input[type="text"]:focus {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -308,7 +308,7 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   max-height: 250px;
   width: 100%;
   max-width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -340,7 +340,7 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
   margin: -1px 0 0 -1px !important;
 
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
   color: var(--text-main) !important;
 
   border-radius: 0 !important;
