@@ -32,8 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     bestWrapper.classList.remove('hidden');
     allWrapper.classList.remove('hidden');
 
-    const maxF = Math.max(...solutions.map(s => s.f));
-    const bestSolution = solutions.find(s => s.f === maxF);
+    // Exclude x_0 from being selected as the best solution
+    const validSolutions = solutions.filter(s => s.s_index !== 0);
+    const maxF = Math.max(...validSolutions.map(s => s.f));
+    const bestSolution = validSolutions.find(s => s.f === maxF);
 
     const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;';
 
@@ -75,13 +77,47 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sol.s_index === 0) return; // Пропускаем x_0, он уже сверху
       allWrapper.appendChild(createCard(sol, false));
     });
+
+    // Update fog overlays
+    setTimeout(handleCandidatesScroll, 50);
+  }
+
+  function handleCandidatesScroll() {
+    const wrapper = document.getElementById('allCandidatesWrapper');
+    const body = wrapper?.closest('.candidates-body');
+    if (!wrapper || !body) return;
+
+    // Check top
+    if (wrapper.scrollTop <= 10) {
+      body.classList.add('at-top');
+    } else {
+      body.classList.remove('at-top');
+    }
+
+    // Check bottom
+    const isAtBottom = wrapper.scrollHeight - wrapper.scrollTop - wrapper.clientHeight <= 10;
+    if (isAtBottom) {
+      body.classList.add('at-bottom');
+    } else {
+      body.classList.remove('at-bottom');
+    }
+  }
+
+  const allCandidatesWrapper = document.getElementById('allCandidatesWrapper');
+  if (allCandidatesWrapper) {
+    allCandidatesWrapper.addEventListener('scroll', handleCandidatesScroll);
+    window.addEventListener('resize', handleCandidatesScroll);
   }
 
   // ── Pill Slider Helper ────────────────────────────────────
-  function updatePillSlider(container) {
+  function updatePillSlider(container, instant = false) {
     const slider = container.querySelector('.pill-slider');
     const activeItem = container.querySelector('.pill-item.active');
     if (!slider || !activeItem) return;
+
+    if (instant) {
+      slider.style.transition = 'none';
+    }
 
     const containerRect = container.getBoundingClientRect();
     const itemRect = activeItem.getBoundingClientRect();
@@ -89,6 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     slider.style.width = itemRect.width + 'px';
     slider.style.transform = `translateX(${offset}px)`;
+
+    if (instant) {
+      // Force a synchronous reflow so the browser renders at the new coordinates immediately
+      void slider.offsetWidth;
+      slider.style.transition = '';
+    }
   }
 
   // ── Переключение навигации ───────────────────────────────
@@ -120,7 +162,40 @@ document.addEventListener('DOMContentLoaded', () => {
       optimizationView.classList.add('hidden');
       docsPanel.classList.add('hidden');
       settingsPanel.classList.remove('hidden');
+
+      // The settings panel was un-hidden; we must wait a single frame for the DOM 
+      // to calculate widths, then instantly update any internal sliders so they aren't squashed.
+      requestAnimationFrame(() => {
+        if (typeof settingsLangPill !== 'undefined' && settingsLangPill) {
+          updatePillSlider(settingsLangPill, true);
+        }
+        const navbarPosPill = document.querySelector('.navbar-pos-pill');
+        if (navbarPosPill) {
+          updatePillSlider(navbarPosPill, true);
+        }
+      });
     }
+  });
+
+  // Global resize listener for all pill sliders globally, so they never break
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(() => {
+      const topNav = document.querySelector('.top-nav');
+      const langSwitcher = document.querySelector('.lang-switcher');
+      const settingsLangPill = document.querySelector('.settings-lang-pill');
+      const themePill = document.querySelector('.theme-switcher-pill');
+      const navbarPosPill = document.querySelector('.navbar-pos-pill');
+
+      if (topNav) updatePillSlider(topNav);
+      if (langSwitcher) updatePillSlider(langSwitcher);
+      if (settingsLangPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
+        updatePillSlider(settingsLangPill);
+      }
+      if (navbarPosPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
+        updatePillSlider(navbarPosPill);
+      }
+      if (themePill) updatePillSlider(themePill);
+    });
   });
 
   // ── Язык ────────────────────────────────────────────────
@@ -197,6 +272,47 @@ document.addEventListener('DOMContentLoaded', () => {
       handleThemeChange(e.target.checked ? 'dark' : 'light');
     });
   }
+
+  // ── Позиция навбара ────────────────────────────────────
+  let navbarPos = localStorage.getItem('navbarPos') || 'center';
+
+  const navbarPosItems = document.querySelectorAll('.navbar-pos-item');
+  const navbarPosPill = document.querySelector('.navbar-pos-pill');
+
+  const updateNavbarUI = (pos) => {
+    // Update pill UI
+    navbarPosItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-pos') === pos);
+    });
+    if (navbarPosPill) updatePillSlider(navbarPosPill);
+
+    const headerRight = document.querySelector('.header-right');
+    if (!headerRight) return;
+
+    // Remove custom mode classes
+    headerRight.classList.remove('navbar-static', 'navbar-right');
+
+    if (pos === 'static') {
+      headerRight.classList.remove('scrolled');
+      headerRight.classList.add('navbar-static');
+    } else if (pos === 'right') {
+      headerRight.classList.remove('scrolled');
+      headerRight.classList.add('navbar-right');
+    } else {
+      // 'center' mode: dynamically calculate scroll class
+      window.dispatchEvent(new Event('scroll'));
+    }
+  };
+
+  updateNavbarUI(navbarPos);
+
+  navbarPosItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navbarPos = item.getAttribute('data-pos');
+      localStorage.setItem('navbarPos', navbarPos);
+      updateNavbarUI(navbarPos);
+    });
+  });
 
   // ── Initial slider positions ────────────────────────────
   requestAnimationFrame(() => {
@@ -518,6 +634,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (themePill) updatePillSlider(themePill);
       if (settingsLangPill) updatePillSlider(settingsLangPill);
     });
+  });
+
+  // Scroll handler for header right controls
+  window.addEventListener('scroll', () => {
+    // If navbar is chosen to be static or right, ignore the center scroll shift
+    if (typeof navbarPos !== 'undefined' && (navbarPos === 'static' || navbarPos === 'right')) return;
+
+    const headerRight = document.querySelector('.header-right');
+    if (headerRight) {
+      if (window.scrollY > 150) {
+        headerRight.classList.add('scrolled');
+      } else {
+        headerRight.classList.remove('scrolled');
+      }
+    }
   });
 
 });

@@ -134,8 +134,8 @@ def solve_problem(
             "s_index": s_idx # s_idx=0 это x_0, s_idx=1 это x_1 (отброшен 1 столбец) и т.д.
         })
         
-        # Строгое сравнение и поиск максимума по критерию
-        if f_total > best_F:
+        # Строгое сравнение и поиск максимума по критерию (исключая x_0)
+        if s_idx > 0 and f_total > best_F:
             best_F = f_total
             best_x = original_x
 

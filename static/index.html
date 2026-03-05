@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Selection</title>
-    <link rel="stylesheet" href="/static/style.css?v=48">
+    <link rel="stylesheet" href="/static/style.css?v=78">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -213,34 +213,37 @@
 
                     </div>
 
-                    <!-- Right column -->
-                    <div class="opt-right-col">
+                    <!-- Right column wrapper to enforce left-column height parity -->
+                    <div class="opt-right-col-wrapper">
+                        <!-- Right column -->
+                        <div class="opt-right-col">
 
-                        <!-- Best result card -->
-                        <div id="resultContainer" class="opt-glass-card opt-result-card">
-                            <div class="opt-card-header">
-                                <h2 data-i18n="results_title">Лучшее решение</h2>
-                            </div>
-                            <div class="opt-card-body result-body">
-                                <div id="errorBox" class="error-notification hidden"></div>
-                                <div id="bestResultWrapper" class="result-cards-area hidden">
-                                    <!-- Best card here -->
+                            <!-- Best result card -->
+                            <div id="resultContainer" class="opt-glass-card opt-result-card">
+                                <div class="opt-card-header">
+                                    <h2 data-i18n="results_title">Лучшее решение</h2>
+                                </div>
+                                <div class="opt-card-body result-body">
+                                    <div id="errorBox" class="error-notification hidden"></div>
+                                    <div id="bestResultWrapper" class="result-cards-area hidden">
+                                        <!-- Best card here -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Candidates card -->
-                        <div class="opt-glass-card opt-candidates-card hidden" id="candidatesContainer">
-                            <div class="opt-card-header candidates-header">
-                                <h2 data-i18n="candidates_title">Кандидаты</h2>
-                            </div>
-                            <div class="opt-card-body result-body candidates-body">
-                                <div id="allCandidatesWrapper" class="result-cards-area">
-                                    <!-- All xs cards here -->
+                            <!-- Candidates card -->
+                            <div class="opt-glass-card opt-candidates-card hidden" id="candidatesContainer">
+                                <div class="opt-card-header candidates-header">
+                                    <h2 data-i18n="candidates_title">Кандидаты</h2>
+                                </div>
+                                <div class="opt-card-body result-body candidates-body">
+                                    <div id="allCandidatesWrapper" class="result-cards-area">
+                                        <!-- All xs cards here -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
 
                 </div>
@@ -381,6 +384,26 @@ lambda</pre>
                                 </label>
                             </div>
 
+                            <div class="settings-glass-card"
+                                style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                                <div class="settings-card-info" style="padding-right: 0;">
+                                    <div class="settings-card-title" data-i18n="navbar_pos_title">Позиция панели
+                                        навигации</div>
+                                    <p class="settings-card-desc" data-i18n="navbar_pos_desc">Как ведет себя панель при
+                                        прокрутке страницы</p>
+                                </div>
+                                <div class="glass-pill-nav navbar-pos-pill"
+                                    style="font-size: 0.95rem; justify-content: space-between;">
+                                    <div class="pill-slider navbar-pos-slider"></div>
+                                    <span class="pill-item navbar-pos-item" data-pos="static"
+                                        style="flex: 1; text-align: center;" data-i18n="nav_pos_static">Статично</span>
+                                    <span class="pill-item navbar-pos-item" data-pos="center"
+                                        style="flex: 1; text-align: center;" data-i18n="nav_pos_center">По центру</span>
+                                    <span class="pill-item navbar-pos-item" data-pos="right"
+                                        style="flex: 1; text-align: center;" data-i18n="nav_pos_right">Справа</span>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>
@@ -431,8 +454,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=33"></script>
-    <script src="/static/script.js?v=34"></script>
+    <script src="/static/lang.js?v=35"></script>
+    <script src="/static/script.js?v=43"></script>
 </body>
 
 </html>

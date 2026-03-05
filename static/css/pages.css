@@ -70,7 +70,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: 1.25rem 2rem 3rem 2rem;
 }
 
 .settings-cards-list {
@@ -126,6 +126,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+  padding-right: 1.5rem;
 }
 
 .settings-card-title {
@@ -272,6 +275,7 @@
   padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 0.5rem;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
