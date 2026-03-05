@@ -463,3 +463,31 @@ html[data-no-blur] .opt-glass-card {
 html[data-no-blur] .result-card {
   background: var(--color-bg-surface) !important;
 }
+
+/* Pill slider — solid bg in no-blur mode */
+html[data-no-blur] .pill-slider {
+  background: rgba(0, 0, 0, 0.12) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+html[data-no-blur][data-theme="dark"] .pill-slider {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Mobile bottom nav — no background plate in no-blur mode */
+html[data-no-blur] .header-right {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Center nav option disabled in no-blur mode */
+.navbar-pos-item.perf-disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}

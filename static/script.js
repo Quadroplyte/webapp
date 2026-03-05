@@ -307,6 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const perfToggle = document.getElementById('perfModeToggle');
   const perfModeEnabled = localStorage.getItem('perfMode') === 'true';
 
+  // navbarPos declared early so applyPerfMode can reference it
+  let navbarPos = localStorage.getItem('navbarPos') || 'center';
+
   const applyPerfMode = (enabled) => {
     if (enabled) {
       document.documentElement.setAttribute('data-no-blur', '');
@@ -314,6 +317,22 @@ document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.removeAttribute('data-no-blur');
     }
     if (perfToggle) perfToggle.checked = enabled;
+
+    // Disable "center" navbar option in perf mode (requires blur)
+    const centerItem = document.querySelector('.navbar-pos-item[data-pos="center"]');
+    if (centerItem) {
+      if (enabled) {
+        centerItem.classList.add('perf-disabled');
+        // If currently on center, switch to static
+        if (navbarPos === 'center') {
+          navbarPos = 'static';
+          localStorage.setItem('navbarPos', 'static');
+          updateNavbarUI('static');
+        }
+      } else {
+        centerItem.classList.remove('perf-disabled');
+      }
+    }
   };
 
   applyPerfMode(perfModeEnabled);
@@ -325,8 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
       applyPerfMode(enabled);
     });
   }
-
-  let navbarPos = localStorage.getItem('navbarPos') || 'center';
 
   const navbarPosItems = document.querySelectorAll('.navbar-pos-item');
   const navbarPosPill = document.querySelector('.navbar-pos-pill');

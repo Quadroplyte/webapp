@@ -24,31 +24,49 @@
 - **Адаптивность**: Стили оптимизированы как для десктопа, так и для мобильных устройств. На экранах `<= 1024px` интерфейс перестраивается: колонки выстраиваются вертикально в одну стопку, а панель навигации (header-right) фиксируется внизу экрана с поддержкой разных режимов позиционирования (Статический \ По центру).
 
 ### Глобальный фон
-Фон задан через `--app-gradient` как `radial-gradient(ellipse at bottom right, ...)` и применён к `body` с `background-attachment: fixed`. Поверх наложена точечная сетка (`--dot-grid-color`). Все панели и секции имеют `background: transparent`, чтобы градиент просвечивал.
+Фон задан через `--app-gradient` как `radial-gradient(ellipse at bottom right, ...)` и применён к `body` с `background-attachment: fixed`. Поверх наложен орнамент, выбираемый пользователем через атрибут `data-pattern` на `<html>`:
+- `dots` — точечная сетка (CSS `radial-gradient`).
+- `plus` — SVG плюсики на сетке 38×38px.
+- `cross` — SVG крестики (×) на сетке 38×38px.
+- `none` — чистый градиент без орнамента.
+
+Цвета градиентов:
+- **Светлая тема**: `#BFDBFE` (голубой) → `#FCE7F3` (розовый) → `#D1D3D9` (серый).
+- **Тёмная тема**: `#2C200B` (янтарный) → `#101D30` (тёмно-синий) → `#141414` (чёрный).
+
+### Акцентные цвета
+- **Светлая тема**: акцентный синий убран. Все кнопки — нейтральный белый фон (`--panel-bg`). Карточка лучшей кандидатуры подсвечена розово-голубым свечением (переменные `--color-best-border`, `--best-card-shadow`).
+- **Тёмная тема**: акцентный жёлтый убран. Все кнопки — тёмная поверхность (`#222222`, текст `#D1D5DB`). Карточка лучшей кандидатуры подсвечена золотым (`#FACC15`).
 
 ### Glassmorphism
 Основные UI-компоненты используют glassmorphism:
-- **Glass Pill Nav** (`.glass-pill-nav`): полупрозрачные rounded-pill контейнеры с `backdrop-filter: blur(16px)` для навигации, выбора языка и темы.
+- **Glass Pill Nav** (`.glass-pill-nav`): полупрозрачные rounded-pill контейнеры с `backdrop-filter: blur(16px)` для навигации и выбора языка.
 - **Pill Slider** (`.pill-slider`): скользящий стеклянный индикатор, позиция и ширина управляются через JS-функцию `updatePillSlider()`.
-- **Glass Toggle** (`.glass-toggle`): тумблер с стеклянной дорожкой и круглым knob. При `checked` дорожка заливается зелёным.
+- **Glass Dropdown** (`.glass-dropdown`): выпадающий список для выбора темы оформления. Стилизован в glassmorphism, содержит header с иконкой стрелки и анимированное меню. Используется вместо pill-selector для тем.
+- **Glass Toggle** (`.glass-toggle`): тумблер с стеклянной дорожкой и круглым knob (`.glass-toggle-knob`). При `checked` дорожка заливается зелёным.
 - **Glass Cards** (`.settings-glass-card`): карточки с `backdrop-filter: blur(20px)`, `border-radius: 16px`, полупрозрачным фоном. Hover-эффекты отключены — карточки статичные.
+
+### Режим производительности
+При активации тумблера «Режим производительности» в настройках на `<html>` устанавливается атрибут `data-no-blur`. CSS-правила в `glass.css` под селектором `html[data-no-blur]` явно отключают `backdrop-filter` для каждого компонента и заменяют прозрачные фоны на сплошные (`--color-bg-surface`). Состояние сохраняется в `localStorage('perfMode')`.
 
 ## Структура фронтенда
 
 ### index.html
-- **Шапка**: Заголовок приложения + три glass-pill группы (навигация, язык, тема). На мобильных устройствах элементы управления прячутся в меню настроек, а панель опускается вниз.
-- **Оптимизация**: Форма ввода, конфигурация параметров, матрицы, кнопка расчёта, отображение результатов. На мобилках колонки становятся вертикальными (`flex-direction: column`).
-- **Справка / Настройки**: Glassmorphic карточки. Для мобильных экранов настроено переключение текста кнопок навигации с помощью классов `.d-text` (десктоп) и `.m-text` (мобильный), а также добавлен выбор расположения самой панели навигации (По центру / Справа / В самом низу).
+- **Шапка**: Заголовок приложения + два glass-pill (навигация, язык). На мобильных устройствах элементы управления прячутся в меню настроек, а панель опускается вниз.
+- **Оптимизация**: Форма ввода, конфигурация параметров, матрицы, кнопки расчёта (единый вид в каждой теме), отображение результатов. На мобилках колонки становятся вертикальными.
+- **Справка / Настройки**: Glassmorphic карточки.
 
 ### script.js
 - `updatePillSlider(container)`: Универсальная функция для позиционирования pill slider по активному элементу.
 - Все sliders пересчитываются при: клике на элемент, смене языка (`languageChanged` event), смене темы, загрузке страницы (`requestAnimationFrame`).
-- Тема управляется через pill selector в шапке и glass toggle в настройках — оба синхронизированы.
+- Тема управляется через **glass-dropdown** в шапке и в настройках — синхронизированы.
+- `applyPerfMode(enabled)`: включает/выключает атрибут `data-no-blur` на `<html>`, сохраняет состояние в `localStorage`.
+- `applyPattern(pattern)`: устанавливает атрибут `data-pattern` на `<html>` для выбора орнамента фона.
 
 ### style.css (модульная структура)
 Главный `style.css` импортирует 5 модулей через `@import`:
-- **`css/variables.css`** — CSS-переменные, `@font-face`, семантические токены, `:root` и `[data-theme="dark"]` overrides.
-- **`css/layout.css`** — Reset, `body`, app wrapper, header, workspace grid, panels, `.hidden`.
-- **`css/glass.css`** — Glass pill nav, pill slider, pill items, glass toggle (тумблер с зелёным `checked`).
-- **`css/components.css`** — Config grid, inputs, params table, matrix cells, buttons, scrollbar, code blocks, modals, legacy switch.
-- **`css/pages.css`** — Settings glass cards, docs cards/params/guide, result cards, candidates, vector display.
+- **`css/variables.css`** — CSS-переменные, `@font-face`, семантические токены, `:root` и `[data-theme="dark"]` overrides. Содержит `--app-gradient`, `--plus-grid-bg`, `--cross-grid-bg`, `--dot-grid-color`, `--best-card-shadow`.
+- **`css/layout.css`** — Reset, `body`, app wrapper, header, workspace grid, panels, `.hidden`. Правила для `html[data-pattern="plus"]`, `html[data-pattern="cross"]`, `html[data-pattern="dots"]`.
+- **`css/glass.css`** — Glass pill nav, pill slider, pill items, glass toggle (тумблер с зелёным `checked`), glass dropdown, performance mode overrides (`html[data-no-blur]`).
+- **`css/components.css`** — Config grid, inputs, params table, matrix cells, buttons (унифицированные по одному стилю на тему), scrollbar, code blocks, modals.
+- **`css/pages.css`** — Settings glass cards, docs cards/params/guide, result cards (с `best-solution` свечением), candidates, vector display.
