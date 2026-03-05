@@ -91,8 +91,8 @@
   padding: 1.25rem 1.75rem;
   border-radius: 16px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.45),
-      rgba(255, 255, 255, 0.2));
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.35));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
@@ -288,19 +288,41 @@
 }
 
 .result-card {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--panel-border);
-  border-radius: 4px;
-  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   gap: 0.5rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    0 4px 16px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+[data-theme="dark"] .result-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Perf mode - no blur for results */
+html[data-no-blur] .result-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--panel-border) !important;
+}
+
+[data-theme="dark"][data-no-blur] .result-card {
+  background: #1e1e1e !important;
 }
 
 /* Solver results override padding/gap for inner segments */
@@ -349,21 +371,46 @@
 }
 
 .x-box {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--panel-border);
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--panel-bg);
-  font-weight: 500;
-  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-weight: 600;
+  border-radius: 10px;
   color: var(--text-muted);
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .x-box {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .x-box.active {
-  background: var(--color-accent-main);
-  color: var(--color-text-on-accent);
-  border-color: var(--color-accent-main);
+  background: linear-gradient(135deg, #1F2937, #111827);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .x-box.active {
+  background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+  color: #111827;
+}
+
+/* Perf mode for x-box */
+html[data-no-blur] .x-box {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--sidebar-bg) !important;
+  border: 1px solid var(--panel-border) !important;
+}
+
+html[data-no-blur] .x-box.active {
+  background: var(--color-accent-main) !important;
 }

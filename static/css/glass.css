@@ -11,8 +11,8 @@
   padding: 4px;
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.35),
-      rgba(255, 255, 255, 0.15));
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -47,8 +47,8 @@
   height: calc(100% - 8px);
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.4));
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 255, 255, 0.6));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
@@ -159,8 +159,8 @@
   height: 28px;
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.35),
-      rgba(255, 255, 255, 0.15));
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -268,7 +268,7 @@
   gap: 0.5rem;
   padding: calc(0.4rem + 4px) 1.2rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.15));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.4);
