@@ -233,6 +233,8 @@ html[lang="ru"] .main-title {
   display: flex;
   flex-direction: column;
   flex: 1;
+  zoom: 0.85;
+  /* Возвращаем zoom для четкости */
 }
 
 .optimization-view {

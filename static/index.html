@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Selection</title>
-    <link rel="stylesheet" href="/static/style.css?v=621">
+    <link rel="stylesheet" href="/static/style.css?v=631">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -191,19 +191,35 @@
                                             <h3 data-i18n="vector_d_title">Вектор d (Время реакции)</h3>
                                             <div class="scroll-wrapper" id="vectorD_container"></div>
                                         </div>
-                                        <div class="data-group">
-                                            <h3 data-i18n="lambda_title">λ</h3>
-                                            <div class="params-table">
-                                                <div class="input-row">
-                                                    <div class="row-label">
-                                                        <label for="lam_input" data-i18n="label_lam">λ</label>
-                                                    </div>
-                                                    <div class="row-value">
-                                                        <input type="number" id="lam_input" min="0" max="1" step="0.1"
-                                                            value="0.5">
-                                                    </div>
+                                    </div>
+
+                                    <div class="data-group" style="margin-top: 0.2rem;">
+                                        <h3 data-i18n="lambda_title">λ</h3>
+                                        <div class="params-table">
+                                            <div class="input-row">
+                                                <div class="row-label">
+                                                    <label for="lam_input" data-i18n="label_lam">λ</label>
+                                                </div>
+                                                <div class="row-value">
+                                                    <input type="number" id="lam_input" min="0" max="1" step="0.1"
+                                                        value="0.5">
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="cellInfoPanel" class="cell-info-panel">
+                                        <div class="cell-info-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                            </svg>
+                                        </div>
+                                        <div id="cellInfoContent" class="cell-info-content" data-i18n="info_empty">
+                                            Выберите ячейку для отображения подробной информации
                                         </div>
                                     </div>
                                 </div>
@@ -527,8 +543,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=43"></script>
-    <script src="/static/script.js?v=51"></script>
+    <script src="/static/lang.js?v=46"></script>
+    <script src="/static/script.js?v=65"></script>
 </body>
 
 </html>

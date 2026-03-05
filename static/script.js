@@ -119,12 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
       slider.style.transition = 'none';
     }
 
-    const containerRect = container.getBoundingClientRect();
-    const itemRect = activeItem.getBoundingClientRect();
-    const offset = itemRect.left - containerRect.left - 4; // 4px padding
+    // Используем offset свойства вместо getBoundingClientRect, 
+    // так как getBoundingClientRect ломается и выдает неправильные координаты из-за CSS свойства zoom.
+    const leftPos = activeItem.offsetLeft;
+    const width = activeItem.offsetWidth;
 
-    slider.style.width = itemRect.width + 'px';
-    slider.style.transform = `translateX(${offset}px)`;
+    slider.style.width = width + 'px';
+    // Анимируем свойство left вместо transform, так как CSS zoom ломает анимации transform в Chromium
+    slider.style.left = leftPos + 'px';
+    slider.style.transform = 'none';
 
     if (instant) {
       // Force a synchronous reflow so the browser renders at the new coordinates immediately
@@ -466,6 +469,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Запуск расчёта ──────────────────────────────────────
+  // Хак: Если кликаем по кнопке расчета пока активна матрица, фокус теряется,
+  // информационная панель схлопывается, высота страницы меняется, кнопка убегает 
+  // из-под курсора и стандартный click не срабатывает. 
+  // Этим preventDefault() мы запрещаем браузеру убирать фокус с инпута.
+  solveBtn.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
   solveBtn.addEventListener('click', async () => {
     // Guard: require data before solving
     if (currentM <= 0 || currentN <= 0) {
@@ -744,6 +755,205 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         headerRight.classList.remove('scrolled');
       }
+    }
+  });
+
+  // ── Интерактивная подсветка связей в матрицах и векторах ──
+  matricesContainer.addEventListener('focusin', (e) => {
+    if (!e.target.classList.contains('matrix-cell')) return;
+
+    // Очищаем старую подсветку
+    document.querySelectorAll('.matrix-cell.highlight-connection, .matrix-cell.highlight-source')
+      .forEach(el => {
+        el.classList.remove('highlight-connection');
+        el.classList.remove('highlight-source');
+      });
+
+    e.target.classList.add('highlight-source');
+
+    const idParts = e.target.id.split('_'); // формат: A_i_j, b_i_0, c_0_j, d_0_j
+    if (idParts.length !== 3) return;
+
+    const prefix = idParts[0];
+    const row = parseInt(idParts[1]);
+    const col = parseInt(idParts[2]);
+
+    if (prefix === 'A') {
+      // 1. При выборе в матрице A:
+      // В векторе b выделяем элемент в той же строке
+      const bCell = document.getElementById(`b_${row}_0`);
+      if (bCell) bCell.classList.add('highlight-connection');
+
+      // В векторах c и d выделяем элемент в том же столбце
+      const cCell = document.getElementById(`c_0_${col}`);
+      const dCell = document.getElementById(`d_0_${col}`);
+      if (cCell) cCell.classList.add('highlight-connection');
+      if (dCell) dCell.classList.add('highlight-connection');
+
+    } else if (prefix === 'b') {
+      // 2. При выборе в векторе b:
+      // В матрице A выделяем всю строку row, векторы c/d не трогаем
+      for (let j = 0; j < currentN; j++) {
+        const aCell = document.getElementById(`A_${row}_${j}`);
+        if (aCell) aCell.classList.add('highlight-connection');
+      }
+
+    } else if (prefix === 'c' || prefix === 'd') {
+      // 3. При выборе в векторе c или d:
+      // В матрице A выделяем весь столбец col, вектор b не трогаем
+      for (let i = 0; i < currentM; i++) {
+        const aCell = document.getElementById(`A_${i}_${col}`);
+        if (aCell) aCell.classList.add('highlight-connection');
+      }
+
+      // Также выделяем соответствующую ячейку в другом векторе (c или d)
+      const otherPrefix = prefix === 'c' ? 'd' : 'c';
+      const otherCell = document.getElementById(`${otherPrefix}_0_${col}`);
+      if (otherCell) otherCell.classList.add('highlight-connection');
+    }
+
+    // --- Отображение информации о ячейке ---
+    const infoContent = document.getElementById('cellInfoContent');
+    if (!infoContent) return;
+
+    const getVal = (id) => {
+      const el = document.getElementById(id);
+      return el ? parseFloat(el.value || 0) : 0;
+    };
+
+    let infoHtml = '';
+
+    if (prefix === 'A') {
+      const cost = getVal(`A_${row}_${col}`);
+      const limit = getVal(`b_${row}_0`);
+      const hTime = getVal(`c_0_${col}`);
+      const rTime = getVal(`d_0_${col}`);
+
+      infoHtml = `
+        <div class="info-grid">
+          <div class="info-item"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
+          <div class="info-item"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_cost')}</span> <b>${cost}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_react_time')}</span> <b>${rTime}</b></div>
+        </div>
+      `;
+    } else if (prefix === 'b') {
+      const limit = getVal(`b_${row}_0`);
+      infoHtml = `
+        <div class="info-grid">
+          <div class="info-item"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
+        </div>
+      `;
+    } else if (prefix === 'c' || prefix === 'd') {
+      const hTime = getVal(`c_0_${col}`);
+      const rTime = getVal(`d_0_${col}`);
+      infoHtml = `
+        <div class="info-grid">
+          <div class="info-item"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_react_time')}</span> <b>${rTime}</b></div>
+        </div>
+      `;
+    }
+
+    infoContent.innerHTML = infoHtml;
+
+  });
+
+  matricesContainer.addEventListener('focusout', (e) => {
+    if (!e.target.classList.contains('matrix-cell')) return;
+    // Снимаем подсветку при потере фокуса
+    document.querySelectorAll('.matrix-cell.highlight-connection, .matrix-cell.highlight-source')
+      .forEach(el => {
+        el.classList.remove('highlight-connection');
+        el.classList.remove('highlight-source');
+      });
+
+    const infoContent = document.getElementById('cellInfoContent');
+    if (infoContent) {
+      // Вернуть дефолтный текст
+      infoContent.innerHTML = t('info_empty');
+    }
+  });
+
+  // ── Синхронизированный скролл ──
+  const syncScroll = (source, targets, prop) => {
+    source.addEventListener('scroll', () => {
+      if (source.dataset.ignoreScroll) {
+        source.dataset.ignoreScroll = '';
+        return;
+      }
+      targets.forEach(target => {
+        if (target && target[prop] !== source[prop]) {
+          target.dataset.ignoreScroll = 'true';
+          target[prop] = source[prop];
+        }
+      });
+    });
+  };
+
+  const aCont = document.getElementById('matrixA_container');
+  const bCont = document.getElementById('vectorB_container');
+  const cCont = document.getElementById('vectorC_container');
+  const dCont = document.getElementById('vectorD_container');
+
+  if (aCont && bCont && cCont && dCont) {
+    // Вертикальный скролл (A <-> b)
+    syncScroll(aCont, [bCont], 'scrollTop');
+    syncScroll(bCont, [aCont], 'scrollTop');
+
+    // Горизонтальный скролл (A <-> c <-> d)
+    syncScroll(aCont, [cCont, dCont], 'scrollLeft');
+    syncScroll(cCont, [aCont, dCont], 'scrollLeft');
+    syncScroll(dCont, [aCont, cCont], 'scrollLeft');
+  }
+
+  // ── Исправление бага браузера со скроллом при zoom ──
+  document.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'INPUT' && e.target.type === 'number') {
+      const aCont = document.getElementById('matrixA_container');
+      const bCont = document.getElementById('vectorB_container');
+      const cCont = document.getElementById('vectorC_container');
+      const dCont = document.getElementById('vectorD_container');
+
+      // Сохраняем все позиции скроллов до фокуса
+      const tops = {
+        a: aCont ? aCont.scrollTop : 0, b: bCont ? bCont.scrollTop : 0,
+        c: cCont ? cCont.scrollTop : 0, d: dCont ? dCont.scrollTop : 0,
+        w: window.scrollY
+      };
+      const lefts = {
+        a: aCont ? aCont.scrollLeft : 0, b: bCont ? bCont.scrollLeft : 0,
+        c: cCont ? cCont.scrollLeft : 0, d: dCont ? dCont.scrollLeft : 0,
+        w: window.scrollX
+      };
+
+      e.preventDefault();
+      e.target.focus({ preventScroll: true });
+      setTimeout(() => e.target.select(), 0);
+
+      const restore = () => {
+        if (aCont && aCont.scrollTop !== tops.a) aCont.scrollTop = tops.a;
+        if (bCont && bCont.scrollTop !== tops.b) bCont.scrollTop = tops.b;
+        if (cCont && cCont.scrollTop !== tops.c) cCont.scrollTop = tops.c;
+        if (dCont && dCont.scrollTop !== tops.d) dCont.scrollTop = tops.d;
+
+        if (aCont && aCont.scrollLeft !== lefts.a) aCont.scrollLeft = lefts.a;
+        if (bCont && bCont.scrollLeft !== lefts.b) bCont.scrollLeft = lefts.b;
+        if (cCont && cCont.scrollLeft !== lefts.c) cCont.scrollLeft = lefts.c;
+        if (dCont && dCont.scrollLeft !== lefts.d) dCont.scrollLeft = lefts.d;
+
+        if (window.scrollY !== tops.w || window.scrollX !== lefts.w) {
+          window.scrollTo(lefts.w, tops.w);
+        }
+      };
+
+      restore();
+      requestAnimationFrame(restore);
+      setTimeout(restore, 10);
     }
   });
 

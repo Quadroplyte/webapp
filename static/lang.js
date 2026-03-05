@@ -100,7 +100,16 @@ const translations = {
 
     // Modal
     modal_import_title: "Формат файла импорта",
-    open_docs_btn: "Открыть справку"
+    open_docs_btn: "Открыть справку",
+
+    // Interactive Info
+    info_empty: "Выберите ячейку для отображения подробной информации",
+    info_gia_num: "ГИА №",
+    info_szi_num: "СЗИ №",
+    info_cost: "Стоимость (A):",
+    info_limit: "Фин. лимит (b):",
+    info_hack_time: "Время взлома (c):",
+    info_react_time: "Время реакции (d):"
   },
   en: {
     // Sidebar & Header
@@ -203,7 +212,16 @@ const translations = {
 
     // Modal
     modal_import_title: "Import file format",
-    open_docs_btn: "Open documentation"
+    open_docs_btn: "Open documentation",
+
+    // Interactive Info
+    info_empty: "Select a cell to show detailed information",
+    info_gia_num: "AG #",
+    info_szi_num: "ISS #",
+    info_cost: "Cost (A):",
+    info_limit: "Fin. limit (b):",
+    info_hack_time: "Hack time (c):",
+    info_react_time: "Reaction time (d):"
   }
 };
 

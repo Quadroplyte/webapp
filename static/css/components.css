@@ -463,6 +463,45 @@ html[data-no-blur] .params-table .row-value input {
   background: var(--input-bg) !important;
 }
 
+/* Interconnection Highlights */
+.matrix-cell.highlight-connection {
+  background: rgba(244, 114, 182, 0.25) !important;
+  border-color: rgba(244, 114, 182, 0.7) !important;
+  box-shadow: inset 0 0 0 2px rgba(244, 114, 182, 0.4) !important;
+  z-index: 1;
+}
+
+[data-theme="dark"] .matrix-cell.highlight-connection {
+  background: rgba(250, 204, 21, 0.25) !important;
+  border-color: rgba(250, 204, 21, 0.7) !important;
+  box-shadow: inset 0 0 0 2px rgba(250, 204, 21, 0.4) !important;
+}
+
+/* Perf mode highlights bg */
+html[data-no-blur] .matrix-cell.highlight-connection {
+  background: rgba(244, 114, 182, 0.15) !important;
+  border-color: rgba(244, 114, 182, 0.8) !important;
+}
+
+html[data-no-blur][data-theme="dark"] .matrix-cell.highlight-connection {
+  background: rgba(250, 204, 21, 0.15) !important;
+  border-color: rgba(250, 204, 21, 0.8) !important;
+}
+
+/* Active Source Cell */
+.matrix-cell.highlight-source {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(244, 114, 182, 0.9) !important;
+  box-shadow: inset 0 0 0 2px rgba(244, 114, 182, 0.6) !important;
+  z-index: 2 !important;
+}
+
+[data-theme="dark"] .matrix-cell.highlight-source {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(250, 204, 21, 0.9) !important;
+  box-shadow: inset 0 0 0 2px rgba(250, 204, 21, 0.6) !important;
+}
+
 .vectors-column {
   display: flex;
   flex-direction: column;
@@ -470,6 +509,8 @@ html[data-no-blur] .params-table .row-value input {
   gap: 0.2rem;
   margin-top: 0;
   max-width: 100%;
+  padding-right: calc(62px + 1rem);
+  /* Выравнивание ширины с матрицей А (минус вектор b и gap) */
 }
 
 .data-group {
@@ -613,6 +654,8 @@ input:checked+.slider:before {
   width: 100%;
   max-width: 450px;
   box-shadow: var(--shadow-md);
+  zoom: 0.85;
+  /* Возвращаем zoom для четкости */
 }
 
 .modal-header {
@@ -625,6 +668,93 @@ input:checked+.slider:before {
 
 .modal-body {
   padding: 1.25rem;
+}
+
+/* Cell Info Panel */
+.cell-info-panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  margin-top: 1rem;
+  background: rgba(244, 114, 182, 0.05);
+  border: 1px solid rgba(244, 114, 182, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  min-height: 72px;
+}
+
+[data-theme="dark"] .cell-info-panel {
+  background: rgba(250, 204, 21, 0.03);
+  border-color: rgba(250, 204, 21, 0.15);
+}
+
+html[data-no-blur] .cell-info-panel {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: var(--input-bg) !important;
+  border-color: var(--panel-border) !important;
+}
+
+.cell-info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .cell-info-icon {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cell-info-content {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.04);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  flex: 1;
+  min-width: 110px;
+}
+
+[data-theme="dark"] .info-item {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.info-item span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+.info-item b {
+  font-size: 1.15rem;
+  color: var(--text-main);
+  font-weight: 600;
 }
 
 /* Language Toggle Custom Switch (legacy) */
