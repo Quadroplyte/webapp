@@ -7,7 +7,7 @@
 .docs-panel {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - var(--topbar-height));
+  flex: 1;
 }
 
 .docs-panel .panel-header {
@@ -49,7 +49,7 @@
 .settings-panel {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - var(--topbar-height));
+  flex: 1;
   position: relative;
   overflow: hidden;
 }

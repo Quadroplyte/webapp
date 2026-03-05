@@ -33,6 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
 
 .content-area {
@@ -192,6 +193,8 @@ body {
   flex: 1;
   min-width: 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .opt-right-col {
@@ -376,7 +379,6 @@ body {
 /* Panels (Now sections defined by hairline borders) */
 .panel {
   background: transparent;
-  border-bottom: 1px solid var(--panel-border);
   transition: border-color 0.3s;
 }
 
@@ -397,4 +399,127 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+/* ========== RESPONSIVE MOBILE LAYOUT ========== */
+@media (max-width: 1024px) {
+  .optimization-view {
+    flex-direction: column;
+    padding: 1.25rem 1rem;
+  }
+
+  .opt-left-col {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .opt-right-col-wrapper {
+    width: 100%;
+    flex: none;
+  }
+
+  .opt-right-col {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: auto;
+  }
+
+  .opt-candidates-card {
+    flex: none;
+    height: clamp(350px, 50vh, 700px);
+  }
+
+  .app-header {
+    padding: 2rem 1rem 1rem 1rem;
+    justify-content: center;
+  }
+
+  .header-container {
+    justify-content: center;
+  }
+
+  .header-logo {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .main-title {
+    text-align: center;
+    font-size: 26px;
+  }
+
+  .header-controls {
+    display: none !important;
+  }
+
+  .workspace {
+    padding-bottom: 6.5rem;
+  }
+
+  .settings-center-wrap {
+    padding: 1.25rem 1rem 1rem 1rem !important;
+  }
+
+  .header-right {
+    position: fixed;
+    top: auto;
+    bottom: 1.5rem;
+    right: 50%;
+    transform: translateX(50%);
+    background: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+
+  [data-theme="dark"] .header-right {
+    background: rgba(40, 40, 40, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .header-right .glass-pill-nav {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .header-right.scrolled {
+    top: auto;
+    bottom: 1.5rem;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .header-right.navbar-static {
+    position: absolute;
+    top: auto;
+    bottom: 1.5rem;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
+  .m-text {
+    display: inline;
+  }
+
+  .d-text {
+    display: none;
+  }
+
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .m-text {
+    display: none;
+  }
 }
