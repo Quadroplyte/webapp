@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SZI Selection</title>
-    <link rel="stylesheet" href="/static/style.css?v=87">
+    <link rel="stylesheet" href="/static/style.css?v=116">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
@@ -39,12 +39,21 @@
                                 <span class="pill-item lang-item" data-lang="en" data-i18n="lang_en_short">АНГ</span>
                             </div>
 
-                            <div class="glass-pill-nav theme-switcher-pill">
-                                <div class="pill-slider theme-slider"></div>
-                                <span class="pill-item theme-pill-item" data-theme="light"
-                                    data-i18n="theme_light">Светлая</span>
-                                <span class="pill-item theme-pill-item active" data-theme="dark"
-                                    data-i18n="theme_dark">Темная</span>
+                            <div class="glass-dropdown theme-dropdown">
+                                <div class="glass-dropdown-header">
+                                    <span class="selected-theme-text" data-i18n="theme_dark">Темная</span>
+                                    <svg class="glass-dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="glass-dropdown-menu">
+                                    <div class="glass-dropdown-item" data-theme="light" data-i18n="theme_light">Светлая
+                                    </div>
+                                    <div class="glass-dropdown-item active" data-theme="dark" data-i18n="theme_dark">
+                                        Темная</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -372,16 +381,71 @@ lambda</pre>
 
                             <div class="settings-glass-card">
                                 <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="dark_theme_title">Темная тема</div>
+                                    <div class="settings-card-title" data-i18n="theme_title">Тема оформления</div>
                                     <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить цветовую
                                         схему интерфейса</p>
                                 </div>
+                                <div class="glass-dropdown theme-dropdown">
+                                    <div class="glass-dropdown-header">
+                                        <span class="selected-theme-text" data-i18n="theme_dark">Темная</span>
+                                        <svg class="glass-dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="glass-dropdown-menu right-aligned">
+                                        <div class="glass-dropdown-item" data-theme="light" data-i18n="theme_light">
+                                            Светлая</div>
+                                        <div class="glass-dropdown-item active" data-theme="dark"
+                                            data-i18n="theme_dark">Темная</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance mode card -->
+                            <div class="settings-glass-card">
+                                <div class="settings-card-info">
+                                    <div class="settings-card-title" data-i18n="perf_mode_title">Режим
+                                        производительности</div>
+                                    <p class="settings-card-desc" data-i18n="perf_mode_desc">Отключить размытие и
+                                        прозрачность</p>
+                                </div>
                                 <label class="glass-toggle">
-                                    <input type="checkbox" class="theme-toggle-input" id="settingsThemeToggle">
+                                    <input type="checkbox" id="perfModeToggle" class="glass-toggle-input">
                                     <span class="glass-toggle-track">
                                         <span class="glass-toggle-knob"></span>
                                     </span>
                                 </label>
+                            </div>
+
+                            <div class="settings-glass-card"
+                                style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                                <div class="settings-card-info" style="padding-right: 0;">
+                                    <div class="settings-card-title" data-i18n="bg_pattern_title">Орнамент фона</div>
+                                    <p class="settings-card-desc" data-i18n="bg_pattern_desc">Выберите узор заднего фона
+                                    </p>
+                                </div>
+                                <div class="glass-pill-nav bg-pattern-pill"
+                                    style="font-size: 0.95rem; justify-content: space-between;">
+                                    <div class="pill-slider bg-pattern-slider"></div>
+                                    <span class="pill-item bg-pattern-item active" data-pattern="dots"
+                                        style="flex: 1; text-align: center;">
+                                        <span data-i18n="pattern_dots">Точки</span>
+                                    </span>
+                                    <span class="pill-item bg-pattern-item" data-pattern="plus"
+                                        style="flex: 1; text-align: center;">
+                                        <span data-i18n="pattern_plus">Плюсики</span>
+                                    </span>
+                                    <span class="pill-item bg-pattern-item" data-pattern="cross"
+                                        style="flex: 1; text-align: center;">
+                                        <span data-i18n="pattern_cross">Крестики</span>
+                                    </span>
+                                    <span class="pill-item bg-pattern-item" data-pattern="none"
+                                        style="flex: 1; text-align: center;">
+                                        <span data-i18n="pattern_none">Нет</span>
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="settings-glass-card"
@@ -462,8 +526,8 @@ lambda</pre>
         </div>
     </div>
 
-    <script src="/static/lang.js?v=35"></script>
-    <script src="/static/script.js?v=43"></script>
+    <script src="/static/lang.js?v=42"></script>
+    <script src="/static/script.js?v=50"></script>
 </body>
 
 </html>

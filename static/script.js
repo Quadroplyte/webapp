@@ -173,6 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navbarPosPill) {
           updatePillSlider(navbarPosPill, true);
         }
+        const bgPatternPill = document.querySelector('.bg-pattern-pill');
+        if (bgPatternPill) {
+          updatePillSlider(bgPatternPill, true);
+        }
       });
     }
   });
@@ -183,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const topNav = document.querySelector('.top-nav');
       const langSwitcher = document.querySelector('.lang-switcher');
       const settingsLangPill = document.querySelector('.settings-lang-pill');
-      const themePill = document.querySelector('.theme-switcher-pill');
       const navbarPosPill = document.querySelector('.navbar-pos-pill');
+      const bgPatternPill = document.querySelector('.bg-pattern-pill');
 
       if (topNav) updatePillSlider(topNav);
       if (langSwitcher) updatePillSlider(langSwitcher);
@@ -194,7 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (navbarPosPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
         updatePillSlider(navbarPosPill);
       }
-      if (themePill) updatePillSlider(themePill);
+      if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
+        updatePillSlider(bgPatternPill);
+      }
     });
   });
 
@@ -224,25 +230,38 @@ document.addEventListener('DOMContentLoaded', () => {
     item.addEventListener('click', () => handleLangChange(item.getAttribute('data-lang')));
   });
 
-  // ── Темная тема ─────────────────────────────────────────
-  const themePill = document.querySelector('.theme-switcher-pill');
-  const themePillItems = document.querySelectorAll('.theme-pill-item');
-  const settingsThemeToggle = document.getElementById('settingsThemeToggle');
+  // ── Glass Dropdowns (Generic) ───────────────────────────
+  document.addEventListener('click', (e) => {
+    // Close all dropdowns if clicked outside
+    if (!e.target.closest('.glass-dropdown')) {
+      document.querySelectorAll('.glass-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
 
+  // ── Темная тема ─────────────────────────────────────────
+  const themeDropdowns = document.querySelectorAll('.theme-dropdown');
   const currentTheme = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', currentTheme);
 
   const updateThemeUI = (theme) => {
-    // Header pill
-    themePillItems.forEach(item => {
-      item.classList.toggle('active', item.getAttribute('data-theme') === theme);
+    themeDropdowns.forEach(dropdown => {
+      // update text
+      const selectedTextEl = dropdown.querySelector('.selected-theme-text');
+      const items = dropdown.querySelectorAll('.glass-dropdown-item');
+      items.forEach(item => {
+        if (item.getAttribute('data-theme') === theme) {
+          item.classList.add('active');
+          if (selectedTextEl) {
+            selectedTextEl.textContent = item.textContent.trim();
+            if (item.hasAttribute('data-i18n')) {
+              selectedTextEl.setAttribute('data-i18n', item.getAttribute('data-i18n'));
+            }
+          }
+        } else {
+          item.classList.remove('active');
+        }
+      });
     });
-    if (themePill) updatePillSlider(themePill);
-
-    // Settings toggle
-    if (settingsThemeToggle) {
-      settingsThemeToggle.checked = (theme === 'dark');
-    }
   };
 
   updateThemeUI(currentTheme);
@@ -252,28 +271,61 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('theme', theme);
     updateThemeUI(theme);
     if (typeof updatePageLanguage === 'function') updatePageLanguage();
+
     // Recalculate pill sliders after theme change
     requestAnimationFrame(() => {
-      updatePillSlider(topNav);
-      updatePillSlider(langSwitcher);
-      if (themePill) updatePillSlider(themePill);
+      const topNav = document.querySelector('.top-nav');
+      const langSwitcher = document.querySelector('.lang-switcher');
+      const settingsLangPill = document.querySelector('.settings-lang-pill');
+      if (topNav) updatePillSlider(topNav);
+      if (langSwitcher) updatePillSlider(langSwitcher);
       if (settingsLangPill) updatePillSlider(settingsLangPill);
     });
   };
 
-  // Header pill click
-  themePillItems.forEach(item => {
-    item.addEventListener('click', () => handleThemeChange(item.getAttribute('data-theme')));
+  themeDropdowns.forEach(dropdown => {
+    const header = dropdown.querySelector('.glass-dropdown-header');
+    const items = dropdown.querySelectorAll('.glass-dropdown-item');
+
+    header.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.glass-dropdown').forEach(d => {
+        if (d !== dropdown) d.classList.remove('open');
+      });
+      dropdown.classList.toggle('open');
+    });
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        handleThemeChange(item.getAttribute('data-theme'));
+        dropdown.classList.remove('open');
+      });
+    });
   });
 
-  // Settings toggle change
-  if (settingsThemeToggle) {
-    settingsThemeToggle.addEventListener('change', (e) => {
-      handleThemeChange(e.target.checked ? 'dark' : 'light');
+  // ── Режим производительности (без размытий) ─────────────
+  const perfToggle = document.getElementById('perfModeToggle');
+  const perfModeEnabled = localStorage.getItem('perfMode') === 'true';
+
+  const applyPerfMode = (enabled) => {
+    if (enabled) {
+      document.documentElement.setAttribute('data-no-blur', '');
+    } else {
+      document.documentElement.removeAttribute('data-no-blur');
+    }
+    if (perfToggle) perfToggle.checked = enabled;
+  };
+
+  applyPerfMode(perfModeEnabled);
+
+  if (perfToggle) {
+    perfToggle.addEventListener('change', () => {
+      const enabled = perfToggle.checked;
+      localStorage.setItem('perfMode', enabled);
+      applyPerfMode(enabled);
     });
   }
 
-  // ── Позиция навбара ────────────────────────────────────
   let navbarPos = localStorage.getItem('navbarPos') || 'center';
 
   const navbarPosItems = document.querySelectorAll('.navbar-pos-item');
@@ -314,12 +366,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ── Орнамент фона ────────────────────────────────────────
+  let bgPattern = localStorage.getItem('bgPattern') || 'dots';
+  document.documentElement.setAttribute('data-pattern', bgPattern);
+
+  const bgPatternItems = document.querySelectorAll('.bg-pattern-item');
+  const bgPatternPill = document.querySelector('.bg-pattern-pill');
+
+  const updateBgPatternUI = (pattern) => {
+    bgPatternItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-pattern') === pattern);
+    });
+    if (bgPatternPill) updatePillSlider(bgPatternPill);
+    document.documentElement.setAttribute('data-pattern', pattern);
+  };
+
+  updateBgPatternUI(bgPattern);
+
+  bgPatternItems.forEach(item => {
+    item.addEventListener('click', () => {
+      bgPattern = item.getAttribute('data-pattern');
+      localStorage.setItem('bgPattern', bgPattern);
+      updateBgPatternUI(bgPattern);
+    });
+  });
+
   // ── Initial slider positions ────────────────────────────
   requestAnimationFrame(() => {
     updatePillSlider(topNav);
     updatePillSlider(langSwitcher);
-    if (themePill) updatePillSlider(themePill);
     if (settingsLangPill) updatePillSlider(settingsLangPill);
+    const bgPatternPill = document.querySelector('.bg-pattern-pill');
+    if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) updatePillSlider(bgPatternPill);
   });
 
   // ── Построение сетки ввода ──────────────────────────────
@@ -631,8 +709,9 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => {
       updatePillSlider(topNav);
       updatePillSlider(langSwitcher);
-      if (themePill) updatePillSlider(themePill);
       if (settingsLangPill) updatePillSlider(settingsLangPill);
+      const bgPatternPill = document.querySelector('.bg-pattern-pill');
+      if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) updatePillSlider(bgPatternPill);
     });
   });
 

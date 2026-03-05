@@ -78,8 +78,10 @@ const translations = {
 
     // Settings Panel
     settings_app_title: "Настройки приложения",
-    dark_theme_title: "Темная тема",
+    theme_title: "Тема оформления",
     toggle_theme_desc: "Переключить цветовую схему интерфейса",
+    perf_mode_title: "Режим производительности",
+    perf_mode_desc: "Отключить размытие и прозрачность (повышает быстродействие)",
     navbar_pos_title: "Позиция панели навигации",
     navbar_pos_desc: "Где располагается панель при прокрутке страницы",
     nav_pos_static: "Статично",
@@ -89,6 +91,12 @@ const translations = {
     nav_pos_right: "Справа",
     lang_title: "Язык интерфейса",
     lang_desc: "Выберите язык приложения",
+    bg_pattern_title: "Орнамент фона",
+    bg_pattern_desc: "Выберите узор заднего фона",
+    pattern_dots: "Точки",
+    pattern_plus: "Плюсики",
+    pattern_cross: "Крестики",
+    pattern_none: "Нет",
 
     // Modal
     modal_import_title: "Формат файла импорта",
@@ -153,6 +161,7 @@ const translations = {
 
     // Docs Panel
     docs_guide_title: "Help and Guide",
+    model_desc_title: "Description of the model",
     model_desc_text: "The system is designed for the optimal selection of information security solutions (ISS) subject to budget constraints for various asset groups (AG). The model minimizes risks, balancing total hacking time and reaction time of the weakest link via the λ coefficient.",
     input_params_title: "Input parameters",
     param_m_desc: "Number of asset groups (rows of matrix A)",
@@ -172,8 +181,10 @@ const translations = {
 
     // Settings Panel
     settings_app_title: "Application settings",
-    dark_theme_title: "Dark theme",
+    theme_title: "Interface theme",
     toggle_theme_desc: "Switch the interface color scheme",
+    perf_mode_title: "Performance Mode",
+    perf_mode_desc: "Disable blur and transparency (improves speed)",
     navbar_pos_title: "Navbar Position",
     navbar_pos_desc: "How the navigation bar behaves when scrolling",
     nav_pos_static: "Static",
@@ -183,6 +194,12 @@ const translations = {
     nav_pos_right: "Stay Right",
     lang_title: "Interface language",
     lang_desc: "Select application language",
+    bg_pattern_title: "Background Pattern",
+    bg_pattern_desc: "Select the background decoration pattern",
+    pattern_dots: "Dots",
+    pattern_plus: "Pluses",
+    pattern_cross: "Crosses",
+    pattern_none: "None",
 
     // Modal
     modal_import_title: "Import file format",

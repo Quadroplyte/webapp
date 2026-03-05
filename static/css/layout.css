@@ -29,6 +29,25 @@ body {
   min-height: 100vh;
 }
 
+html[data-pattern="plus"] body {
+  background:
+    var(--plus-grid-bg) 0 0 / 38px 38px,
+    var(--app-gradient);
+  background-attachment: fixed, fixed;
+}
+
+html[data-pattern="cross"] body {
+  background:
+    var(--cross-grid-bg) 0 0 / 38px 38px,
+    var(--app-gradient);
+  background-attachment: fixed, fixed;
+}
+
+html[data-pattern="none"] body {
+  background: var(--app-gradient);
+  background-attachment: fixed;
+}
+
 .app-wrapper {
   display: flex;
   flex-direction: column;
@@ -144,11 +163,14 @@ body {
   font-family: 'Roboto Flex', sans-serif;
   font-size: 32px;
   font-weight: 700;
-  color: var(--text-main);
   margin: 0;
-  line-height: 0.9;
+  padding: 4px 8px;
+  /* Extra padding to prevent clipping of shadows and strokes */
+  line-height: 1.15;
+  /* Increased to prevent clipping of tall letters like Й */
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.015em;
+  /* Increased letter distance */
   font-variation-settings:
     "slnt" -10,
     "wdth" 151,
@@ -162,6 +184,43 @@ body {
     "YTFI" 738,
     "YTLC" 570,
     "YTUC" 760;
+
+  /* High Contrast Glass Text Effect */
+  color: transparent;
+  background: linear-gradient(135deg,
+      rgba(15, 23, 42, 0.95) 0%,
+      rgba(15, 23, 42, 0.8) 40%,
+      rgba(255, 255, 255, 1) 48%,
+      rgba(255, 255, 255, 0.8) 52%,
+      rgba(15, 23, 42, 0.85) 55%,
+      rgba(15, 23, 42, 0.95) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Thin dark stroke helps outline the text without muddying it */
+  -webkit-text-stroke: 1px rgba(15, 23, 42, 0.2);
+
+  text-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .main-title {
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.9) 40%,
+      rgba(148, 163, 184, 0.5) 48%,
+      rgba(255, 255, 255, 1) 52%,
+      rgba(255, 255, 255, 0.95) 55%,
+      rgba(255, 255, 255, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1);
+
+  text-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.8),
+    0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 

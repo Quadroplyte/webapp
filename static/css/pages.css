@@ -109,6 +109,27 @@
   transform: none;
 }
 
+/* Stacking context fix for dropdown menus in glass cards */
+.settings-glass-card:nth-child(1) {
+  z-index: 50;
+}
+
+.settings-glass-card:nth-child(2) {
+  z-index: 40;
+}
+
+.settings-glass-card:nth-child(3) {
+  z-index: 30;
+}
+
+.settings-glass-card:nth-child(4) {
+  z-index: 20;
+}
+
+.settings-glass-card:nth-child(5) {
+  z-index: 10;
+}
+
 /* Dark theme glass card */
 [data-theme="dark"] .settings-glass-card {
   background: linear-gradient(135deg,
