@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     buildMatrix('matrixA_container', currentM, currentN, 'A');
-    buildMatrix('vectorB_container', 1, currentM, 'b');
+    buildMatrix('vectorB_container', currentM, 1, 'b');
     buildMatrix('vectorC_container', 1, currentN, 'c');
     buildMatrix('vectorD_container', 1, currentN, 'd');
 
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Collect vectors
       let b = [];
       for (let i = 0; i < currentM; i++) {
-        b.push(parseFloat(document.getElementById(`b_0_${i}`).value) || 0);
+        b.push(parseFloat(document.getElementById(`b_${i}_0`).value) || 0);
       }
 
       let c = [];
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentN = n;
 
         buildMatrix('matrixA_container', m, n, 'A');
-        buildMatrix('vectorB_container', 1, m, 'b');
+        buildMatrix('vectorB_container', m, 1, 'b');
         buildMatrix('vectorC_container', 1, n, 'c');
         buildMatrix('vectorD_container', 1, n, 'd');
 
@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let lineIdx = 1 + m;
         // Fill b
         const bVals = lines[lineIdx++].split(/\s+/).map(Number);
-        for (let i = 0; i < m; i++) document.getElementById(`b_0_${i}`).value = bVals[i];
+        for (let i = 0; i < m; i++) document.getElementById(`b_${i}_0`).value = bVals[i];
 
         // Fill c
         const cVals = lines[lineIdx++].split(/\s+/).map(Number);
@@ -674,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentN = n;
 
         buildMatrix('matrixA_container', m, n, 'A');
-        buildMatrix('vectorB_container', 1, m, 'b');
+        buildMatrix('vectorB_container', m, 1, 'b');
         buildMatrix('vectorC_container', 1, n, 'c');
         buildMatrix('vectorD_container', 1, n, 'd');
 
@@ -689,7 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let lineIdx = 1 + m;
         // Fill b
         const bVals = lines[lineIdx++].split(/\s+/).map(Number);
-        for (let i = 0; i < m; i++) document.getElementById(`b_0_${i}`).value = bVals[i];
+        for (let i = 0; i < m; i++) document.getElementById(`b_${i}_0`).value = bVals[i];
 
         // Fill c
         const cVals = lines[lineIdx++].split(/\s+/).map(Number);

@@ -170,16 +170,21 @@
                             </div>
                             <div class="opt-card-body">
                                 <div id="dataFieldsWrapper" class="hidden">
-                                    <div class="data-group">
-                                        <h3 data-i18n="matrix_a_title">Матрица A: Стоимость СЗИ для каждой ГИА</h3>
-                                        <div class="scroll-wrapper" id="matrixA_container"></div>
+                                    <div class="matrix-b-wrapper">
+                                        <div class="data-group" style="flex: 1; overflow: hidden;">
+                                            <h3 data-i18n="matrix_a_title">Матрица A: Стоимость СЗИ для каждой ГИА</h3>
+                                            <div class="scroll-wrapper" id="matrixA_container"></div>
+                                        </div>
+                                        <div class="data-group"
+                                            style="width: 54px; min-width: 54px; max-width: 54px; flex-shrink: 0;">
+                                            <h3 data-i18n="vector_b_title"
+                                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.85rem; text-align: center;"
+                                                title="Вектор b (Бюджеты ГИА)">Вектор b</h3>
+                                            <div class="scroll-wrapper vertical-vector" id="vectorB_container"></div>
+                                        </div>
                                     </div>
 
                                     <div class="vectors-column">
-                                        <div class="data-group">
-                                            <h3 data-i18n="vector_b_title">Вектор b (Бюджеты ГИА)</h3>
-                                            <div class="scroll-wrapper" id="vectorB_container"></div>
-                                        </div>
                                         <div class="data-group">
                                             <h3 data-i18n="vector_c_title">Вектор c (Время взлома)</h3>
                                             <div class="scroll-wrapper" id="vectorC_container"></div>

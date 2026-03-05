@@ -318,23 +318,68 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   border-color: rgba(255, 255, 255, 0.05);
 }
 
+.matrix-b-wrapper {
+  display: flex;
+  gap: 0.8rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+  max-height: 280px;
+}
+
+.matrix-b-wrapper .data-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.matrix-b-wrapper .data-group h3 {
+  min-height: 3rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.matrix-b-wrapper .scroll-wrapper {
+  max-height: 100%;
+}
+
+.matrix-b-wrapper .data-group:first-child .scroll-wrapper {
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: 100%;
+}
+
+.vertical-vector {
+  overflow-x: hidden;
+}
+
+.vertical-vector .matrix-grid {
+  width: max-content;
+}
+
+.vertical-vector .matrix-cell {
+  width: 46px !important;
+  min-width: 46px !important;
+  display: block;
+  margin: -1px 0 0 -1px !important;
+}
+
 .matrix-grid {
   display: inline-grid;
   background: transparent;
   width: max-content;
   gap: 0;
   padding: 1px 0 0 1px;
-  /* Add padding only on top/left so that the negative margin borders are visible without adding extra space on bottom/right */
 }
 
 .matrix-cell {
-  width: 50px !important;
-  min-width: 50px !important;
+  width: 46px !important;
+  min-width: 46px !important;
   height: 32px !important;
   text-align: center !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
   font-weight: 500 !important;
-  padding: 0 6px !important;
+  padding: 0 4px !important;
 
   /* Glass grid cells */
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
@@ -422,7 +467,7 @@ html[data-no-blur] .params-table .row-value input {
   flex-direction: column;
   /* Reverted to stack vertically as before */
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 0;
   max-width: 100%;
 }
 
