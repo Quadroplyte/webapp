@@ -78,10 +78,10 @@
   cursor: pointer;
   font-family: 'Roboto Flex', sans-serif;
   font-optical-sizing: auto;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 500;
   color: var(--text-muted);
-  padding: 0.45rem 1rem;
+  padding: 0.5rem 1.1rem;
   transition: color 0.25s ease;
   text-transform: capitalize;
   white-space: nowrap;
@@ -117,25 +117,40 @@
   color: #E8E8E8 !important;
 }
 
-/* Nav-specific sizing */
-.top-nav {
-  gap: 0;
+/* Nav-specific sizing (Synchronized - Reduced by 10%) */
+.top-nav .pill-item,
+.header-right .lang-switcher .pill-item {
+  padding: 0.75rem 1.6rem !important;
+  font-size: 1.2rem !important;
+  min-height: auto !important;
+  line-height: normal !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
-.top-nav .pill-item {
-  padding: 0.5rem 1.25rem;
+.header-right .theme-dropdown .glass-dropdown-header {
+  padding: 0.86rem 1.82rem !important;
+  font-size: 1.32rem !important;
+  min-height: auto !important;
+  line-height: normal !important;
+  display: flex !important;
+  align-items: center !important;
+  height: auto !important;
 }
 
-/* Lang switcher compact */
-.lang-switcher .pill-item {
+/* Lang switcher compact (Small/Settings) */
+.settings-panel .lang-switcher .pill-item,
+.settings-panel .settings-lang-pill .pill-item {
   padding: 0.4rem 0.9rem;
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
-/* Theme switcher compact */
-.theme-switcher-pill .pill-item {
-  padding: 0.4rem 0.9rem;
-  font-size: 1.05rem;
+/* Theme switcher compact (Small/Settings) */
+.settings-panel .theme-dropdown .glass-dropdown-header {
+  padding: 0.4rem 1.1rem;
+  font-size: 1rem;
+  gap: 0.5rem;
+  min-width: 110px;
 }
 
 /* ========== GLASS TOGGLE (Theme Tumbler) ========== */

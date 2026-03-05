@@ -28,15 +28,15 @@ const translations = {
     label_m: "ГИА",
     label_n: "СЗИ",
     label_lam: "λ",
-    lambda_title: "Приоритет",
+    lambda_title: "λ",
     create_tables_btn: "Создать таблицы",
 
     // Matrices Panel
     matrices_data_title: "Ограничения",
-    matrix_a_title: "Матрица A",
-    vector_b_title: "Вектор b",
-    vector_c_title: "Вектор c",
-    vector_d_title: "Вектор d",
+    matrix_a_title: "A",
+    vector_b_title: "b",
+    vector_c_title: "c",
+    vector_d_title: "d",
     solve_btn: "Запустить расчет решения",
     solving_btn: "Вычисление...",
 
@@ -131,15 +131,15 @@ const translations = {
     label_m: "Assets",
     label_n: "Protection tools",
     label_lam: "λ",
-    lambda_title: "Priority",
+    lambda_title: "λ",
     create_tables_btn: "Create tables",
 
     // Matrices Panel
     matrices_data_title: "Constraints",
-    matrix_a_title: "Matrix A",
-    vector_b_title: "Vector b",
-    vector_c_title: "Vector c",
-    vector_d_title: "Vector d",
+    matrix_a_title: "A",
+    vector_b_title: "b",
+    vector_c_title: "c",
+    vector_d_title: "d",
     solve_btn: "Run solution calculation",
     solving_btn: "Calculating...",
 

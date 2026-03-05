@@ -121,8 +121,8 @@ input[type="text"]:focus {
   flex: 0 0 30%;
   /* Narrower label */
   border-right: 1px solid rgba(0, 0, 0, 0.1);
-  min-height: 32px;
-  /* Much shorter */
+  min-height: 42px;
+  /* Synchronized with matrix cell height */
   padding: 4px 12px;
   display: flex;
   align-items: center;
@@ -138,8 +138,9 @@ input[type="text"]:focus {
 }
 
 #configPanel .params-table .row-label {
-  min-height: 32px;
-  padding: 2px 12px;
+  min-height: 42px;
+  /* Synchronized with matrix cell height */
+  padding: 4px 12px;
 }
 
 .params-table .row-label label {
@@ -162,7 +163,7 @@ input[type="text"]:focus {
   border-radius: 0 !important;
   padding: 0 12px;
   height: auto;
-  min-height: 32px;
+  min-height: 42px;
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
@@ -187,7 +188,7 @@ input[type="text"]:focus {
 }
 
 #configPanel .params-table .row-value input {
-  min-height: 32px;
+  min-height: 42px;
 }
 
 /* Modern Glass Buttons */
@@ -196,7 +197,10 @@ input[type="text"]:focus {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 6px 16px;
+  padding: 0 24px;
+  height: 63px;
+  min-height: 63px;
+  font-size: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.45);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(16px);
@@ -304,7 +308,7 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   overflow: auto;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-  margin-top: 0.75rem;
+  margin-top: 0.2rem;
   max-height: 250px;
   width: 100%;
   max-width: 100%;
@@ -320,32 +324,33 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
 
 .matrix-b-wrapper {
   display: flex;
-  gap: 0.8rem;
+  gap: 1rem;
   align-items: stretch;
-  margin-bottom: 1.5rem;
-  max-height: 280px;
+  margin-bottom: 0px;
+  height: auto;
 }
 
 .matrix-b-wrapper .data-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .matrix-b-wrapper .data-group h3 {
-  min-height: 3rem;
+  min-height: auto;
   display: flex;
   align-items: flex-end;
-  margin-bottom: 0.75rem;
+  justify-content: center;
+  margin-bottom: 0.1rem;
 }
 
 .matrix-b-wrapper .scroll-wrapper {
-  max-height: 100%;
+  height: 250px;
 }
 
 .matrix-b-wrapper .data-group:first-child .scroll-wrapper {
-  flex: 0 1 auto;
-  width: max-content;
+  flex: 1;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -353,13 +358,9 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   overflow-x: hidden;
 }
 
-.vertical-vector .matrix-grid {
-  width: max-content;
-}
-
 .vertical-vector .matrix-cell {
-  width: 46px !important;
-  min-width: 46px !important;
+  width: 60px !important;
+  min-width: 60px !important;
   display: block;
   margin: -1px 0 0 -1px !important;
 }
@@ -373,11 +374,11 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
 }
 
 .matrix-cell {
-  width: 46px !important;
-  min-width: 46px !important;
-  height: 32px !important;
+  width: 60px !important;
+  min-width: 60px !important;
+  height: 42px !important;
   text-align: center !important;
-  font-size: 0.95rem !important;
+  font-size: 1.25rem !important;
   font-weight: 500 !important;
   padding: 0 4px !important;
 
@@ -466,7 +467,7 @@ html[data-no-blur] .params-table .row-value input {
   display: flex;
   flex-direction: column;
   /* Reverted to stack vertically as before */
-  gap: 1.5rem;
+  gap: 0.2rem;
   margin-top: 0;
   max-width: 100%;
 }
@@ -479,10 +480,13 @@ html[data-no-blur] .params-table .row-value input {
 }
 
 .data-group h3 {
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.1rem;
   color: var(--text-main);
-  font-weight: 500;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  margin-top: 0.1rem;
 }
 
 .calculate-action {
