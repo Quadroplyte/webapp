@@ -12,6 +12,13 @@ const translations = {
     lang_en_short: "АНГ",
     theme_dark: "темная",
     theme_light: "светлая",
+    theme_pink: "розовая",
+    theme_yellow: "желтая",
+    theme_green: "зеленая",
+    theme_card_title: "Яркость карточек",
+    theme_color_title: "Акцент интерфейса",
+    bg_gradient_title: "Градиент фона",
+    bg_gradient_desc: "Выберите два цвета для фона",
 
     // Input Panel
     data_input_title: "Ввод данных",
@@ -134,6 +141,13 @@ const translations = {
     lang_en_short: "EN",
     theme_dark: "dark",
     theme_light: "light",
+    theme_pink: "pink",
+    theme_yellow: "yellow",
+    theme_green: "green",
+    theme_card_title: "Card Brightness",
+    theme_color_title: "Interface Accent",
+    bg_gradient_title: "Background Gradient",
+    bg_gradient_desc: "Pick two colors for the background",
 
     // Input Panel
     data_input_title: "Data input",

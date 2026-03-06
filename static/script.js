@@ -37,33 +37,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxF = Math.max(...validSolutions.map(s => s.f));
     const bestSolution = validSolutions.find(s => s.f === maxF);
 
-    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;';
+    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 1.1em;';
 
     const createCard = (sol, isBestHighlight) => {
       const card = document.createElement('div');
       card.className = 'result-card solver-card';
-      // Mark as best-solution if it's the highlighted one OR if its value matches the max
-      if (isBestHighlight || (bestSolution && sol.f === bestSolution.f)) {
+      if (isBestHighlight) {
         card.classList.add('best-solution');
       }
 
       card.innerHTML = `
-          <div style="padding: 0.6rem 0.75rem 0.6rem 1.25rem; border-bottom: 1px solid var(--panel-border); min-height: 3.2rem; display: flex; align-items: center;">
-              <div style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
-                  ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 0.85rem; border: 1.5px solid var(--best-card-border); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
-                  <span style="font-size: 1.2rem; font-weight: 700; color: ${(isBestHighlight || (bestSolution && sol.f === bestSolution.f)) ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
+          <div style="padding: 0.9rem 1.1rem 0.9rem 1.9rem; border-bottom: 1px solid var(--panel-border); min-height: 4.8rem; display: flex; align-items: center;">
+              <div style="display:flex; align-items:center; gap: 1.1rem; width: 100%;">
+                  ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 1.25rem; border: 2px solid var(--best-card-border); padding: 5px 12px; border-radius: 6px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
+                  <span style="font-size: 1.8rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
                       ${t('vector_x')}<sub style="${subStyle}">${sol.s_index}</sub> [${sol.vector_x.join(', ')}]
                   </span>
               </div>
           </div>
           <div class="card-bottom-row">
               <div>
-                  <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index}</sub>)</div>
-                  <div style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
+                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index}</sub>)</div>
+                  <div style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
               </div>
               <div>
-                  <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('chosen_szi')}</div>
-                  <div style="font-size: 1.5rem; font-weight: 700; color: ${(isBestHighlight || (bestSolution && sol.f === bestSolution.f)) ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
+                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('chosen_szi')}</div>
+                  <div style="font-size: 2.25rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
               </div>
           </div>
       `;
@@ -112,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', handleCandidatesScroll);
   }
 
-  // ── Pill Slider Helper ────────────────────────────────────
   function updatePillSlider(container, instant = false) {
     const slider = container.querySelector('.pill-slider');
     const activeItem = container.querySelector('.pill-item.active');
@@ -122,22 +120,29 @@ document.addEventListener('DOMContentLoaded', () => {
       slider.style.transition = 'none';
     }
 
-    // Используем offset свойства вместо getBoundingClientRect, 
-    // так как getBoundingClientRect ломается и выдает неправильные координаты из-за CSS свойства zoom.
     const leftPos = activeItem.offsetLeft;
     const width = activeItem.offsetWidth;
 
     slider.style.width = width + 'px';
-    // Анимируем свойство left вместо transform, так как CSS zoom ломает анимации transform в Chromium
     slider.style.left = leftPos + 'px';
     slider.style.transform = 'none';
 
     if (instant) {
-      // Force a synchronous reflow so the browser renders at the new coordinates immediately
       void slider.offsetWidth;
       slider.style.transition = '';
     }
   }
+
+  // ── Global Slider Refresh ──
+  const refreshAllSliders = (instant = false) => {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.glass-pill-nav').forEach(pill => {
+        if (pill.offsetWidth > 0 || pill.offsetHeight > 0) {
+          updatePillSlider(pill, instant);
+        }
+      });
+    });
+  };
 
   // ── Переключение навигации ───────────────────────────────
   const topNav = document.querySelector('.top-nav');
@@ -169,53 +174,16 @@ document.addEventListener('DOMContentLoaded', () => {
       docsPanel.classList.add('hidden');
       settingsPanel.classList.remove('hidden');
 
-      // The settings panel was un-hidden; we must wait a single frame for the DOM 
-      // to calculate widths, then instantly update any internal sliders so they aren't squashed.
-      requestAnimationFrame(() => {
-        if (typeof settingsLangPill !== 'undefined' && settingsLangPill) {
-          updatePillSlider(settingsLangPill, true);
-        }
-        const navbarPosPill = document.querySelector('.navbar-pos-pill');
-        if (navbarPosPill) {
-          updatePillSlider(navbarPosPill, true);
-        }
-        const bgPatternPill = document.querySelector('.bg-pattern-pill');
-        if (bgPatternPill) {
-          updatePillSlider(bgPatternPill, true);
-        }
-        const borderStylePill = document.querySelector('.borders-style-pill');
-        if (borderStylePill) {
-          updatePillSlider(borderStylePill, true);
-        }
-      });
+      setTimeout(() => {
+        refreshAllSliders(true);
+      }, 50);
     }
   });
 
   // Global resize listener for all pill sliders globally, so they never break
+  // Global resize listener for all pill sliders globally, so they never break
   window.addEventListener('resize', () => {
-    requestAnimationFrame(() => {
-      const topNav = document.querySelector('.top-nav');
-      const langSwitcher = document.querySelector('.lang-switcher');
-      const settingsLangPill = document.querySelector('.settings-lang-pill');
-      const navbarPosPill = document.querySelector('.navbar-pos-pill');
-      const bgPatternPill = document.querySelector('.bg-pattern-pill');
-
-      if (topNav) updatePillSlider(topNav);
-      if (langSwitcher) updatePillSlider(langSwitcher);
-      if (settingsLangPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
-        updatePillSlider(settingsLangPill);
-      }
-      if (navbarPosPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
-        updatePillSlider(navbarPosPill);
-      }
-      if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
-        updatePillSlider(bgPatternPill);
-      }
-      const borderStylePill = document.querySelector('.borders-style-pill');
-      if (borderStylePill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
-        updatePillSlider(borderStylePill);
-      }
-    });
+    refreshAllSliders();
   });
 
   // ── Язык ────────────────────────────────────────────────
@@ -252,18 +220,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ── Темная тема ─────────────────────────────────────────
-  const themeDropdowns = document.querySelectorAll('.theme-dropdown');
-  const currentTheme = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', currentTheme);
+  // ── Темизация (Яркость и Цвет) ──────────────────────────
+  const themeItems = document.querySelectorAll('.theme-item');
+  const colorSwatches = document.querySelectorAll('.color-swatch');
+  const themePill = document.querySelector('.theme-pill');
+  const glassDropdowns = document.querySelectorAll('.glass-dropdown');
+
+  let currentTheme = localStorage.getItem('appTheme') || 'dark';
+  let currentColor = localStorage.getItem('appColor') || 'slate';
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('appTheme', theme);
+    currentTheme = theme;
+    updateThemeUI(theme);
+  };
+
+  const applyColor = (color) => {
+    document.documentElement.setAttribute('data-color', color);
+    localStorage.setItem('appColor', color);
+    currentColor = color;
+    updateColorUI(color);
+  };
 
   const updateThemeUI = (theme) => {
-    themeDropdowns.forEach(dropdown => {
-      // update text
+    themeItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-theme') === theme);
+    });
+    if (themePill) updatePillSlider(themePill);
+
+    glassDropdowns.forEach(dropdown => {
+      if (!dropdown.classList.contains('theme-dropdown')) return;
       const selectedTextEl = dropdown.querySelector('.selected-theme-text');
       const items = dropdown.querySelectorAll('.glass-dropdown-item');
       items.forEach(item => {
-        if (item.getAttribute('data-theme') === theme) {
+        const itemTheme = item.getAttribute('data-theme');
+        if (itemTheme === theme) {
           item.classList.add('active');
           if (selectedTextEl) {
             selectedTextEl.textContent = item.textContent.trim();
@@ -276,28 +268,135 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+    if (typeof updatePageLanguage === 'function') updatePageLanguage();
+    requestAnimationFrame(() => refreshSliders());
   };
 
-  updateThemeUI(currentTheme);
+  const updateColorUI = (color) => {
+    // Update preview in the slot
+    const accentPreview = document.getElementById('accentPreview');
+    if (accentPreview) accentPreview.style.background = paletteColors[color] || '#FFF';
 
-  const handleThemeChange = (theme) => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    updateThemeUI(theme);
+    // Mark as active in the accent popover
+    document.querySelectorAll('#accentPopover .popover-swatch').forEach(s => {
+      s.classList.toggle('active', s.getAttribute('data-color') === color);
+    });
+
+    // Legacy support for any other swatches
+    colorSwatches.forEach(swatch => {
+      swatch.classList.toggle('active', swatch.getAttribute('data-color') === color);
+    });
+
     if (typeof updatePageLanguage === 'function') updatePageLanguage();
+    requestAnimationFrame(() => refreshSliders());
+  };
 
-    // Recalculate pill sliders after theme change
-    requestAnimationFrame(() => {
-      const topNav = document.querySelector('.top-nav');
-      const langSwitcher = document.querySelector('.lang-switcher');
-      const settingsLangPill = document.querySelector('.settings-lang-pill');
-      if (topNav) updatePillSlider(topNav);
-      if (langSwitcher) updatePillSlider(langSwitcher);
-      if (settingsLangPill) updatePillSlider(settingsLangPill);
+  // ── Gradient Picker Logic ──────────────────────────────
+  let gradColor1 = localStorage.getItem('gradColor1') || 'neutral';
+  let gradColor2 = localStorage.getItem('gradColor2') || 'neutral';
+
+  const paletteColors = {
+    pink: '#F472B6', yellow: '#FACC15', green: '#10B981',
+    blue: '#3B82F6', indigo: '#6366F1', purple: '#A855F7',
+    orange: '#F97316', red: '#EF4444', cyan: '#06B6D4',
+    teal: '#14B8A6', lime: '#84CC16', amber: '#F59E0B',
+    fuchsia: '#D946EF', rose: '#F43F5E', slate: '#64748B',
+    sky: '#0EA5E9', neutral: '#D1D3D9'
+  };
+
+  const applyGradient = (slotIdx, colorName) => {
+    const varValue = `var(--pal-${colorName})`;
+    document.documentElement.style.setProperty(`--grad-${slotIdx}`, varValue);
+    localStorage.setItem(`gradColor${slotIdx}`, colorName);
+
+    // Update preview background color (vibrant palette color)
+    const preview = document.getElementById(`gradPreview${slotIdx}`);
+    if (preview) {
+      if (colorName === 'neutral') {
+        preview.style.background = document.documentElement.getAttribute('data-theme') === 'dark' ? '#141414' : '#D1D3D9';
+      } else {
+        preview.style.background = paletteColors[colorName];
+      }
+    }
+
+    // Mark as active in popover
+    document.querySelectorAll(`#gradPopover${slotIdx} .popover-swatch`).forEach(s => {
+      s.classList.toggle('active', s.getAttribute('data-color') === colorName);
     });
   };
 
-  themeDropdowns.forEach(dropdown => {
+  const setupPopover = (idx) => {
+    const slot = document.getElementById(`gradSlot${idx}`);
+    const popover = document.getElementById(`gradPopover${idx}`);
+    if (!slot || !popover) return;
+
+    slot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = popover.classList.contains('hidden');
+      document.querySelectorAll('.color-popover').forEach(p => p.classList.add('hidden'));
+      if (isHidden) popover.classList.remove('hidden');
+    });
+
+    popover.querySelectorAll('.popover-swatch').forEach(swatch => {
+      swatch.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const color = swatch.getAttribute('data-color');
+        applyGradient(idx, color);
+        popover.classList.add('hidden');
+      });
+    });
+  };
+
+  // ── Accent Color Popover Logic ────────────────────────
+  const setupAccentPopover = () => {
+    const slot = document.getElementById('accentSlot');
+    const popover = document.getElementById('accentPopover');
+    if (!slot || !popover) return;
+
+    slot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isHidden = popover.classList.contains('hidden');
+      document.querySelectorAll('.color-popover').forEach(p => p.classList.add('hidden'));
+      if (isHidden) popover.classList.remove('hidden');
+    });
+
+    popover.querySelectorAll('.popover-swatch').forEach(swatch => {
+      swatch.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const color = swatch.getAttribute('data-color');
+        applyColor(color);
+        popover.classList.add('hidden');
+      });
+    });
+  };
+
+  // Initial Apply for Gradient
+  applyGradient(1, gradColor1);
+  applyGradient(2, gradColor2);
+  setupPopover(1);
+  setupPopover(2);
+  setupAccentPopover();
+  // Ensure the UI matches the initial color
+  updateColorUI(document.documentElement.getAttribute('data-color') || 'yellow');
+
+  const refreshSliders = () => {
+    refreshAllSliders();
+  };
+
+  // Initial Apply
+  applyTheme(currentTheme);
+  applyColor(currentColor);
+
+  themeItems.forEach(item => {
+    item.addEventListener('click', () => applyTheme(item.getAttribute('data-theme')));
+  });
+
+  colorSwatches.forEach(swatch => {
+    swatch.addEventListener('click', () => applyColor(swatch.getAttribute('data-color')));
+  });
+
+  glassDropdowns.forEach(dropdown => {
     const header = dropdown.querySelector('.glass-dropdown-header');
     const items = dropdown.querySelectorAll('.glass-dropdown-item');
 
@@ -311,10 +410,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     items.forEach(item => {
       item.addEventListener('click', () => {
-        handleThemeChange(item.getAttribute('data-theme'));
+        if (item.hasAttribute('data-theme')) {
+          const theme = item.getAttribute('data-theme');
+          applyTheme(theme);
+        }
         dropdown.classList.remove('open');
       });
     });
+  });
+
+  // Close all popovers on document click
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.color-popover').forEach(p => p.classList.add('hidden'));
   });
 
   // ── Прозрачность (blur) ─────────────
@@ -322,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // By default transparency is ON, unless explicitly saved as false
   const transparencyEnabled = localStorage.getItem('transparencyMode') !== 'false';
 
-  let navbarPos = localStorage.getItem('navbarPos') || 'center';
+  let navbarPos = localStorage.getItem('navbarPos') || 'right';
 
   const applyTransparency = (enabled) => {
     if (!enabled) {
@@ -346,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Акцентные границы ────────────────
   const borderStylePill = document.querySelector('.borders-style-pill');
   const borderStyleItems = document.querySelectorAll('.border-style-item');
-  const currentBorderStyle = localStorage.getItem('accentBorderStyle') || 'none';
+  const currentBorderStyle = localStorage.getItem('accentBorderStyle') || 'accent';
 
   const applyBorderStyle = (style) => {
     document.documentElement.setAttribute('data-border-style', style);
@@ -402,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Орнамент фона ────────────────────────────────────────
-  let bgPattern = localStorage.getItem('bgPattern') || 'dots';
+  let bgPattern = localStorage.getItem('bgPattern') || 'none';
   document.documentElement.setAttribute('data-pattern', bgPattern);
 
   const bgPatternItems = document.querySelectorAll('.bg-pattern-item');
@@ -778,14 +885,11 @@ document.addEventListener('DOMContentLoaded', () => {
       renderResultCards(lastSolutions);
     }
 
-    // Recalculate pill sliders after text widths change
-    requestAnimationFrame(() => {
-      updatePillSlider(topNav);
-      updatePillSlider(langSwitcher);
-      if (settingsLangPill) updatePillSlider(settingsLangPill);
-      const bgPatternPill = document.querySelector('.bg-pattern-pill');
-      if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) updatePillSlider(bgPatternPill);
-    });
+    // Recalculate all pill sliders after text widths change due to language switch
+    // We use a small timeout to ensure the browser has computed new text widths.
+    setTimeout(() => {
+      refreshAllSliders(true);
+    }, 50);
   });
 
   // Scroll handler for header right controls
@@ -905,8 +1009,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       infoHtml = `
         <div class="info-grid">
-          <div class="info-item"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
-          <div class="info-item"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
           <div class="info-item highlight-val"><span>${t('info_cost')}</span> <b>${cost}</b></div>
           <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
           <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
@@ -917,7 +1021,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const limit = getVal(`b_${row}_0`);
       infoHtml = `
         <div class="info-grid">
-          <div class="info-item"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
           <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
         </div>
       `;
@@ -926,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const rTime = getVal(`d_0_${col}`);
       infoHtml = `
         <div class="info-grid">
-          <div class="info-item"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
+          <div class="info-item highlight-val"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
           <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
           <div class="info-item highlight-val"><span>${t('info_react_time')}</span> <b>${rTime}</b></div>
         </div>
@@ -1053,5 +1157,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  // ── Sync Range and Number Inputs ──
+  const syncInputs = (rangeId, numId) => {
+    const range = document.getElementById(rangeId);
+    const num = document.getElementById(numId);
+    if (!range || !num) return;
+
+    range.addEventListener('input', () => {
+      num.value = range.value;
+      num.dispatchEvent(new Event('input'));
+    });
+
+    num.addEventListener('input', () => {
+      range.value = num.value;
+    });
+  };
+
+  syncInputs('lam_range', 'lam_input');
 
 });

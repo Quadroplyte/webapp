@@ -10,19 +10,19 @@
 }
 
 html {
-  font-size: 92.5%;
-  /* Reduced by 5% (97.5% -> 92.5%) */
+  font-size: 85%;
+  /* Increased from 65% to 85% (~30% relative increase for text) */
 }
 
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background:
-    radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 30px 30px,
+    radial-gradient(circle, var(--dot-grid-color) 1px, transparent 1px) 0 0 / 21px 21px,
     var(--app-gradient);
   background-attachment: fixed, fixed;
   color: var(--text-main);
-  font-size: 17px;
-  /* Scaled up by 30% (13px * 1.3) */
+  font-size: 15px;
+  /* Increased from 12px to 15px */
   line-height: 1.5;
   transition: color 0.3s;
   overflow-x: hidden;
@@ -55,6 +55,7 @@ html[data-pattern="none"] body {
   position: relative;
 }
 
+
 .content-area {
   flex: 1;
   display: flex;
@@ -66,7 +67,7 @@ html[data-pattern="none"] body {
 .app-header {
   background: transparent;
   border-bottom: none;
-  padding: 2.5rem 2rem 1.75rem 2rem;
+  padding: 1rem 2rem 0.75rem 2rem;
 }
 
 .header-container {
@@ -89,8 +90,8 @@ html[data-pattern="none"] body {
 
   /* Always fixed so it can smoothly physically transition */
   position: fixed;
-  top: 2.4rem;
-  right: 1.4rem;
+  top: 1rem;
+  right: 1rem;
   transform: translateX(0);
 
   padding: 0.4rem 0.6rem;
@@ -161,8 +162,8 @@ html[data-pattern="none"] body {
 
 .main-title {
   font-family: 'Roboto Flex', sans-serif;
-  font-size: 42px;
-  /* Scaled up by 30% (32px * 1.3) */
+  font-size: 38px;
+  /* Increased by another 15% (33px * 1.15) */
   font-weight: 700;
   margin: 0;
   padding: 4px 8px;
@@ -220,9 +221,9 @@ html[data-pattern="none"] body {
     0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Reduced Russian title (Calculated: 26px * 1.25 = 32px approx) */
+/* Increased Russian title (Calculated: 25px * 1.15 = 29px approx) */
 html[lang="ru"] .main-title {
-  font-size: 32px !important;
+  font-size: 29px !important;
 }
 
 /* Solid title when transparency is off */
@@ -287,6 +288,18 @@ html[data-no-blur] .main-title {
 .opt-left-col .info-item b {
   font-size: 1.4rem !important;
 }
+
+/* Flush inputs like matrix cells to align with table corners */
+#m_input,
+#n_input,
+#lam_input {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+  border: 1px solid transparent !important;
+}
+
 
 /* Increase card header font sizes on Optimization page */
 .optimization-view .opt-card-header h2 {

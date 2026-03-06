@@ -19,7 +19,7 @@
 }
 
 .config-col h3 {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   letter-spacing: 0.05em;
   color: var(--text-main);
   margin-bottom: 1rem;
@@ -75,18 +75,18 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"]:focus,
 input[type="text"]:focus,
 .params-table .row-value input:focus {
-  border-color: rgba(244, 114, 182, 1) !important;
-  background: rgba(244, 114, 182, 0.08) !important;
-  box-shadow: inset 0 0 0 2px rgba(244, 114, 182, 0.5) !important;
+  border-color: var(--input-focus-border) !important;
+  background: var(--info-panel-bg) !important;
+  box-shadow: var(--input-focus-shadow) !important;
   outline: none !important;
 }
 
 [data-theme="dark"] input[type="number"]:focus,
 [data-theme="dark"] input[type="text"]:focus,
 [data-theme="dark"] .params-table .row-value input:focus {
-  border-color: rgba(250, 204, 21, 1) !important;
-  background: rgba(250, 204, 21, 0.05) !important;
-  box-shadow: inset 0 0 0 2px rgba(250, 204, 21, 0.5) !important;
+  border-color: var(--input-focus-border) !important;
+  background: var(--info-panel-bg) !important;
+  box-shadow: var(--input-focus-shadow) !important;
   outline: none !important;
 }
 
@@ -152,7 +152,19 @@ input[type="text"]:focus,
 .params-table .row-label label {
   font-weight: 700;
   color: var(--text-main);
-  font-size: 1.15rem;
+  font-size: 1.5rem;
+}
+
+.params-table .row-range {
+  flex: 4;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .params-table .row-range {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .params-table .row-value {
@@ -162,14 +174,21 @@ input[type="text"]:focus,
   background: transparent;
 }
 
+.params-table .row-range+.row-value {
+  flex: 0 0 85px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .params-table .row-range+.row-value {
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .params-table .row-value input {
   width: 100%;
   max-width: none;
-  border: none !important;
-  border-radius: 0 !important;
+  border: 1px solid transparent !important;
   padding: 0 12px;
-  height: auto;
-  min-height: 42px;
+  height: 100%;
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
@@ -179,7 +198,7 @@ input[type="text"]:focus,
   font-weight: 750;
   color: var(--text-main);
   text-align: center;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 /* Focus styles unified above to avoid conflicts */
@@ -188,26 +207,81 @@ input[type="text"]:focus,
   min-height: 42px;
 }
 
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: rgba(var(--acc-rgb), 0.15);
+  border-radius: 2px;
+  border: 1px solid rgba(var(--acc-rgb), 0.1);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background: rgb(var(--acc-rgb));
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px;
+  box-shadow: 0 0 7px rgba(var(--acc-rgb), 0.3);
+  border: 1.5px solid #fff;
+}
+
+[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
+  border-color: #333;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: rgba(var(--acc-rgb), 0.25);
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: rgba(var(--acc-rgb), 0.15);
+  border-radius: 3px;
+  border: 1px solid rgba(var(--acc-rgb), 0.1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: rgb(var(--acc-rgb));
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
 /* Modern Glass Buttons */
 .action-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 0 24px;
-  height: 63px;
-  min-height: 63px;
-  font-size: 1.25rem;
+  gap: 6px;
+  padding: 0 17px;
+  height: 44px;
+  min-height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.45);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   color: var(--text-main);
   cursor: pointer;
-  font-weight: 500;
-  border-radius: 14px;
+  font-weight: 600;
+  border-radius: 10px;
   transition: background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-family: inherit;
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.7),
@@ -312,6 +386,11 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+
+  /* Critical for rounding highlights at corners */
+  isolation: isolate;
+  position: relative;
+  z-index: 0;
 }
 
 [data-theme="dark"] .scroll-wrapper {
@@ -356,29 +435,29 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
 }
 
 .vertical-vector .matrix-cell {
-  width: 60px !important;
-  min-width: 60px !important;
+  width: 63px !important;
+  min-width: 63px !important;
   display: block;
   margin: -1px 0 0 -1px !important;
 }
 
 .matrix-grid {
   display: inline-grid;
+  grid-template-rows: repeat(auto-fill, auto);
   background: transparent;
   width: max-content;
   gap: 0;
   padding: 1px 0 0 1px;
-  /* Back to minimal padding */
 }
 
 .matrix-cell {
-  width: 60px !important;
-  min-width: 60px !important;
-  height: 42px !important;
+  width: 63px !important;
+  min-width: 63px !important;
+  height: 45px !important;
   text-align: center !important;
   font-size: 1.25rem !important;
   font-weight: 700 !important;
-  padding: 0 4px !important;
+  padding: 0 5px !important;
 
   /* Glass grid cells */
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
@@ -409,6 +488,12 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   -webkit-user-select: none !important;
 }
 
+/* SOLID mode base for matrix cells */
+html[data-no-blur] .matrix-cell {
+  background: var(--input-bg) !important;
+  border-color: var(--panel-border) !important;
+}
+
 .matrix-cell.view-only::selection {
   background: transparent !important;
 }
@@ -427,17 +512,52 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   /* Critical to ensure they actually disappear */
 }
 
+/* Ensure focus in preview area also shows accent highlight */
+.settings-preview-area input[type="number"]:not(.matrix-cell):focus,
+#preview_param_x:focus {
+  border-color: var(--input-focus-border) !important;
+  background: var(--info-panel-bg) !important;
+  box-shadow: var(--input-focus-shadow) !important;
+  outline: none !important;
+}
+
 .matrix-cell:focus {
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
-  background: rgba(0, 0, 0, 0.06) !important;
+  border-color: var(--input-focus-border) !important;
+  background: var(--info-panel-bg) !important;
   position: relative !important;
-  z-index: 1 !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
+  z-index: 10 !important;
+  box-shadow: var(--input-focus-shadow) !important;
+  outline: none !important;
 }
 
 [data-theme="dark"] .matrix-cell:focus {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: var(--input-focus-border) !important;
+  background: var(--info-panel-bg) !important;
+  box-shadow: var(--input-focus-shadow) !important;
+}
+
+/* SOLID mode focus / no-blur overrides */
+html[data-no-blur] .matrix-cell:focus {
+  background: var(--info-panel-no-blur-bg) !important;
+  border-color: var(--info-panel-no-blur-border) !important;
+}
+
+[data-theme="dark"] html[data-no-blur] .matrix-cell:focus {
+  background: var(--info-panel-no-blur-bg) !important;
+  border-color: var(--info-panel-no-blur-border) !important;
+}
+
+/* Specific corner roundings to match scroll-wrappers */
+#matrixA_container .matrix-cell:first-child,
+#vectorB_container .matrix-cell:first-child,
+#vectorC_container .matrix-cell:first-child,
+#vectorD_container .matrix-cell:first-child {
+  border-top-left-radius: 11px !important;
+}
+
+#vectorC_container .matrix-cell:last-child,
+#vectorD_container .matrix-cell:last-child {
+  border-top-right-radius: 11px !important;
 }
 
 /* Perf mode for matrix/vectors */
@@ -478,43 +598,40 @@ html[data-no-blur] .params-table .row-value input {
   background: var(--input-bg) !important;
 }
 
-/* Interconnection Highlights */
+/* Interconnection Highlights - Restored to classic glassy look */
 .matrix-cell.highlight-connection {
-  background: rgba(244, 114, 182, 0.25) !important;
-  border-color: rgba(244, 114, 182, 0.7) !important;
-  box-shadow: inset 0 0 0 2px rgba(244, 114, 182, 0.4) !important;
-  z-index: 1;
+  background: var(--highlight-connection-bg) !important;
+  border-color: var(--highlight-connection-border) !important;
+  box-shadow: var(--highlight-connection-shadow) !important;
+  z-index: 10;
 }
 
-[data-theme="dark"] .matrix-cell.highlight-connection {
-  background: rgba(250, 204, 21, 0.25) !important;
-  border-color: rgba(250, 204, 21, 0.7) !important;
-  box-shadow: inset 0 0 0 2px rgba(250, 204, 21, 0.4) !important;
+/* Base highlight source style */
+.matrix-cell.highlight-source {
+  background: var(--highlight-source-no-blur-bg) !important;
+  border-color: var(--highlight-source-border) !important;
+  box-shadow: var(--highlight-source-shadow) !important;
+  z-index: 20 !important;
 }
 
-/* Perf mode highlights bg */
+/* SOLID mode (no-blur) Highlights */
 html[data-no-blur] .matrix-cell.highlight-connection {
-  background: rgba(244, 114, 182, 0.15) !important;
-  border-color: rgba(244, 114, 182, 0.8) !important;
+  background: var(--highlight-connection-no-blur-bg) !important;
+  border-color: var(--highlight-connection-border) !important;
+  box-shadow: var(--highlight-connection-shadow) !important;
 }
 
-html[data-no-blur][data-theme="dark"] .matrix-cell.highlight-connection {
-  background: rgba(250, 204, 21, 0.15) !important;
-  border-color: rgba(250, 204, 21, 0.8) !important;
+html[data-no-blur] .matrix-cell.highlight-source {
+  background: var(--highlight-source-no-blur-bg) !important;
+  border-color: var(--highlight-source-border) !important;
+  box-shadow: var(--highlight-source-shadow) !important;
 }
 
 /* Active Source Cell */
-.matrix-cell.highlight-source {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(244, 114, 182, 0.9) !important;
-  box-shadow: inset 0 0 0 2px rgba(244, 114, 182, 0.6) !important;
-  z-index: 2 !important;
-}
-
+/* Extra specific source highlight for dark theme */
 [data-theme="dark"] .matrix-cell.highlight-source {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(250, 204, 21, 0.9) !important;
-  box-shadow: inset 0 0 0 2px rgba(250, 204, 21, 0.6) !important;
+  border-color: var(--highlight-source-border) !important;
+  box-shadow: var(--highlight-source-shadow) !important;
 }
 
 .vectors-column {
@@ -612,6 +729,10 @@ input:checked+.slider:before {
   background: transparent;
 }
 
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.12);
   /* Subtle for light theme */
@@ -621,13 +742,12 @@ input:checked+.slider:before {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(244, 114, 182, 0.55);
-  border-color: rgba(244, 114, 182, 0.3);
-  box-shadow: none;
+  background: var(--color-best-border);
+  opacity: 0.7;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: rgba(244, 114, 182, 0.7);
+  background: var(--color-best-border);
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
@@ -636,13 +756,12 @@ input:checked+.slider:before {
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: rgba(250, 204, 21, 0.55);
-  border-color: rgba(250, 204, 21, 0.3);
-  box-shadow: none;
+  background: var(--color-best-border);
+  opacity: 0.8;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:active {
-  background: rgba(250, 204, 21, 0.7);
+  background: var(--color-best-border);
 }
 
 /* Specific scrollbar styling for the result card containers to keep it extra clean */
@@ -747,19 +866,21 @@ input:checked+.slider:before {
 }
 
 /* Cell Info Panel */
-.cell-info-panel {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  margin-top: 1rem;
-  background: var(--info-panel-bg);
-  border: 1px solid var(--info-panel-border);
-  border-radius: 12px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  min-height: 72px;
-  transition: background 0.3s, border-color 0.3s;
+.cell-info-panel,
+#cellInfoPanel {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 16px !important;
+  margin-top: 1rem !important;
+  background: var(--info-panel-bg) !important;
+  border: 1px solid var(--info-panel-border) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  min-height: 72px !important;
+  color: var(--text-main) !important;
+  transition: all 0.3s ease !important;
 }
 
 /* Performance (Solid) mode overrides — ID-specific for maximum priority */
@@ -771,38 +892,27 @@ html[data-no-blur] #cellInfoPanel {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
-/* Explicit fallback if variables fail to reach ID rule */
-html[data-theme="dark"][data-no-blur] #cellInfoPanel {
-  background: #2B281A !important;
-  /* Hardcoded solid earthy gold */
-  border-color: #FACC15 !important;
-  /* Hardcoded gold border */
-}
 
-html[data-theme="dark"] .cell-info-panel .highlight-val {
-  border-left: 2px solid var(--info-panel-no-blur-border);
-  background: rgba(250, 204, 21, 0.08);
-}
+
+
+
+
 
 .cell-info-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.2);
-  padding: 10px;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="dark"] .cell-info-icon {
-  background: rgba(255, 255, 255, 0.1);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 10px !important;
+  border-radius: 50% !important;
+  background: var(--info-panel-bg) !important;
+  color: var(--color-best-border) !important;
+  font-size: 1.4rem !important;
 }
 
 .cell-info-content {
   flex: 1;
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: var(--text-main);
   line-height: 1.4;
 }
 
@@ -816,17 +926,17 @@ html[data-theme="dark"] .cell-info-panel .highlight-val {
 .info-item {
   display: flex;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--color-bg-alt);
   padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  border: 1px solid var(--color-border-subtle);
   flex: 1;
   min-width: 175px;
 }
 
 [data-theme="dark"] .info-item {
   background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 .info-item span {
@@ -834,93 +944,54 @@ html[data-theme="dark"] .cell-info-panel .highlight-val {
   color: var(--text-muted);
   margin-bottom: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   font-weight: 500;
 }
 
 .info-item b {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   color: var(--text-main);
-  font-weight: 600;
-}
-
-/* Language Toggle Custom Switch (legacy) */
-.lang-toggle-wrapper {
-  position: relative;
-  display: flex;
-  background: var(--input-bg);
-  border: 1px solid var(--panel-border);
-  border-radius: 6px;
-  padding: 2px;
-  width: 120px;
-  height: 40px;
-  overflow: hidden;
-}
-
-.lang-toggle-bg {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: calc(50% - 2px);
-  height: calc(100% - 4px);
-  background: var(--color-accent-main);
-  border-radius: 4px;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s;
-  z-index: 1;
-}
-
-.lang-toggle-btn {
-  flex: 1;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 1rem;
   font-weight: 700;
-  cursor: pointer;
-  z-index: 2;
-  transition: color 0.25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.lang-toggle-btn.active {
-  color: var(--app-bg);
+.cell-info-panel .highlight-val {
+  border: 1px solid var(--info-panel-border) !important;
+  background: var(--info-panel-bg) !important;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  margin: 4px 0 !important;
 }
 
-.lang-toggle-wrapper[data-lang="en"] .lang-toggle-bg {
-  transform: translateX(100%);
+/* Specific rounding for calculation inputs to match table corners */
+/* Using explicit 4-value border-radius: top-left top-right bottom-right bottom-left */
+
+/* GIA (m_input) - Only TOP-RIGHT */
+#m_input,
+.params-table .input-row:first-child .row-value {
+  border-radius: 0 12px 0 0 !important;
 }
 
-/* DEFINITIVE DARK THEME INFO PANEL OVERRIDE — ELIMINATES PINK REVERSION */
-[data-theme="dark"] #cellInfoPanel,
-html[data-theme="dark"] #cellInfoPanel,
-[data-theme="dark"] .cell-info-panel,
-html[data-theme="dark"] .cell-info-panel {
-  background: rgba(250, 204, 21, 0.05) !important;
-  border-color: rgba(250, 204, 21, 0.25) !important;
+/* SZI (n_input) - Only BOTTOM-RIGHT */
+#n_input,
+.params-table .input-row:last-child .row-value {
+  border-radius: 0 0 12px 0 !important;
 }
 
-/* NO-BLUR (SOLID) MODE FOR DARK THEME — MUST BE GOLD */
-[data-theme="dark"][data-no-blur] #cellInfoPanel,
-html[data-theme="dark"][data-no-blur] #cellInfoPanel,
-[data-theme="dark"][data-no-blur] .cell-info-panel,
-html[data-theme="dark"][data-no-blur] .cell-info-panel {
-  background: #252319 !important;
-  /* Pure solid dark earthy-gold surface */
-  border-color: rgba(250, 204, 21, 0.45) !important;
-  /* More subtle semi-transparent gold border */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+/* Lambda (lam_input) and Preview Param X - Both RIGHT corners (top and bottom) */
+#lam_input,
+#lam_input:focus,
+#preview_param_x,
+#preview_param_x:focus {
+  border-radius: 0 12px 12px 0 !important;
 }
 
-[data-theme="dark"] .cell-info-icon {
-  background: rgba(250, 204, 21, 0.1) !important;
-  color: #FACC15 !important;
-}
-
-[data-theme="dark"] .cell-info-panel .highlight-val {
-  border-left: 2px solid #FACC15 !important;
-  background: rgba(250, 204, 21, 0.08) !important;
+/* Ensure preview input also follows flush sizing to match real inputs */
+#preview_param_x {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  align-self: stretch !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  /* Let the container or local focus rule handle background */
 }

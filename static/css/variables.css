@@ -33,11 +33,11 @@
   --color-error: #EF4444;
   --color-warning: #F59E0B;
 
-  /* Special Components */
+  /* Special Components (Defaults) */
   --color-best-border: #F472B6;
   --color-best-shadow: rgba(244, 114, 182, 0.6);
   --color-blur-bg: rgba(255, 255, 255, 0.7);
-  --best-card-shadow: 0 0 0 2px rgba(244, 114, 182, 0.9), 0 0 16px 4px rgba(244, 114, 182, 0.65), 0 0 36px 10px rgba(249, 168, 212, 0.45), 0 0 60px 20px rgba(196, 181, 253, 0.25);
+  --best-card-shadow: 0 0 30px var(--color-best-shadow);
 
   --info-panel-bg: rgba(244, 114, 182, 0.05);
   --info-panel-border: rgba(244, 114, 182, 0.2);
@@ -45,9 +45,9 @@
   --info-panel-no-blur-border: rgba(244, 114, 182, 0.25);
 
   /* Layout */
-  --sidebar-width: 210px;
-  --sidebar-collapsed-width: 70px;
-  --topbar-height: 48px;
+  --sidebar-width: 147px;
+  --sidebar-collapsed-width: 49px;
+  --topbar-height: 34px;
   --transition-speed: 0.2s;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -83,11 +83,70 @@
   --card-inner-bg: rgba(255, 255, 255, 0.2);
   --card-inner-divider: rgba(255, 255, 255, 0.3);
 
-  /* Global Background Gradient */
-  --app-gradient: radial-gradient(ellipse at bottom right, #BFDBFE 0%, #BFDBFE 20%, #FCE7F3 55%, #E2E4EA 85%, #D1D3D9 100%);
+  /* Background Grid patterns */
   --dot-grid-color: rgba(0, 0, 0, 0.22);
   --plus-grid-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 15v8M15 19h8' stroke='rgba(0,0,0,0.08)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   --cross-grid-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M17 17l5 5M22 17l-5 5' stroke='rgba(0,0,0,0.08)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+
+  /* Muted Gradient Palette Values (Light & Dark variations) */
+  --pal-pink-l: #FEF2F7;
+  --pal-pink-d: #25181D;
+  --pal-yellow-l: #FFFDF0;
+  --pal-yellow-d: #1F1B12;
+  --pal-green-l: #F5FEFA;
+  --pal-green-d: #141C18;
+  --pal-blue-l: #F5FAFF;
+  --pal-blue-d: #131A26;
+  --pal-indigo-l: #F7F9FF;
+  --pal-indigo-d: #181926;
+  --pal-purple-l: #FBF7FF;
+  --pal-purple-d: #1C1824;
+  --pal-orange-l: #FFF9F5;
+  --pal-orange-d: #241B16;
+  --pal-red-l: #FFF5F5;
+  --pal-red-d: #261616;
+  --pal-cyan-l: #F5FEFF;
+  --pal-cyan-d: #101F24;
+  --pal-teal-l: #F5FEFD;
+  --pal-teal-d: #111E1D;
+  --pal-lime-l: #FAFEF5;
+  --pal-lime-d: #191D11;
+  --pal-amber-l: #FFFDF5;
+  --pal-amber-d: #211D12;
+  --pal-fuchsia-l: #FEF7FF;
+  --pal-fuchsia-d: #211824;
+  --pal-rose-l: #FEF5F6;
+  --pal-rose-d: #26181C;
+  --pal-slate-l: #F8FAFC;
+  --pal-slate-d: #1E293B;
+  --pal-neutral-l: #D1D3D9;
+  --pal-neutral-d: #141414;
+
+  /* Default logical tokens (fallback) */
+  --grad-1: var(--pal-pink-l);
+  --grad-2: var(--pal-blue-l);
+  --grad-end: #D1D3D9;
+
+  /* Palette Pointers (Dynamic based on theme) */
+  --pal-pink: var(--pal-pink-l);
+  --pal-yellow: var(--pal-yellow-l);
+  --pal-green: var(--pal-green-l);
+  --pal-blue: var(--pal-blue-l);
+  --pal-indigo: var(--pal-indigo-l);
+  --pal-purple: var(--pal-purple-l);
+  --pal-orange: var(--pal-orange-l);
+  --pal-red: var(--pal-red-l);
+  --pal-cyan: var(--pal-cyan-l);
+  --pal-teal: var(--pal-teal-l);
+  --pal-lime: var(--pal-lime-l);
+  --pal-amber: var(--pal-amber-l);
+  --pal-fuchsia: var(--pal-fuchsia-l);
+  --pal-rose: var(--pal-rose-l);
+  --pal-slate: var(--pal-slate-l);
+  --pal-neutral: var(--pal-neutral-l);
+
+  /* Fallback Gradient */
+  --app-gradient: radial-gradient(ellipse at bottom right, var(--grad-1) 0%, var(--grad-1) 20%, var(--grad-2) 55%, var(--grad-end) 85%, var(--grad-end) 100%);
 }
 
 /* Dark Theme Overrides — Neutral gray tones, blue accent */
@@ -112,7 +171,7 @@
   --color-error: #EF4444;
   --color-warning: #F59E0B;
 
-  /* Special Components */
+  /* Special Components (Dark Defaults) */
   --color-best-border: #FACC15;
   --color-best-shadow: rgba(250, 204, 21, 0.6);
   --color-blur-bg: rgba(20, 20, 20, 0.7);
@@ -120,31 +179,201 @@
   --info-panel-bg: rgba(250, 204, 21, 0.05);
   --info-panel-border: rgba(250, 204, 21, 0.2);
   --info-panel-no-blur-bg: #2B281A;
-  /* Solid earthy gold */
   --info-panel-no-blur-border: #FACC15;
-  /* Solid gold border */
 
   /* Overrides */
   --sidebar-item-hover: #2D2D2D;
   --best-card-shadow: 0 0 25px var(--color-best-shadow);
-  /* keep text-on-accent WHITE for nav pill active states */
   --color-text-on-accent: #E8E8E8;
 
   --card-inner-bg: rgba(0, 0, 0, 0.25);
   --card-inner-divider: rgba(0, 0, 0, 0.35);
 
-  /* Global Background Gradient */
-  --app-gradient: radial-gradient(ellipse at bottom right, #2C200B 0%, #2C200B 15%, #101D30 55%, #1C1C1C 85%, #141414 100%);
   --dot-grid-color: rgba(255, 255, 255, 0.14);
   --plus-grid-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M19 15v8M15 19h8' stroke='rgba(255,255,255,0.07)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   --cross-grid-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='38'%3E%3Cpath d='M17 17l5 5M22 17l-5 5' stroke='rgba(255,255,255,0.07)' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+
+  --grad-1: var(--pal-pink-d);
+  --grad-2: #101D30;
+  --grad-end: #141414;
+
+  /* Palette Pointers (Dynamic based on theme) */
+  --pal-pink: var(--pal-pink-d);
+  --pal-yellow: var(--pal-yellow-d);
+  --pal-green: var(--pal-green-d);
+  --pal-blue: var(--pal-blue-d);
+  --pal-indigo: var(--pal-indigo-d);
+  --pal-purple: var(--pal-purple-d);
+  --pal-orange: var(--pal-orange-d);
+  --pal-red: var(--pal-red-d);
+  --pal-cyan: var(--pal-cyan-d);
+  --pal-teal: var(--pal-teal-d);
+  --pal-lime: var(--pal-lime-d);
+  --pal-amber: var(--pal-amber-d);
+  --pal-fuchsia: var(--pal-fuchsia-d);
+  --pal-rose: var(--pal-rose-d);
+  --pal-slate: var(--pal-slate-d);
+  --pal-neutral: var(--pal-neutral-d);
 }
+
+/* ========================================
+   ACCENT COLOR SCHEMES
+   Define all color-specific tokens here.
+   Add a new block to add a new accent color.
+   ======================================== */
+
+/* ========================================
+   ACCENT COLOR SCHEMES
+   Refactored to 16 colors using RGB tokens
+   ======================================== */
+
+[data-color] {
+  --color-best-border: rgb(var(--acc-rgb));
+  --color-best-shadow: rgba(var(--acc-rgb), 0.6);
+  --best-card-shadow: 0 0 0 2px rgba(var(--acc-rgb), 0.9), 0 0 16px 4px rgba(var(--acc-rgb), 0.65), 0 0 36px 10px rgba(var(--acc-rgb), 0.45), 0 0 60px 20px rgba(var(--acc-rgb), 0.25);
+
+  --info-panel-bg: rgba(var(--acc-rgb), 0.05);
+  --info-panel-border: rgba(var(--acc-rgb), 0.2);
+  --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.1);
+  --info-panel-no-blur-border: rgba(var(--acc-rgb), 0.25);
+
+  --highlight-connection-bg: rgba(var(--acc-rgb), 0.23);
+  --highlight-connection-border: rgba(var(--acc-rgb), 0.52);
+  --highlight-connection-shadow: inset 0 0 0 2px rgba(var(--acc-rgb), 0.22);
+  --highlight-connection-no-blur-bg: rgba(var(--acc-rgb), 0.45);
+  --highlight-source-border: rgba(var(--acc-rgb), 0.34);
+  --highlight-source-shadow: inset 0 0 0 2px rgba(var(--acc-rgb), 0.23);
+  --highlight-source-no-blur-bg: rgba(var(--acc-rgb), 0.2);
+
+  --input-focus-border: rgba(var(--acc-rgb), 0.65);
+  --input-focus-shadow: 0 0 0 3px rgba(var(--acc-rgb), 0.22);
+  --accent-gradient: linear-gradient(135deg, rgb(var(--acc-rgb)), rgb(var(--acc-rgb-dark)));
+  --accent-text: #FFFFFF;
+  --accent-border-color: rgba(var(--acc-rgb), 0.8);
+}
+
+[data-theme="light"][data-color] {
+  --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.06);
+  --info-panel-no-blur-border: rgb(var(--acc-rgb));
+
+  /* Saturated highlights for light theme visibility */
+  --highlight-connection-bg: rgba(var(--acc-rgb), 0.42);
+  --highlight-connection-border: rgba(var(--acc-rgb), 0.75);
+  --highlight-connection-no-blur-bg: rgba(var(--acc-rgb), 0.68);
+
+  --highlight-source-border: rgba(var(--acc-rgb), 0.65);
+  --highlight-source-shadow: inset 0 0 0 2px rgba(var(--acc-rgb), 0.4);
+  --highlight-source-no-blur-bg: rgba(var(--acc-rgb), 0.35);
+}
+
+[data-theme="dark"][data-color] {
+  --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.12);
+  --info-panel-no-blur-border: rgb(var(--acc-rgb));
+}
+
+/* Color Token Definitions */
+[data-color="pink"] {
+  --acc-rgb: 244, 114, 182;
+  --acc-rgb-dark: 219, 39, 119;
+}
+
+[data-color="yellow"] {
+  --acc-rgb: 250, 204, 21;
+  --acc-rgb-dark: 234, 179, 8;
+  --accent-text: #111827;
+}
+
+[data-color="green"] {
+  --acc-rgb: 16, 185, 129;
+  --acc-rgb-dark: 5, 150, 105;
+}
+
+[data-color="blue"] {
+  --acc-rgb: 59, 130, 246;
+  --acc-rgb-dark: 37, 99, 235;
+}
+
+[data-color="indigo"] {
+  --acc-rgb: 99, 102, 241;
+  --acc-rgb-dark: 79, 70, 229;
+}
+
+[data-color="purple"] {
+  --acc-rgb: 168, 85, 247;
+  --acc-rgb-dark: 147, 51, 234;
+}
+
+[data-color="orange"] {
+  --acc-rgb: 249, 115, 22;
+  --acc-rgb-dark: 234, 88, 12;
+}
+
+[data-color="red"] {
+  --acc-rgb: 239, 68, 68;
+  --acc-rgb-dark: 220, 38, 38;
+}
+
+[data-color="cyan"] {
+  --acc-rgb: 6, 182, 212;
+  --acc-rgb-dark: 8, 145, 178;
+}
+
+[data-color="teal"] {
+  --acc-rgb: 20, 184, 166;
+  --acc-rgb-dark: 13, 148, 136;
+}
+
+[data-color="lime"] {
+  --acc-rgb: 132, 204, 22;
+  --acc-rgb-dark: 101, 163, 13;
+}
+
+[data-color="amber"] {
+  --acc-rgb: 245, 158, 11;
+  --acc-rgb-dark: 217, 119, 6;
+  --accent-text: #111827;
+}
+
+[data-color="fuchsia"] {
+  --acc-rgb: 217, 70, 239;
+  --acc-rgb-dark: 192, 38, 211;
+}
+
+[data-color="rose"] {
+  --acc-rgb: 244, 63, 94;
+  --acc-rgb-dark: 225, 29, 72;
+}
+
+[data-color="slate"] {
+  --acc-rgb: 100, 116, 139;
+  --acc-rgb-dark: 71, 85, 105;
+}
+
+[data-color="sky"] {
+  --acc-rgb: 14, 165, 233;
+  --acc-rgb-dark: 2, 132, 199;
+}
+
+/* ========================================
+   GLOBAL GRADIENT LOGIC
+   Uses tokens defined in ACCENT COLOR SCHEMES
+   ======================================== */
+
+/* Centralized Background Gradient Logic */
+body {
+  --app-gradient: radial-gradient(ellipse at bottom right,
+      var(--grad-1) 0%,
+      var(--grad-1) 20%,
+      var(--grad-2) 55%,
+      var(--grad-end) 85%,
+      var(--grad-end) 100%) !important;
+}
+
 
 /* Specific styling for the settings Panel */
 [data-theme="dark"] #settingsPanel p {
   color: var(--text-muted) !important;
 }
-
 
 [data-theme="dark"] .action-btn {
   background: var(--color-bg-alt);
@@ -153,7 +382,6 @@
 
 [data-theme="dark"] .action-btn:hover {
   background: #262626;
-  /* Specific hover adjustment */
 }
 
 [data-theme="dark"] code,

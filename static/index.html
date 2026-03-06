@@ -201,6 +201,10 @@
                                                 <div class="row-label">
                                                     <label for="lam_input" data-i18n="label_lam">λ</label>
                                                 </div>
+                                                <div class="row-range">
+                                                    <input type="range" id="lam_range" min="0" max="1" step="0.01"
+                                                        value="0.5">
+                                                </div>
                                                 <div class="row-value">
                                                     <input type="number" id="lam_input" min="0" max="1" step="0.1"
                                                         value="0.5">
@@ -402,26 +406,118 @@ lambda</pre>
 
                             <div class="settings-glass-card">
                                 <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="theme_title">Тема оформления
-                                    </div>
-                                    <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить
-                                        цветовую
+                                    <div class="settings-card-title" data-i18n="theme_card_title">Яркость карточек</div>
+                                    <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить цветовую
                                         схему интерфейса</p>
                                 </div>
-                                <div class="glass-dropdown theme-dropdown">
-                                    <div class="glass-dropdown-header">
-                                        <span class="selected-theme-text" data-i18n="theme_dark">Темная</span>
-                                        <svg class="glass-dropdown-arrow" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                        </svg>
+                                <div class="glass-pill-nav theme-pill">
+                                    <div class="pill-slider theme-slider"></div>
+                                    <span class="pill-item theme-item active" data-theme="dark">
+                                        <span data-i18n="theme_dark">Темная</span>
+                                    </span>
+                                    <span class="pill-item theme-item" data-theme="light">
+                                        <span data-i18n="theme_light">Светлая</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="settings-glass-card">
+                                <div class="settings-card-info">
+                                    <div class="settings-card-title" data-i18n="theme_color_title">Цветовая схема</div>
+                                    <p class="settings-card-desc" data-i18n="borders_desc">Выберите основной акцентный
+                                        цвет</p>
+                                </div>
+                                <div class="gradient-controls">
+                                    <div class="gradient-slot-wrapper">
+                                        <div class="gradient-slot" id="accentSlot" title="Accent Color">
+                                            <div class="slot-preview" id="accentPreview"></div>
+                                            <div class="color-popover hidden" id="accentPopover">
+                                                <div class="popover-grid">
+                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
+                                                    <div class="popover-swatch color-green" data-color="green"></div>
+                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
+                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
+                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
+                                                    <div class="popover-swatch color-red" data-color="red"></div>
+                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
+                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                    </div>
+                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
+                                                    <div class="popover-swatch color-sky" data-color="sky"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="glass-dropdown-menu right-aligned">
-                                        <div class="glass-dropdown-item" data-theme="light" data-i18n="theme_light">
-                                            Светлая</div>
-                                        <div class="glass-dropdown-item active" data-theme="dark"
-                                            data-i18n="theme_dark">Темная</div>
+                                </div>
+                            </div>
+
+                            <!-- Background Gradient Settings -->
+                            <div class="settings-glass-card">
+                                <div class="settings-card-info">
+                                    <div class="settings-card-title" data-i18n="bg_gradient_title">Градиент фона</div>
+                                    <p class="settings-card-desc" data-i18n="bg_gradient_desc">Персонализируйте два
+                                        базовых цвета градиента</p>
+                                </div>
+                                <div class="gradient-controls">
+                                    <div class="gradient-slot-wrapper">
+                                        <div class="gradient-slot" id="gradSlot1" title="Color 1">
+                                            <div class="slot-preview" id="gradPreview1"></div>
+                                            <div class="color-popover hidden" id="gradPopover1">
+                                                <div class="popover-grid">
+                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
+                                                    <div class="popover-swatch color-green" data-color="green"></div>
+                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
+                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
+                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
+                                                    <div class="popover-swatch color-red" data-color="red"></div>
+                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
+                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                    </div>
+                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
+                                                    <div class="popover-swatch color-neutral" data-color="neutral">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="gradient-slot-wrapper">
+                                        <div class="gradient-slot" id="gradSlot2" title="Color 2">
+                                            <div class="slot-preview" id="gradPreview2"></div>
+                                            <div class="color-popover hidden" id="gradPopover2">
+                                                <div class="popover-grid">
+                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
+                                                    <div class="popover-swatch color-green" data-color="green"></div>
+                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
+                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
+                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
+                                                    <div class="popover-swatch color-red" data-color="red"></div>
+                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
+                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                    </div>
+                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
+                                                    <div class="popover-swatch color-neutral" data-color="neutral">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -566,8 +662,8 @@ lambda</pre>
                                             <div class="input-row">
                                                 <div class="row-label"><label data-i18n="param_x">Параметр X</label>
                                                 </div>
-                                                <div class="row-value"><input type="number" value="42"
-                                                        style="width: 100%;"></div>
+                                                <div class="row-value"><input type="number" id="preview_param_x"
+                                                        value="42"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -588,8 +684,14 @@ lambda</pre>
                                                 <!-- Generate a 20x20 grid (400 items) via repeated structure -->
                                                 <script>
                                                     for (let i = 0; i < 400; i++) {
-                                                        const val = (Math.random() * 3 + 0.1).toFixed(1);
-                                                        document.write(`<input class="matrix-cell" value="${val}">`);
+                                                        const val = Math.floor(Math.random() * 90 + 10);
+                                                        let cls = "matrix-cell";
+                                                        // Add dummy highlights at row 5, col 5
+                                                        const row = Math.floor(i / 20);
+                                                        const col = i % 20;
+                                                        if (row === 4 && col === 4) cls += " highlight-source";
+                                                        else if (row === 4 || col === 4) cls += " highlight-connection";
+                                                        document.write(`<input class="${cls}" value="${val}">`);
                                                     }
                                                 </script>
                                             </div>
@@ -597,39 +699,50 @@ lambda</pre>
                                     </div>
                                 </div>
 
-                                <!-- Mockup 3: Result Card -->
-                                <div class="result-card solver-card best-solution" style="margin: 0; width: 100%;">
-                                    <div
-                                        style="padding: 0.6rem 0.75rem 0.6rem 1.25rem; border-bottom: 1px solid var(--panel-border); min-height: 3.2rem; display: flex; align-items: center;">
-                                        <div style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
-                                            <span class="best-label-ru best-label-en"
-                                                style="color:var(--best-card-border); font-weight:700; font-size: 0.85rem; border: 1.5px solid var(--best-card-border); padding: 3px 8px; border-radius: 4px; white-space: nowrap; text-transform: uppercase;"></span>
-                                            <span
-                                                style="font-size: 1.25rem; font-weight: 700; color: var(--best-card-border); line-height: 1.65; flex: 1; word-break: break-all;">
-                                                <span data-i18n="vector_x">Вектор x</span><sub
-                                                    style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;">1</sub>
-                                                [1, 0, 1, 1, 0, 0, 1, 0]
-                                            </span>
-                                        </div>
+                                <!-- Mockup 3: Result Card inside Result List context -->
+                                <div class="opt-glass-card"
+                                    style="min-height: 380px; display: flex; flex-direction: column;">
+                                    <div class="opt-card-header">
+                                        <h2 data-i18n="results_title">Лучшее решение</h2>
                                     </div>
-                                    <div class="card-bottom-row">
-                                        <div>
+                                    <div class="opt-card-body result-body"
+                                        style="padding: 2.5rem; display: flex; flex: 1; align-items: center; justify-content: center; background: rgba(0,0,0,0.02);">
+                                        <div class="result-card solver-card best-solution"
+                                            style="margin: 0; width: 90%; max-width: 550px; transform: scale(0.95);">
                                             <div
-                                                style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">
-                                                <span data-i18n="val_fx">F(x</span><sub
-                                                    style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;">1</sub>)
+                                                style="padding: 0.6rem 0.75rem 0.6rem 1.25rem; border-bottom: 1px solid var(--card-inner-divider); min-height: 3.2rem; display: flex; align-items: center;">
+                                                <div
+                                                    style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
+                                                    <span class="best-label-ru best-label-en"
+                                                        style="color:var(--best-card-border); font-weight:700; font-size: 0.85rem; border: 1.5px solid var(--best-card-border); padding: 3px 8px; border-radius: 4px; white-space: nowrap; text-transform: uppercase;"></span>
+                                                    <span
+                                                        style="font-size: 1.2rem; font-weight: 700; color: var(--best-card-border); line-height: 1.65; flex: 1; word-break: break-all;">
+                                                        <span data-i18n="vector_x">Вектор x</span><sub
+                                                            style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;">1</sub>
+                                                        [1, 0, 1, 1, 0, 0, 1, 0]
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div
-                                                style="font-size: 1.75rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">
-                                                0.8742</div>
-                                        </div>
-                                        <div>
-                                            <div data-i18n="chosen_szi"
-                                                style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">
-                                                Выбрано СЗИ</div>
-                                            <div
-                                                style="font-size: 1.75rem; font-weight: 700; color: var(--best-card-border); line-height: 1.5; word-break: break-word;">
-                                                1, 3, 4, 7</div>
+                                            <div class="card-bottom-row">
+                                                <div>
+                                                    <div
+                                                        style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">
+                                                        <span data-i18n="val_fx">F(x</span><sub
+                                                            style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 0.75em;">1</sub>)
+                                                    </div>
+                                                    <div
+                                                        style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">
+                                                        0.8742</div>
+                                                </div>
+                                                <div>
+                                                    <div data-i18n="chosen_szi"
+                                                        style="font-size: 1.1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">
+                                                        Выбрано СЗИ</div>
+                                                    <div
+                                                        style="font-size: 1.5rem; font-weight: 700; color: var(--best-card-border); line-height: 1.5; word-break: break-word;">
+                                                        1, 3, 4, 7</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
