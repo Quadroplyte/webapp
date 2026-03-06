@@ -11,11 +11,11 @@
   padding: 3px;
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.55),
-      rgba(255, 255, 255, 0.25));
+      rgba(255, 255, 255, 0.72),
+      rgba(255, 255, 255, 0.45));
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.5),
     inset 0 -1px 1px rgba(0, 0, 0, 0.03),
@@ -47,14 +47,14 @@
   height: calc(100% - 6px);
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.85),
-      rgba(255, 255, 255, 0.6));
+      rgba(255, 255, 255, 0.94),
+      rgba(255, 255, 255, 0.82));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
     inset 0 1px 2px rgba(255, 255, 255, 0.7),
     0 2px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
@@ -120,8 +120,8 @@
 /* Nav-specific sizing (Synchronized - Reduced by 10%) */
 .top-nav .pill-item,
 .header-right .lang-switcher .pill-item {
-  padding: 0.75rem 1.6rem !important;
-  font-size: 1.2rem !important;
+  padding: 0.8625rem 1.84rem !important;
+  font-size: 1.38rem !important;
   min-height: auto !important;
   line-height: normal !important;
   display: flex !important;
@@ -129,8 +129,8 @@
 }
 
 .header-right .theme-dropdown .glass-dropdown-header {
-  padding: 0.86rem 1.82rem !important;
-  font-size: 1.32rem !important;
+  padding: 0.989rem 2.093rem !important;
+  font-size: 1.518rem !important;
   min-height: auto !important;
   line-height: normal !important;
   display: flex !important;

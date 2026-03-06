@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxF = Math.max(...validSolutions.map(s => s.f));
     const bestSolution = validSolutions.find(s => s.f === maxF);
 
-    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.15em; font-size: 1.1em;';
+    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;';
 
     const createCard = (sol, isBestHighlight) => {
       const card = document.createElement('div');
@@ -293,8 +293,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // ── Gradient Picker Logic ──────────────────────────────
-  let gradColor1 = localStorage.getItem('gradColor1') || 'neutral';
-  let gradColor2 = localStorage.getItem('gradColor2') || 'neutral';
+  let gradColor1 = localStorage.getItem('gradColor1') || 'slate';
+  let gradColor2 = localStorage.getItem('gradColor2') || 'slate';
 
   const paletteColors = {
     pink: '#F472B6', yellow: '#FACC15', green: '#10B981',
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     orange: '#F97316', red: '#EF4444', cyan: '#06B6D4',
     teal: '#14B8A6', lime: '#84CC16', amber: '#F59E0B',
     fuchsia: '#D946EF', rose: '#F43F5E', slate: '#64748B',
-    sky: '#0EA5E9', neutral: '#D1D3D9'
+    sky: '#0EA5E9', white: '#FFFFFF'
   };
 
   const applyGradient = (slotIdx, colorName) => {
@@ -426,8 +426,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Прозрачность (blur) ─────────────
   const transparencyToggle = document.getElementById('transparencyToggle');
+  const headerTransToggle = document.getElementById('headerTransToggle');
   // By default transparency is ON, unless explicitly saved as false
   const transparencyEnabled = localStorage.getItem('transparencyMode') !== 'false';
+  const headerTransEnabled = localStorage.getItem('headerTransMode') !== 'false';
 
   let navbarPos = localStorage.getItem('navbarPos') || 'right';
 
@@ -440,7 +442,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (transparencyToggle) transparencyToggle.checked = enabled;
   };
 
+  const applyHeaderTransparency = (enabled) => {
+    if (!enabled) {
+      document.documentElement.setAttribute('data-header-no-blur', '');
+    } else {
+      document.documentElement.removeAttribute('data-header-no-blur');
+    }
+    if (headerTransToggle) headerTransToggle.checked = enabled;
+  };
+
   applyTransparency(transparencyEnabled);
+  applyHeaderTransparency(headerTransEnabled);
 
   if (transparencyToggle) {
     transparencyToggle.addEventListener('change', () => {
@@ -450,10 +462,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  if (headerTransToggle) {
+    headerTransToggle.addEventListener('change', () => {
+      const enabled = headerTransToggle.checked;
+      localStorage.setItem('headerTransMode', enabled);
+      applyHeaderTransparency(enabled);
+    });
+  }
+
   // ── Акцентные границы ────────────────
   const borderStylePill = document.querySelector('.borders-style-pill');
   const borderStyleItems = document.querySelectorAll('.border-style-item');
-  const currentBorderStyle = localStorage.getItem('accentBorderStyle') || 'accent';
+  const currentBorderStyle = localStorage.getItem('accentBorderStyle') || 'neutral';
 
   const applyBorderStyle = (style) => {
     document.documentElement.setAttribute('data-border-style', style);

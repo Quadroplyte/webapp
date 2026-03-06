@@ -155,20 +155,20 @@
   top: calc(100% + 12px);
   right: 50%;
   transform: translateX(50%);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 14px;
   border-radius: 20px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  width: 186px;
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  width: 226px;
+  backdrop-filter: blur(45px);
+  -webkit-backdrop-filter: blur(45px);
   animation: popoverFadeIn 0.2s ease-out;
 }
 
 [data-theme="dark"] .color-popover {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.6);
   border-color: rgba(255, 255, 255, 0.08);
 }
 
@@ -282,6 +282,11 @@ html[data-no-blur] .color-popover {
 
 .popover-swatch.color-slate {
   background: #64748B;
+}
+
+.popover-swatch.color-white {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .popover-swatch.color-neutral {
@@ -586,8 +591,8 @@ html[lang="en"] #settingsPanel .best-label-ru {
   padding: 1.25rem 1.75rem;
   border-radius: 16px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.45),
-      rgba(255, 255, 255, 0.15));
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.35));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
@@ -671,7 +676,7 @@ html[data-no-blur][data-border-style="neutral"] .result-card:not(.best-solution)
 html[data-no-blur][data-border-style="neutral"] .settings-glass-card,
 html[data-no-blur][data-border-style="neutral"] .preview-title-card {
   border-width: 3.3px !important;
-  border-color: rgba(0, 0, 0, 0.45) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 [data-theme="dark"][data-border-style="neutral"] .opt-glass-card,
@@ -740,10 +745,22 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
 
 .docs-panel .settings-card-title {
   font-size: 2.15rem;
+  color: #000000;
+}
+
+[data-theme="dark"] .docs-panel .settings-card-title {
+  color: #FFFFFF;
 }
 
 .docs-panel .settings-card-desc {
   font-size: 1.75rem;
+  color: #374151;
+  /* Darker than default muted in light mode */
+}
+
+[data-theme="dark"] .docs-panel .settings-card-desc {
+  color: #D1D5DB;
+  /* Lighter than default muted in dark mode */
 }
 
 .docs-params-list {
@@ -779,7 +796,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   padding: 0.75rem 1rem;
   font-weight: 700;
   font-size: 1.95rem;
-  color: var(--text-main);
+  color: #000000;
   background: rgba(255, 255, 255, 0.15);
   border-right: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
@@ -790,6 +807,8 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
 [data-theme="dark"] .docs-param-name {
   background: rgba(255, 255, 255, 0.04);
   border-right-color: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+  /* Max light in dark mode */
 }
 
 .docs-param-desc {
@@ -798,10 +817,16 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   /* Slightly more padding for longer texts */
   font-size: 1.85rem;
   line-height: 1.5;
-  color: var(--text-muted);
+  color: #374151;
+  /* Darker text for documentation description */
   display: flex;
   align-items: center;
   /* Center the description text vertically */
+}
+
+[data-theme="dark"] .docs-param-desc {
+  color: #D1D5DB;
+  /* Lighter text for documentation description */
 }
 
 .docs-example-guide {
@@ -814,8 +839,14 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.25);
   font-size: 1.45rem;
-  color: var(--text-muted);
+  color: #374151;
+  /* High contrast guide text for light mode */
   line-height: 1.7;
+}
+
+[data-theme="dark"] .docs-example-guide {
+  color: #D1D5DB;
+  /* High contrast guide text for dark mode */
 }
 
 [data-theme="dark"] .docs-example-guide {

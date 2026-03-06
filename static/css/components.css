@@ -76,7 +76,7 @@ input[type="number"]:focus,
 input[type="text"]:focus,
 .params-table .row-value input:focus {
   border-color: var(--input-focus-border) !important;
-  background: var(--info-panel-bg) !important;
+  background: rgba(var(--acc-rgb), 0.15) !important;
   box-shadow: var(--input-focus-shadow) !important;
   outline: none !important;
 }
@@ -85,7 +85,7 @@ input[type="text"]:focus,
 [data-theme="dark"] input[type="text"]:focus,
 [data-theme="dark"] .params-table .row-value input:focus {
   border-color: var(--input-focus-border) !important;
-  background: var(--info-panel-bg) !important;
+  background: rgba(var(--acc-rgb), 0.18) !important;
   box-shadow: var(--input-focus-shadow) !important;
   outline: none !important;
 }
@@ -186,19 +186,25 @@ input[type="text"]:focus,
 .params-table .row-value input {
   width: 100%;
   max-width: none;
-  border: 1px solid transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 0 12px;
   height: 100%;
-  background: transparent !important;
-  background-color: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  font-size: 1.35rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px;
+  font-size: 1.28rem;
   font-weight: 750;
   color: var(--text-main);
   text-align: center;
   transition: all 0.2s ease;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="dark"] .params-table .row-value input {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 /* Focus styles unified above to avoid conflicts */
@@ -839,6 +845,7 @@ input:checked+.slider:before {
   align-items: center;
 }
 
+
 .icon-btn {
   background: transparent;
   border: none;
@@ -941,11 +948,15 @@ html[data-no-blur] #cellInfoPanel {
 
 .info-item span {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: #000000;
   margin-bottom: 4px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .info-item span {
+  color: #FFFFFF !important;
 }
 
 .info-item b {
