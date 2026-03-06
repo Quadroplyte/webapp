@@ -42,13 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const createCard = (sol, isBestHighlight) => {
       const card = document.createElement('div');
       card.className = 'result-card solver-card';
-      if (isBestHighlight) card.classList.add('best-solution');
+      // Mark as best-solution if it's the highlighted one OR if its value matches the max
+      if (isBestHighlight || (bestSolution && sol.f === bestSolution.f)) {
+        card.classList.add('best-solution');
+      }
 
       card.innerHTML = `
           <div style="padding: 0.6rem 0.75rem 0.6rem 1.25rem; border-bottom: 1px solid var(--panel-border); min-height: 3.2rem; display: flex; align-items: center;">
               <div style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
                   ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 0.85rem; border: 1.5px solid var(--best-card-border); padding: 3px 8px; border-radius: 4px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
-                  <span style="font-size: 1.2rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
+                  <span style="font-size: 1.2rem; font-weight: 700; color: ${(isBestHighlight || (bestSolution && sol.f === bestSolution.f)) ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
                       ${t('vector_x')}<sub style="${subStyle}">${sol.s_index}</sub> [${sol.vector_x.join(', ')}]
                   </span>
               </div>
@@ -60,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div>
                   <div style="font-size: 1rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.3rem;">${t('chosen_szi')}</div>
-                  <div style="font-size: 1.5rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
+                  <div style="font-size: 1.5rem; font-weight: 700; color: ${(isBestHighlight || (bestSolution && sol.f === bestSolution.f)) ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
               </div>
           </div>
       `;

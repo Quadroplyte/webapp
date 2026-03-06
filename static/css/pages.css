@@ -284,24 +284,23 @@ html[lang="en"] #settingsPanel .best-label-ru {
 
 /* Neutral Style: Subtle 1.8px borders */
 [data-border-style="neutral"] .opt-glass-card,
-[data-border-style="neutral"] .result-card:not(#allCandidatesWrapper *),
+[data-border-style="neutral"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 [data-border-style="neutral"] .settings-glass-card,
 [data-border-style="neutral"] .preview-title-card,
 html[data-no-blur][data-border-style="neutral"] .opt-glass-card,
-html[data-no-blur][data-border-style="neutral"] .result-card:not(#allCandidatesWrapper *),
+html[data-no-blur][data-border-style="neutral"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 html[data-no-blur][data-border-style="neutral"] .settings-glass-card,
 html[data-no-blur][data-border-style="neutral"] .preview-title-card {
   border-width: 1.8px !important;
   border-color: rgba(0, 0, 0, 0.45) !important;
-  /* Increased contrast for light theme */
 }
 
 [data-theme="dark"][data-border-style="neutral"] .opt-glass-card,
-[data-theme="dark"][data-border-style="neutral"] .result-card:not(#allCandidatesWrapper *),
+[data-theme="dark"][data-border-style="neutral"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 [data-theme="dark"][data-border-style="neutral"] .settings-glass-card,
 [data-theme="dark"][data-border-style="neutral"] .preview-title-card,
 html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .opt-glass-card,
-html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .result-card:not(#allCandidatesWrapper *),
+html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .settings-glass-card,
 html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .preview-title-card {
   border-color: rgba(255, 255, 255, 0.25) !important;
@@ -309,16 +308,15 @@ html[data-theme="dark"][data-no-blur][data-border-style="neutral"] .preview-titl
 
 /* Accent Style: 2.3px borders using theme accent color */
 [data-border-style="accent"] .opt-glass-card,
-[data-border-style="accent"] .result-card:not(#allCandidatesWrapper *),
+[data-border-style="accent"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 [data-border-style="accent"] .settings-glass-card,
 [data-border-style="accent"] .preview-title-card,
 html[data-no-blur][data-border-style="accent"] .opt-glass-card,
-html[data-no-blur][data-border-style="accent"] .result-card:not(#allCandidatesWrapper *),
+html[data-no-blur][data-border-style="accent"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 html[data-no-blur][data-border-style="accent"] .settings-glass-card,
 html[data-no-blur][data-border-style="accent"] .preview-title-card {
   border-width: 2.3px !important;
   border-color: rgba(244, 114, 182, 0.8) !important;
-  /* Clearly pink, not gray */
 }
 
 [data-border-style="accent"] .opt-glass-card,
@@ -333,17 +331,6 @@ html[data-no-blur][data-border-style="accent"] .preview-title-card {
 }
 
 [data-theme="dark"][data-border-style="accent"] .opt-glass-card,
-[data-theme="dark"][data-border-style="accent"] .result-card:not(#allCandidatesWrapper *),
-[data-theme="dark"][data-border-style="accent"] .settings-glass-card,
-[data-theme="dark"][data-border-style="accent"] .preview-title-card,
-html[data-theme="dark"][data-no-blur][data-border-style="accent"] .opt-glass-card,
-html[data-theme="dark"][data-no-blur][data-border-style="accent"] .result-card:not(#allCandidatesWrapper *),
-html[data-theme="dark"][data-no-blur][data-border-style="accent"] .settings-glass-card,
-html[data-theme="dark"][data-no-blur][data-border-style="accent"] .preview-title-card {
-  border-color: rgba(250, 204, 21, 0.4) !important;
-}
-
-[data-theme="dark"][data-border-style="accent"] .opt-glass-card,
 [data-theme="dark"][data-border-style="accent"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 [data-theme="dark"][data-border-style="accent"] .settings-glass-card,
 [data-theme="dark"][data-border-style="accent"] .preview-title-card,
@@ -351,15 +338,11 @@ html[data-theme="dark"][data-no-blur][data-border-style="accent"] .opt-glass-car
 html[data-theme="dark"][data-no-blur][data-border-style="accent"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 html[data-theme="dark"][data-no-blur][data-border-style="accent"] .settings-glass-card,
 html[data-theme="dark"][data-no-blur][data-border-style="accent"] .preview-title-card {
+  border-color: rgba(250, 204, 21, 0.4) !important;
   box-shadow: 0 0 8px -2px rgba(250, 204, 21, 0.25) !important;
 }
 
-/* Optimal solution remains constant regardless of style selected */
-.result-card.best-solution,
-html[data-no-blur] .result-card.best-solution {
-  border: 3.5px solid var(--best-card-border) !important;
-  box-shadow: var(--best-card-shadow) !important;
-}
+
 
 /* Preview area support */
 [data-border-style="neutral"] #settingsPanel .preview-mockups .opt-glass-card,
@@ -539,14 +522,14 @@ html[data-no-blur] .result-card.best-solution {
 }
 
 /* Perf mode - no blur for results */
-html[data-no-blur] .result-card {
+html[data-no-blur] .result-card:not(.best-solution) {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   background: var(--panel-bg) !important;
   border: 1px solid var(--panel-border) !important;
 }
 
-[data-theme="dark"][data-no-blur] .result-card {
+[data-theme="dark"][data-no-blur] .result-card:not(.best-solution) {
   background: #1e1e1e !important;
 }
 
@@ -665,4 +648,29 @@ html[data-no-blur] .x-box {
 
 html[data-no-blur] .x-box.active {
   background: var(--color-accent-main) !important;
+}
+
+/* ==========================================================================
+   FINAL OVERRIDES — ABSOLUTE STABILITY FOR BEST SOLUTION BORDER
+   High specificity + Bottom of file placement to override all border settings
+   ========================================================================== */
+html .result-card.best-solution,
+html[data-theme] .result-card.best-solution,
+html[data-no-blur] .result-card.best-solution,
+html[data-border-style] .result-card.best-solution,
+body .result-card.best-solution,
+.result-card.best-solution {
+  border: 4px solid var(--best-card-border) !important;
+  box-shadow: var(--best-card-shadow) !important;
+  outline: none !important;
+  z-index: 10 !important;
+  transform: none !important;
+}
+
+[data-theme="dark"] .result-card.best-solution {
+  border-color: #FACC15 !important;
+}
+
+[data-theme="light"] .result-card.best-solution {
+  border-color: #F472B6 !important;
 }

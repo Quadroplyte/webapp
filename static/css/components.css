@@ -753,29 +753,35 @@ input:checked+.slider:before {
   gap: 16px;
   padding: 16px;
   margin-top: 1rem;
-  background: rgba(244, 114, 182, 0.05);
-  border: 1px solid rgba(244, 114, 182, 0.2);
+  background: var(--info-panel-bg);
+  border: 1px solid var(--info-panel-border);
   border-radius: 12px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   min-height: 72px;
+  transition: background 0.3s, border-color 0.3s;
 }
 
-[data-theme="dark"] .cell-info-panel {
-  background: rgba(250, 204, 21, 0.03);
-  border-color: rgba(250, 204, 21, 0.15);
-}
-
-html[data-no-blur] .cell-info-panel {
+/* Performance (Solid) mode overrides — ID-specific for maximum priority */
+html[data-no-blur] #cellInfoPanel {
+  background: var(--info-panel-no-blur-bg) !important;
+  border-color: var(--info-panel-no-blur-border) !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  background: rgba(244, 114, 182, 0.08) !important;
-  border-color: rgba(244, 114, 182, 0.2) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
-[data-theme="dark"] html[data-no-blur] .cell-info-panel {
-  background: rgba(250, 204, 21, 0.06) !important;
-  border-color: rgba(250, 204, 21, 0.15) !important;
+/* Explicit fallback if variables fail to reach ID rule */
+html[data-theme="dark"][data-no-blur] #cellInfoPanel {
+  background: #2B281A !important;
+  /* Hardcoded solid earthy gold */
+  border-color: #FACC15 !important;
+  /* Hardcoded gold border */
+}
+
+html[data-theme="dark"] .cell-info-panel .highlight-val {
+  border-left: 2px solid var(--info-panel-no-blur-border);
+  background: rgba(250, 204, 21, 0.08);
 }
 
 .cell-info-icon {
@@ -884,4 +890,37 @@ html[data-no-blur] .cell-info-panel {
 
 .lang-toggle-wrapper[data-lang="en"] .lang-toggle-bg {
   transform: translateX(100%);
+}
+
+/* DEFINITIVE DARK THEME INFO PANEL OVERRIDE — ELIMINATES PINK REVERSION */
+[data-theme="dark"] #cellInfoPanel,
+html[data-theme="dark"] #cellInfoPanel,
+[data-theme="dark"] .cell-info-panel,
+html[data-theme="dark"] .cell-info-panel {
+  background: rgba(250, 204, 21, 0.05) !important;
+  border-color: rgba(250, 204, 21, 0.25) !important;
+}
+
+/* NO-BLUR (SOLID) MODE FOR DARK THEME — MUST BE GOLD */
+[data-theme="dark"][data-no-blur] #cellInfoPanel,
+html[data-theme="dark"][data-no-blur] #cellInfoPanel,
+[data-theme="dark"][data-no-blur] .cell-info-panel,
+html[data-theme="dark"][data-no-blur] .cell-info-panel {
+  background: #252319 !important;
+  /* Pure solid dark earthy-gold surface */
+  border-color: rgba(250, 204, 21, 0.45) !important;
+  /* More subtle semi-transparent gold border */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .cell-info-icon {
+  background: rgba(250, 204, 21, 0.1) !important;
+  color: #FACC15 !important;
+}
+
+[data-theme="dark"] .cell-info-panel .highlight-val {
+  border-left: 2px solid #FACC15 !important;
+  background: rgba(250, 204, 21, 0.08) !important;
 }

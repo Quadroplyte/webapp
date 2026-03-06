@@ -39,6 +39,11 @@
   --color-blur-bg: rgba(255, 255, 255, 0.7);
   --best-card-shadow: 0 0 0 2px rgba(244, 114, 182, 0.9), 0 0 16px 4px rgba(244, 114, 182, 0.65), 0 0 36px 10px rgba(249, 168, 212, 0.45), 0 0 60px 20px rgba(196, 181, 253, 0.25);
 
+  --info-panel-bg: rgba(244, 114, 182, 0.05);
+  --info-panel-border: rgba(244, 114, 182, 0.2);
+  --info-panel-no-blur-bg: rgba(244, 114, 182, 0.1);
+  --info-panel-no-blur-border: rgba(244, 114, 182, 0.25);
+
   /* Layout */
   --sidebar-width: 210px;
   --sidebar-collapsed-width: 70px;
@@ -111,6 +116,13 @@
   --color-best-border: #FACC15;
   --color-best-shadow: rgba(250, 204, 21, 0.6);
   --color-blur-bg: rgba(20, 20, 20, 0.7);
+
+  --info-panel-bg: rgba(250, 204, 21, 0.05);
+  --info-panel-border: rgba(250, 204, 21, 0.2);
+  --info-panel-no-blur-bg: #2B281A;
+  /* Solid earthy gold */
+  --info-panel-no-blur-border: #FACC15;
+  /* Solid gold border */
 
   /* Overrides */
   --sidebar-item-hover: #2D2D2D;

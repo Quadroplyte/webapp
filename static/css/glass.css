@@ -427,7 +427,7 @@ html[data-no-blur] .glass-toggle-knob,
 html[data-no-blur] .settings-glass-card,
 html[data-no-blur] .opt-glass-card,
 html[data-no-blur] .opt-card-header,
-html[data-no-blur] .result-card,
+html[data-no-blur] .result-card:not(.best-solution),
 html[data-no-blur] .header-right,
 html[data-no-blur] .panel-header,
 html[data-no-blur] .modal-content {
@@ -476,7 +476,7 @@ html[data-no-blur] .opt-glass-card {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08) !important;
 }
 
-html[data-no-blur] .result-card {
+html[data-no-blur] .result-card:not(.best-solution) {
   background: var(--color-bg-surface) !important;
 }
 
