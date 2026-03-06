@@ -180,6 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (bgPatternPill) {
           updatePillSlider(bgPatternPill, true);
         }
+        const borderStylePill = document.querySelector('.borders-style-pill');
+        if (borderStylePill) {
+          updatePillSlider(borderStylePill, true);
+        }
       });
     }
   });
@@ -203,6 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (bgPatternPill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
         updatePillSlider(bgPatternPill);
+      }
+      const borderStylePill = document.querySelector('.borders-style-pill');
+      if (borderStylePill && !document.getElementById('settingsPanel').classList.contains('hidden')) {
+        updatePillSlider(borderStylePill);
       }
     });
   });
@@ -306,47 +314,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Режим производительности (без размытий) ─────────────
-  const perfToggle = document.getElementById('perfModeToggle');
-  const perfModeEnabled = localStorage.getItem('perfMode') === 'true';
+  // ── Прозрачность (blur) ─────────────
+  const transparencyToggle = document.getElementById('transparencyToggle');
+  // By default transparency is ON, unless explicitly saved as false
+  const transparencyEnabled = localStorage.getItem('transparencyMode') !== 'false';
 
-  // navbarPos declared early so applyPerfMode can reference it
   let navbarPos = localStorage.getItem('navbarPos') || 'center';
 
-  const applyPerfMode = (enabled) => {
-    if (enabled) {
+  const applyTransparency = (enabled) => {
+    if (!enabled) {
       document.documentElement.setAttribute('data-no-blur', '');
     } else {
       document.documentElement.removeAttribute('data-no-blur');
     }
-    if (perfToggle) perfToggle.checked = enabled;
-
-    // Disable "center" navbar option in perf mode (requires blur)
-    const centerItem = document.querySelector('.navbar-pos-item[data-pos="center"]');
-    if (centerItem) {
-      if (enabled) {
-        centerItem.classList.add('perf-disabled');
-        // If currently on center, switch to static
-        if (navbarPos === 'center') {
-          navbarPos = 'static';
-          localStorage.setItem('navbarPos', 'static');
-          updateNavbarUI('static');
-        }
-      } else {
-        centerItem.classList.remove('perf-disabled');
-      }
-    }
+    if (transparencyToggle) transparencyToggle.checked = enabled;
   };
 
-  applyPerfMode(perfModeEnabled);
+  applyTransparency(transparencyEnabled);
 
-  if (perfToggle) {
-    perfToggle.addEventListener('change', () => {
-      const enabled = perfToggle.checked;
-      localStorage.setItem('perfMode', enabled);
-      applyPerfMode(enabled);
+  if (transparencyToggle) {
+    transparencyToggle.addEventListener('change', () => {
+      const enabled = transparencyToggle.checked;
+      localStorage.setItem('transparencyMode', enabled);
+      applyTransparency(enabled);
     });
   }
+
+  // ── Акцентные границы ────────────────
+  const borderStylePill = document.querySelector('.borders-style-pill');
+  const borderStyleItems = document.querySelectorAll('.border-style-item');
+  const currentBorderStyle = localStorage.getItem('accentBorderStyle') || 'none';
+
+  const applyBorderStyle = (style) => {
+    document.documentElement.setAttribute('data-border-style', style);
+    borderStyleItems.forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-style') === style);
+    });
+    if (borderStylePill) updatePillSlider(borderStylePill);
+    localStorage.setItem('accentBorderStyle', style);
+  };
+
+  applyBorderStyle(currentBorderStyle);
+
+  borderStyleItems.forEach(item => {
+    item.addEventListener('click', () => applyBorderStyle(item.getAttribute('data-style')));
+  });
 
   const navbarPosItems = document.querySelectorAll('.navbar-pos-item');
   const navbarPosPill = document.querySelector('.navbar-pos-pill');
@@ -433,10 +445,12 @@ document.addEventListener('DOMContentLoaded', () => {
       for (let j = 0; j < cols; j++) {
         const input = document.createElement('input');
         input.type = 'number';
-        input.className = 'matrix-cell';
+        input.className = 'matrix-cell view-only'; // Start in view-only mode
+        input.readOnly = true; // Prevent keyboard input initially
         input.id = `${prefix}_${i}_${j}`;
         input.step = 'any';
         input.value = initVal;
+
         grid.appendChild(input);
       }
     }
@@ -572,6 +586,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  const loadDataFromText = (content) => {
+    const lines = content.split('\n').map(l => l.trim()).filter(l => l);
+    if (lines.length < 5) throw new Error(t('err_invalid_file'));
+
+    const [mStr, nStr] = lines[0].split(/\s+/);
+    const m = parseInt(mStr);
+    const n = parseInt(nStr);
+
+    mInput.value = m;
+    nInput.value = n;
+    currentM = m;
+    currentN = n;
+
+    buildMatrix('matrixA_container', m, n, 'A');
+    buildMatrix('vectorB_container', m, 1, 'b');
+    buildMatrix('vectorC_container', 1, n, 'c');
+    buildMatrix('vectorD_container', 1, n, 'd');
+
+    // Fill A
+    for (let i = 0; i < m; i++) {
+      const vals = lines[1 + i].split(/\s+/).map(Number);
+      for (let j = 0; j < n; j++) {
+        const cell = document.getElementById(`A_${i}_${j}`);
+        if (cell) cell.value = vals[j];
+      }
+    }
+
+    let lineIdx = 1 + m;
+    // Fill b
+    const bVals = lines[lineIdx++].split(/\s+/).map(Number);
+    for (let i = 0; i < m; i++) {
+      const cell = document.getElementById(`b_${i}_0`);
+      if (cell) cell.value = bVals[i];
+    }
+
+    // Fill c
+    const cVals = lines[lineIdx++].split(/\s+/).map(Number);
+    for (let j = 0; j < n; j++) {
+      const cell = document.getElementById(`c_0_${j}`);
+      if (cell) cell.value = cVals[j];
+    }
+
+    // Fill d
+    const dVals = lines[lineIdx++].split(/\s+/).map(Number);
+    for (let j = 0; j < n; j++) {
+      const cell = document.getElementById(`d_0_${j}`);
+      if (cell) cell.value = dVals[j];
+    }
+
+    // Fill lam
+    lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
+
+    configPanel.classList.remove('hidden');
+    matricesContainer.classList.remove('hidden');
+    document.getElementById('dataFieldsWrapper').classList.remove('hidden');
+  };
+
   // ── Импорт данных из файла ──────────────────────────────
   fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -579,66 +650,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const reader = new FileReader();
     reader.onload = (evt) => {
-      const content = evt.target.result;
-      const lines = content.split('\n').map(l => l.trim()).filter(l => l);
-
-      if (lines.length < 5) return alert(t('err_invalid_file'));
-
       try {
-        const [mStr, nStr] = lines[0].split(/\s+/);
-        const m = parseInt(mStr);
-        const n = parseInt(nStr);
-
-        mInput.value = m;
-        nInput.value = n;
-        currentM = m;
-        currentN = n;
-
-        buildMatrix('matrixA_container', m, n, 'A');
-        buildMatrix('vectorB_container', m, 1, 'b');
-        buildMatrix('vectorC_container', 1, n, 'c');
-        buildMatrix('vectorD_container', 1, n, 'd');
-
-        // Fill A
-        for (let i = 0; i < m; i++) {
-          const vals = lines[1 + i].split(/\s+/).map(Number);
-          for (let j = 0; j < n; j++) {
-            document.getElementById(`A_${i}_${j}`).value = vals[j];
-          }
-        }
-
-        let lineIdx = 1 + m;
-        // Fill b
-        const bVals = lines[lineIdx++].split(/\s+/).map(Number);
-        for (let i = 0; i < m; i++) document.getElementById(`b_${i}_0`).value = bVals[i];
-
-        // Fill c
-        const cVals = lines[lineIdx++].split(/\s+/).map(Number);
-        for (let j = 0; j < n; j++) document.getElementById(`c_0_${j}`).value = cVals[j];
-
-        // Fill d
-        const dVals = lines[lineIdx++].split(/\s+/).map(Number);
-        for (let j = 0; j < n; j++) document.getElementById(`d_0_${j}`).value = dVals[j];
-
-        // Fill lam
-        lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
-
-        configPanel.classList.remove('hidden');
-        matricesContainer.classList.remove('hidden');
-        document.getElementById('dataFieldsWrapper').classList.remove('hidden');
-
+        loadDataFromText(evt.target.result);
       } catch (err) {
         console.error(err);
-        alert(t('err_read_file') + err.message);
+        alert(t('err_read_file') + ': ' + err.message);
       }
     };
     reader.readAsText(file);
   });
 
+  // ── Быстрая загрузка 20x20 по двойному клику ────────────────
+  const load20x20 = async () => {
+    try {
+      const resp = await fetch('/static/task_20x20.txt');
+      if (!resp.ok) return;
+      const text = await resp.text();
+      loadDataFromText(text);
+    } catch (err) {
+      console.error("Failed to load 20x20 task:", err);
+    }
+  };
+
+  const dataInputHeader = document.getElementById('dataInputHeader');
+  if (dataInputHeader) dataInputHeader.addEventListener('dblclick', load20x20);
+
   // ── Info Modal & Demo Data ──────────────────────────────
-  const infoBtn = document.getElementById('infoBtn');
+  // ── Модалка формат импорта ───────────────────────────────
   const infoModal = document.getElementById('infoModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
+  const infoBtn = document.getElementById('infoBtn');
   const demoDataBtn = document.getElementById('demoDataBtn');
   const docLinkBtn = document.getElementById('docLinkBtn');
 
@@ -660,11 +701,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (docLinkBtn) {
     docLinkBtn.addEventListener('click', () => {
-      infoModal.classList.add('hidden');
-      const docTab = document.querySelector('.nav-item[data-tab="Документация"]');
-      if (docTab) {
-        // Trigger click event on the documentation tab to run the existing navigation logic
-        docTab.click();
+      const helpTab = document.querySelector('.nav-item[data-tab="Справка"]');
+      if (helpTab) {
+        helpTab.click(); // Переключаемся на вкладку Справка
+      }
+      if (infoModal) {
+        infoModal.classList.add('hidden'); // Закрываем модалку
       }
     });
   }
@@ -759,6 +801,35 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Интерактивная подсветка связей в матрицах и векторах ──
+  let activeEditCell = null;
+
+  document.addEventListener('mousedown', (e) => {
+    // If clicking outside the currently active edit cell, make it view-only again
+    if (activeEditCell && e.target !== activeEditCell) {
+      activeEditCell.classList.add('view-only');
+      activeEditCell.readOnly = true;
+      activeEditCell = null;
+    }
+  });
+
+  matricesContainer.addEventListener('mousedown', (e) => {
+    if (!e.target.classList.contains('matrix-cell')) return;
+
+    if (e.target.classList.contains('view-only')) {
+      // If the cell is NOT currently focused, this is the FIRST click.
+      // Prevent default to avoid showing text caret, but manually focus.
+      if (document.activeElement !== e.target) {
+        e.preventDefault();
+        e.target.focus();
+      } else {
+        // If it IS already focused, this is the SECOND click. Let default behavior happen (caret appears)
+        e.target.classList.remove('view-only');
+        e.target.readOnly = false;
+        activeEditCell = e.target;
+      }
+    }
+  });
+
   matricesContainer.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('matrix-cell')) return;
 
@@ -954,6 +1025,29 @@ document.addEventListener('DOMContentLoaded', () => {
       restore();
       requestAnimationFrame(restore);
       setTimeout(restore, 10);
+    }
+  });
+
+  // Mockup Interactivity for Settings Preview Matrix
+  window.addEventListener('mousedown', (e) => {
+    const previewCell = e.target.closest('.settings-preview-area .matrix-cell');
+    if (previewCell) {
+      const grid = previewCell.closest('.matrix-grid');
+      const cells = Array.from(grid.querySelectorAll('.matrix-cell'));
+      const index = cells.indexOf(previewCell);
+      const row = Math.floor(index / 20);
+      const col = index % 20;
+
+      cells.forEach((c, idx) => {
+        c.classList.remove('highlight-source', 'highlight-connection');
+        const r = Math.floor(idx / 20);
+        const c_idx = idx % 20;
+        if (idx === index) {
+          c.classList.add('highlight-source');
+        } else if (r === row || c_idx === col) {
+          c.classList.add('highlight-connection');
+        }
+      });
     }
   });
 

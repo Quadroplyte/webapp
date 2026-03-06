@@ -429,7 +429,8 @@ html[data-no-blur] .opt-glass-card,
 html[data-no-blur] .opt-card-header,
 html[data-no-blur] .result-card,
 html[data-no-blur] .header-right,
-html[data-no-blur] .panel-header {
+html[data-no-blur] .panel-header,
+html[data-no-blur] .modal-content {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
