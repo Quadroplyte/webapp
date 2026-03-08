@@ -56,6 +56,9 @@ input[type="text"] {
   -moz-appearance: textfield;
   appearance: textfield;
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  /* Prevent rendering jank on focus/hover */
+  will-change: transform, border-color, background-color;
+  transform: translateZ(0);
 }
 
 [data-theme="dark"] input[type="number"],
@@ -509,6 +512,13 @@ html[data-no-blur] .matrix-cell {
 
 .matrix-cell.view-only::-moz-selection {
   background: transparent !important;
+}
+
+.matrix-cell {
+  /* Prevent artifacts during matrix interactions */
+  will-change: transform, border-color, background-color;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 

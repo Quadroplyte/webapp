@@ -352,6 +352,11 @@ html[data-header-no-blur] .main-title {
     0 1px 3px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  /* GPU Acceleration to prevent rendering artifacts with backdrop-filter */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  isolation: isolate;
 }
 
 [data-theme="dark"] .opt-glass-card {

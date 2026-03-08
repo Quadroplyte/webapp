@@ -450,6 +450,9 @@ html[data-no-blur] .color-popover {
   -webkit-backdrop-filter: blur(14px);
   opacity: 1;
   transition: opacity 0.4s ease;
+  /* Prevent flickering on scroll */
+  transform: translateZ(0);
+  pointer-events: none;
 }
 
 .settings-list-container.at-top::before {
