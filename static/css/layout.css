@@ -122,7 +122,7 @@ html[data-pattern="none"] body {
   top: 1rem;
   right: 50%;
   transform: translateX(50%);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6);
@@ -242,6 +242,7 @@ html[data-header-no-blur] .main-title {
   flex-direction: column;
   flex: 1;
   zoom: 0.75;
+  padding-top: 0 !important;
   /* Reduced by another 5% (0.80 -> 0.75) for compactness */
 }
 
@@ -249,7 +250,7 @@ html[data-header-no-blur] .main-title {
   display: flex;
   width: 100%;
   gap: 1.25rem;
-  padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
   align-items: stretch;
 }
 
@@ -338,8 +339,8 @@ html[data-header-no-blur] .main-title {
 .opt-glass-card {
   border-radius: 16px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.65),
-      rgba(255, 255, 255, 0.35));
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.55));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
@@ -479,7 +480,7 @@ html[data-header-no-blur] .main-title {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
   padding: 0 8px;
   transition: opacity 0.2s;
 }

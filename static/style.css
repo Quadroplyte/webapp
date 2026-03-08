@@ -3,8 +3,8 @@
    Imports all CSS modules in dependency order
    ======================================== */
 
-@import url('/static/css/variables.css?v=895');
-@import url('/static/css/layout.css?v=895');
-@import url('/static/css/glass.css?v=895');
-@import url('/static/css/components.css?v=895');
-@import url('/static/css/pages.css?v=895');
+@import url('/static/css/variables.css?v=922');
+@import url('/static/css/layout.css?v=922');
+@import url('/static/css/glass.css?v=922');
+@import url('/static/css/components.css?v=922');
+@import url('/static/css/pages.css?v=922');

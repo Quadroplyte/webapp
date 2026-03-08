@@ -11,8 +11,8 @@
   padding: 3px;
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.72),
-      rgba(255, 255, 255, 0.45));
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.55));
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.65);
@@ -138,19 +138,23 @@
   height: auto !important;
 }
 
-/* Lang switcher compact (Small/Settings) */
-.settings-panel .lang-switcher .pill-item,
-.settings-panel .settings-lang-pill .pill-item {
-  padding: 0.4rem 0.9rem;
-  font-size: 1rem;
+/* Lang switcher & All Settings Pill Items (Unified Scaling) */
+.settings-panel .pill-item {
+  padding: 0.55rem 1rem !important;
+  font-size: 1.18rem !important;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Theme switcher compact (Small/Settings) */
+/* Specific override to keep settings dropdown text aligned */
 .settings-panel .theme-dropdown .glass-dropdown-header {
-  padding: 0.4rem 1.1rem;
-  font-size: 1rem;
-  gap: 0.5rem;
-  min-width: 110px;
+  padding: 0.55rem 1.4rem !important;
+  font-size: 1.18rem !important;
+  gap: 0.6rem;
+  min-width: 135px;
 }
 
 /* ========== GLASS TOGGLE (Theme Tumbler) ========== */
@@ -170,12 +174,12 @@
 
 .glass-toggle-track {
   position: relative;
-  width: 52px;
-  height: 28px;
+  width: 64px;
+  height: 34px;
   border-radius: 999px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.55),
-      rgba(255, 255, 255, 0.25));
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.35));
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -220,8 +224,8 @@
   position: absolute;
   top: 2px;
   left: 3px;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: linear-gradient(135deg,
       rgba(255, 255, 255, 0.8),
@@ -251,7 +255,7 @@
 
 /* Checked state — knob slides right */
 .glass-toggle input:checked~.glass-toggle-track .glass-toggle-knob {
-  transform: translateX(23px);
+  transform: translateX(30px);
 }
 
 /* Checked state — track borders & shadow turns green */
@@ -283,7 +287,7 @@
   gap: 0.5rem;
   padding: calc(0.4rem + 4px) 1.2rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.25));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.35));
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.4);
@@ -343,7 +347,7 @@
   min-width: 100%;
   border-radius: 12px;
   padding: 6px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.65));
   backdrop-filter: blur(35px);
   -webkit-backdrop-filter: blur(35px);
   border: 1px solid rgba(255, 255, 255, 0.6);

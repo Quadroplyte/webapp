@@ -30,12 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     bestWrapper.classList.remove('hidden');
     allWrapper.classList.remove('hidden');
 
-    // Exclude x_0 from being selected as the best solution
-    const validSolutions = solutions.filter(s => s.s_index !== 0);
-    const maxF = Math.max(...validSolutions.map(s => s.f));
-    const bestSolution = validSolutions.find(s => s.f === maxF);
+    // Элемент x_0 (индекс 0 в массиве) исключаем из борьбы за "Лучший вариант" и из списка кандидатов.
+    // Это начальное состояние, которое просто служит точкой отсчета.
+    const candidates = solutions.filter(s => s.s_index !== 0);
+    if (candidates.length === 0) return;
 
-    const subStyle = 'line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;';
+    const maxF = Math.max(...candidates.map(s => s.f));
+    const bestSolution = candidates.find(s => s.f === maxF);
+
+    const indexStyle = 'line-height:0; position:relative; vertical-align:baseline; top:-0.5em; font-size: 0.7em;';
 
     const createCard = (sol, isBestHighlight) => {
       const card = document.createElement('div');
@@ -49,18 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
               <div style="display:flex; align-items:center; gap: 1.1rem; width: 100%;">
                   ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 1.25rem; border: 2px solid var(--best-card-border); padding: 5px 12px; border-radius: 6px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
                   <span style="font-size: 1.8rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
-                      ${t('vector_x')}<sub style="${subStyle}">${sol.s_index - 1}</sub> [${sol.vector_x.join(', ')}]
+                      ${t('vector_x')}<sup style="${indexStyle}">${sol.s_index - 1}</sup> [${sol.vector_x.join(', ')}]
                   </span>
               </div>
           </div>
           <div class="card-bottom-row">
-              <div>
-                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index - 1}</sub>)</div>
-                  <div style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
+              <div style="display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;">
+                  <span style="font-size: 1.8rem; color: var(--text-muted); font-weight: 700;">${t('val_fx')}<sup style="${indexStyle}">${sol.s_index - 1}</sup>)</span>
+                  <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-main);">${parseFloat(sol.f.toFixed(4))}</span>
               </div>
-              <div>
-                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('chosen_szi')}</div>
-                  <div style="font-size: 2.25rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; line-height: 1.5; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</div>
+              <div style="display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap;">
+                  <span style="font-size: 1.8rem; color: var(--text-muted); font-weight: 700;">${t('chosen_szi')}:</span>
+                  <span style="font-size: 1.8rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--salt-blue-accent)'}; word-break: break-word;">${sol.szi.length > 0 ? sol.szi.join(', ') : t('none')}</span>
               </div>
           </div>
       `;
@@ -72,9 +75,28 @@ document.addEventListener('DOMContentLoaded', () => {
       bestWrapper.appendChild(createCard(bestSolution, true));
     }
 
-    // 2. Показываем список x_s в нижнем блоке (исключая x_0)
-    solutions.forEach((sol) => {
-      if (sol.s_index === 0) return; // Пропускаем x_0, он уже сверху
+    // 2. Показываем уникальных кандидатов
+    const shownVectors = new Set();
+    const bestVectorStr = JSON.stringify(bestSolution?.vector_x);
+    if (bestVectorStr) {
+      shownVectors.add(bestVectorStr);
+    }
+
+    candidates.forEach((sol) => {
+      // Проверка по индексу (на всякий случай)
+      if (bestSolution && sol.s_index === bestSolution.s_index) return;
+
+      const vStr = JSON.stringify(sol.vector_x);
+
+      // Если этот вектор идентичен оптимальному (по содержанию) - НЕ показываем его в кандидатах
+      if (shownVectors.has(vStr)) return;
+
+      // Если F-значение совпадает с оптимальным до 6 знака - скорее всего это дубликат, скрываем
+      if (bestSolution && Math.abs(sol.f - bestSolution.f) < 1e-7) {
+        if (vStr === bestVectorStr) return;
+      }
+
+      shownVectors.add(vStr);
       allWrapper.appendChild(createCard(sol, false));
     });
 
@@ -227,10 +249,51 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentTheme = localStorage.getItem('appTheme') || 'dark';
   let currentColor = localStorage.getItem('appColor') || 'slate';
 
-  const applyTheme = (theme) => {
+  const applyTheme = (theme, enforcePresets = false) => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('appTheme', theme);
     currentTheme = theme;
+
+    // --- Dynamic Theme Presets Logic (Only on user manual switch) ---
+    if (enforcePresets) {
+      if (theme === 'dark') {
+        // Accent - 4th color (blue)
+        applyColor('blue');
+        // Gradient - all 3 slots (slate)
+        applyGradient(1, 'slate');
+        applyGradient(2, 'slate');
+        applyGradient(3, 'slate');
+        // Transparency
+        applyTransparency(true);
+        applyHeaderTransparency(true);
+        localStorage.setItem('transparencyMode', 'true');
+        localStorage.setItem('headerTransMode', 'true');
+      } else {
+        // Light mode
+        // Accent - 15th color (slate)
+        applyColor('slate');
+        // Gradient - all 3 slots (slate)
+        applyGradient(1, 'slate');
+        applyGradient(2, 'slate');
+        applyGradient(3, 'slate');
+        // Transparency
+        applyTransparency(true);
+        applyHeaderTransparency(false);
+        localStorage.setItem('transparencyMode', 'true');
+        localStorage.setItem('headerTransMode', 'false');
+      }
+
+      // Common presets for both themes
+      applyBorderStyle('neutral');
+      updateBgPatternUI('none');
+      localStorage.setItem('bgPattern', 'none');
+
+      navbarPos = 'static';
+      localStorage.setItem('navbarPos', 'static');
+      updateNavbarUI('static');
+    }
+    // --- End Presets Logic ---
+
     updateThemeUI(theme);
   };
 
@@ -370,27 +433,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Initial Apply for Gradient
-  applyGradient(1, gradColor1);
-  applyGradient(2, gradColor2);
-  applyGradient(3, gradColor3);
-  setupPopover(1);
-  setupPopover(2);
-  setupPopover(3);
-  setupAccentPopover();
-  // Ensure the UI matches the initial color
-  updateColorUI(document.documentElement.getAttribute('data-color') || 'yellow');
 
   const refreshSliders = () => {
     refreshAllSliders();
   };
 
-  // Initial Apply
-  applyTheme(currentTheme);
-  applyColor(currentColor);
 
   themeItems.forEach(item => {
-    item.addEventListener('click', () => applyTheme(item.getAttribute('data-theme')));
+    item.addEventListener('click', () => applyTheme(item.getAttribute('data-theme'), true));
   });
 
   colorSwatches.forEach(swatch => {
@@ -413,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('click', () => {
         if (item.hasAttribute('data-theme')) {
           const theme = item.getAttribute('data-theme');
-          applyTheme(theme);
+          applyTheme(theme, true);
         }
         dropdown.classList.remove('open');
       });
@@ -621,12 +671,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Initial generation
-  buildMatrix('matrixA_container', 3, 4, 'A');
-  buildMatrix('vectorB_container', 3, 1, 'b');
-  buildMatrix('vectorC_container', 1, 4, 'c');
-  buildMatrix('vectorD_container', 1, 4, 'd');
-  currentM = 3;
-  currentN = 4;
+  buildMatrix('matrixA_container', 5, 5, 'A');
+  buildMatrix('vectorB_container', 5, 1, 'b');
+  buildMatrix('vectorC_container', 1, 5, 'c');
+  buildMatrix('vectorD_container', 1, 5, 'd');
+  currentM = 5;
+  currentN = 5;
 
   // ── Запуск расчёта ──────────────────────────────────────
   // Хак: Если кликаем по кнопке расчета пока активна матрица, фокус теряется,
@@ -783,6 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fill lam
     lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
+    lamInput.dispatchEvent(new Event('input'));
 
     configPanel.classList.remove('hidden');
     matricesContainer.classList.remove('hidden');
@@ -806,27 +857,10 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   });
 
-  // ── Быстрая загрузка 10x10 по двойному клику ────────────────
-  const load10x10 = async () => {
-    try {
-      const resp = await fetch(`/static/task_10x10.txt?t=${Date.now()}`);
-      if (!resp.ok) return;
-      const text = await resp.text();
-      loadDataFromText(text);
-    } catch (err) {
-      console.error("Failed to load 10x10 task:", err);
-    }
-  };
-
-  const dataInputHeader = document.getElementById('dataInputHeader');
-  if (dataInputHeader) dataInputHeader.addEventListener('dblclick', load10x10);
-
   // ── Info Modal & Demo Data ──────────────────────────────
-  // ── Модалка формат импорта ───────────────────────────────
   const infoModal = document.getElementById('infoModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
   const infoBtn = document.getElementById('infoBtn');
-  const demoDataBtn = document.getElementById('demoDataBtn');
   const docLinkBtn = document.getElementById('docLinkBtn');
 
   if (infoBtn && infoModal && closeModalBtn) {
@@ -857,56 +891,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Demo Data ──────────────────────────────
+  const demoDataBtn = document.getElementById('demoDataBtn');
+
   if (demoDataBtn) {
     demoDataBtn.addEventListener('click', () => {
       const demoContent = `3 5\n15 10 5 4 3\n27 18 12 6 6\n40 25 12 11 8\n20 39 48\n90 76 30 35 30\n40 20 14 12 10\n0.5`;
-
       const lines = demoContent.split('\n').map(l => l.trim()).filter(l => l);
       try {
         const [mStr, nStr] = lines[0].split(/\s+/);
         const m = parseInt(mStr);
         const n = parseInt(nStr);
-
         mInput.value = m;
         nInput.value = n;
         currentM = m;
         currentN = n;
-
         buildMatrix('matrixA_container', m, n, 'A');
         buildMatrix('vectorB_container', m, 1, 'b');
         buildMatrix('vectorC_container', 1, n, 'c');
         buildMatrix('vectorD_container', 1, n, 'd');
-
-        // Fill A
         for (let i = 0; i < m; i++) {
           const vals = lines[1 + i].split(/\s+/).map(Number);
           for (let j = 0; j < n; j++) {
             document.getElementById(`A_${i}_${j}`).value = vals[j];
           }
         }
-
         let lineIdx = 1 + m;
-        // Fill b
         const bVals = lines[lineIdx++].split(/\s+/).map(Number);
         for (let i = 0; i < m; i++) document.getElementById(`b_${i}_0`).value = bVals[i];
-
-        // Fill c
         const cVals = lines[lineIdx++].split(/\s+/).map(Number);
         for (let j = 0; j < n; j++) document.getElementById(`c_0_${j}`).value = cVals[j];
-
-        // Fill d
         const dVals = lines[lineIdx++].split(/\s+/).map(Number);
         for (let j = 0; j < n; j++) document.getElementById(`d_0_${j}`).value = dVals[j];
-
-        // Fill lam
         lamInput.value = parseFloat(lines[lineIdx]) || 0.5;
-
+        lamInput.dispatchEvent(new Event('input'));
         configPanel.classList.remove('hidden');
         matricesContainer.classList.remove('hidden');
         document.getElementById('dataFieldsWrapper').classList.remove('hidden');
-
-        // Hide modal
-        infoModal.classList.add('hidden');
       } catch (err) {
         console.error(err);
         alert(t('err_demo_data') + err.message);
@@ -1155,5 +1176,22 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   syncInputs('lam_range', 'lam_input');
+
+  // ── Initial Apply (Restored State) ──────────────────────────
+  // Ensure all definitions are loaded before initial calls
+  applyGradient(1, gradColor1);
+  applyGradient(2, gradColor2);
+  applyGradient(3, gradColor3);
+  setupPopover(1);
+  setupPopover(2);
+  setupPopover(3);
+  setupAccentPopover();
+
+  // Ensure the UI matches the initial color
+  updateColorUI(document.documentElement.getAttribute('data-color') || 'yellow');
+
+  // Initial Apply Theme & Color (Restore saved state, don't enforce presets)
+  applyTheme(currentTheme, false);
+  applyColor(currentColor);
 
 });

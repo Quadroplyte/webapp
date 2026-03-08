@@ -324,10 +324,17 @@ html[data-no-blur] .color-popover {
   font-weight: 600;
 }
 
+.docs-panel .settings-card-desc,
 .docs-panel p,
 .settings-panel p {
   color: var(--text-muted);
   font-weight: normal;
+}
+
+/* Higher contrast for Help Page descriptions to match param-row-desc */
+.docs-panel .settings-card-desc,
+.docs-panel p {
+  color: #374151;
 }
 
 .docs-panel .row-label,
@@ -366,7 +373,7 @@ html[data-no-blur] .color-popover {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 1.25rem 2rem 3rem 2rem;
+  padding: 0.5rem 2rem 3rem 2rem;
   width: 100%;
 }
 
@@ -385,7 +392,7 @@ html[data-no-blur] .color-popover {
   gap: 4rem;
   width: 100%;
   margin: 0;
-  padding: 1.25rem 1.5rem 3rem 1.5rem;
+  padding: 0.5rem 2rem 3rem 2rem;
 }
 
 .settings-cards-list {
@@ -412,7 +419,7 @@ html[data-no-blur] .color-popover {
   min-height: 600px;
   /* Pointer events enabled to allow interacting with dummy elements */
   pointer-events: auto;
-  margin-top: 4rem;
+  margin-top: 0 !important;
 }
 
 .settings-preview-area .matrix-cell {
@@ -429,7 +436,7 @@ html[data-no-blur] .color-popover {
 }
 
 .preview-header {
-  font-size: 1.15rem;
+  font-size: 1.65rem;
   font-weight: 700;
   color: var(--text-main);
   margin: 0;
@@ -591,8 +598,8 @@ html[lang="en"] #settingsPanel .best-label-ru {
   padding: 0.9rem 1.25rem;
   border-radius: 12px;
   background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.65),
-      rgba(255, 255, 255, 0.35));
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.55));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow:
@@ -643,6 +650,7 @@ html[lang="en"] #settingsPanel .best-label-ru {
     0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+
 .settings-card-info {
   display: flex;
   flex-direction: column;
@@ -653,15 +661,25 @@ html[lang="en"] #settingsPanel .best-label-ru {
 }
 
 .settings-card-title {
-  font-size: 1.3rem;
+  font-size: 1.65rem !important;
   font-weight: 600;
   color: var(--text-main);
 }
 
 .settings-card-desc {
-  font-size: 1.05rem;
+  font-size: 1.62rem !important;
   color: var(--text-muted);
   margin: 0;
+  line-height: 1.6;
+}
+
+/* Specific override for Help page to ensure requested color consistency */
+.docs-panel .settings-card-desc {
+  color: #374151 !important;
+}
+
+[data-theme="dark"] .docs-panel .settings-card-desc {
+  color: #D1D5DB !important;
 }
 
 /* ========== ACCENT BORDERS ========== */
@@ -675,8 +693,8 @@ html[data-no-blur][data-border-style="neutral"] .opt-glass-card,
 html[data-no-blur][data-border-style="neutral"] .result-card:not(.best-solution):not(#allCandidatesWrapper *),
 html[data-no-blur][data-border-style="neutral"] .settings-glass-card,
 html[data-no-blur][data-border-style="neutral"] .preview-title-card {
-  border-width: 3.3px !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-width: 3.5px !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
 }
 
 [data-theme="dark"][data-border-style="neutral"] .opt-glass-card,
@@ -743,24 +761,15 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   transform: none;
 }
 
-.docs-panel .settings-card-title {
-  font-size: 1.4rem;
-  color: #000000;
+.docs-panel .code-block {
+  font-size: 1.8rem !important;
+  line-height: 1.4;
 }
 
-[data-theme="dark"] .docs-panel .settings-card-title {
-  color: #FFFFFF;
-}
-
-.docs-panel .settings-card-desc {
-  font-size: 1.15rem;
-  color: #374151;
-  /* Darker than default muted in light mode */
-}
-
-[data-theme="dark"] .docs-panel .settings-card-desc {
-  color: #D1D5DB;
-  /* Lighter than default muted in dark mode */
+.docs-panel .docs-param-desc,
+.docs-panel .docs-example-guide {
+  font-size: 1.62rem !important;
+  line-height: 1.6;
 }
 
 .docs-params-list {
@@ -795,7 +804,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   flex: 0 0 150px;
   padding: 0.75rem 1rem;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.35rem !important;
   color: #000000;
   background: rgba(255, 255, 255, 0.15);
   border-right: 1px solid rgba(255, 255, 255, 0.15);
@@ -815,7 +824,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   flex: 1;
   padding: 1.25rem 1rem;
   /* Slightly more padding for longer texts */
-  font-size: 1.85rem;
+  font-size: 1.35rem !important;
   line-height: 1.5;
   color: #374151;
   /* Darker text for documentation description */
@@ -824,7 +833,8 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   /* Center the description text vertically */
 }
 
-[data-theme="dark"] .docs-param-desc {
+[data-theme="dark"] .docs-param-desc,
+[data-theme="dark"] .docs-panel p {
   color: #D1D5DB;
   /* Lighter text for documentation description */
 }
@@ -838,7 +848,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  font-size: 1.45rem;
+  font-size: 1.35rem !important;
   color: #374151;
   /* High contrast guide text for light mode */
   line-height: 1.7;
@@ -945,14 +955,12 @@ html[data-no-blur] .result-card:not(.best-solution) {
 }
 
 .card-bottom-row>div:first-child {
-  flex: 1;
-  min-width: 255px;
+  flex: 0 1 auto;
   border-right: 1px solid var(--card-inner-divider);
 }
 
 .card-bottom-row>div:last-child {
-  flex: 2;
-  min-width: 420px;
+  flex: 1 1 auto;
 }
 
 @media (max-width: 480px) {
@@ -1054,22 +1062,22 @@ html[data-border-style] .result-card.best-solution,
 html[data-color] .result-card.best-solution,
 body .result-card.best-solution,
 .result-card.best-solution {
-  border: 4px solid #FACC15 !important;
-  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45) !important;
+  border: 4px solid var(--best-card-border) !important;
+  box-shadow: var(--best-card-shadow) !important;
   outline: none !important;
   z-index: 10 !important;
   transform: none !important;
 }
 
-/* Ensure SZI numbers AND all accent-colored text inside best card are also Gold */
+/* Ensure SZI numbers AND all accent-colored text inside best card are also reactive to theme */
 .best-solution [style*="var(--best-card-border)"],
 .best-solution [style*="color: var(--best-card-border)"],
 .best-solution div[style*="color"] {
-  color: #FACC15 !important;
+  color: var(--best-card-border) !important;
 }
 
 .best-solution span[style*="border"] {
-  border-color: #FACC15 !important;
+  border-color: var(--best-card-border) !important;
 }
 
 

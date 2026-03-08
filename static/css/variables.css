@@ -34,10 +34,10 @@
   --color-warning: #F59E0B;
 
   /* Special Components (Defaults) */
-  --color-best-border: #FACC15;
-  --color-best-shadow: rgba(250, 204, 21, 0.6);
-  --color-blur-bg: rgba(255, 255, 255, 0.85);
-  --best-card-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45);
+  --color-best-border: #D9B11B;
+  --color-best-shadow: rgba(217, 177, 27, 0.6);
+  --color-blur-bg: rgba(255, 255, 255, 0.92);
+  --best-card-shadow: 0 0 0 1px rgba(217, 177, 27, 0.9), 0 0 16px 4px rgba(217, 177, 27, 0.65), 0 0 36px 10px rgba(217, 177, 27, 0.45);
 
   --info-panel-bg: rgba(250, 204, 21, 0.1);
   --info-panel-border: rgba(250, 204, 21, 0.2);
@@ -76,12 +76,12 @@
   --salt-success: var(--color-success);
   --salt-error: var(--color-error);
   --best-card-border: var(--color-best-border);
-  --best-card-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45);
+  --best-card-shadow: 0 0 0 1px rgba(217, 177, 27, 0.9), 0 0 16px 4px rgba(217, 177, 27, 0.65), 0 0 36px 10px rgba(217, 177, 27, 0.45);
   --doc-special-text: var(--text-main);
   --config-input-bg: var(--color-bg-alt);
 
-  --card-inner-bg: rgba(255, 255, 255, 0.35);
-  --card-inner-divider: rgba(255, 255, 255, 0.5);
+  --card-inner-bg: rgba(255, 255, 255, 0.45);
+  --card-inner-divider: rgba(0, 0, 0, 0.18);
 
   /* Background Grid patterns */
   --dot-grid-color: rgba(0, 0, 0, 0.28);
@@ -95,7 +95,7 @@
   --pal-yellow-d: #4D4010;
   --pal-green-l: #34D399;
   --pal-green-d: #1A523A;
-  --pal-blue-l: #60A5FA;
+  --pal-blue-l: #3B82F6;
   --pal-blue-d: #1D3D73;
   --pal-indigo-l: #818CF8;
   --pal-indigo-d: #25286B;
@@ -117,16 +117,16 @@
   --pal-fuchsia-d: #542361;
   --pal-rose-l: #FB7185;
   --pal-rose-d: #6B2342;
-  --pal-slate-l: #E8EFF5;
+  --pal-slate-l: #9AC1E0;
   --pal-slate-d: #1D2D49;
   --pal-neutral-l: #D1D3D9;
   --pal-neutral-d: #141414;
 
   /* Default logical tokens (fallback) */
-  --grad-1: var(--pal-pink-l);
-  --grad-2: var(--pal-blue-l);
-  --grad-3: var(--pal-neutral-l);
-  --grad-end: var(--pal-neutral-l);
+  --grad-1: var(--pal-blue-l);
+  --grad-2: var(--pal-indigo-l);
+  --grad-3: var(--pal-blue-l);
+  --grad-end: var(--pal-blue-l);
 
   /* Palette Pointers (Dynamic based on theme) */
   --pal-pink: var(--pal-pink-l);
@@ -210,6 +210,11 @@
   --pal-rose: var(--pal-rose-d);
   --pal-slate: var(--pal-slate-d);
   --pal-neutral: var(--pal-neutral-d);
+
+  /* Preserve bright best-solution colors for dark mode */
+  --color-best-border: #FACC15;
+  --best-card-border: #FACC15;
+  --best-card-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45);
 }
 
 /* ========================================
@@ -242,14 +247,14 @@
   --accent-gradient: linear-gradient(135deg, rgb(var(--acc-rgb)), rgb(var(--acc-rgb-dark)));
   --accent-text: #FFFFFF;
   --accent-border-color: rgba(var(--acc-rgb), 0.8);
-
-  /* Force Best Solution to always be gold regardless of accent */
-  --color-best-border: #FACC15;
-  --best-card-border: #FACC15;
-  --best-card-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45);
 }
 
 [data-theme="light"][data-color] {
+  /* Force Best Solution to always be true yellow in light mode */
+  --color-best-border: #D9B11B;
+  --best-card-border: #D9B11B;
+  --best-card-shadow: 0 0 0 1px rgba(217, 177, 27, 0.9), 0 0 16px 4px rgba(217, 177, 27, 0.65), 0 0 36px 10px rgba(217, 177, 27, 0.45);
+
   --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.06);
   --info-panel-no-blur-border: rgb(var(--acc-rgb));
 
@@ -264,6 +269,11 @@
 }
 
 [data-theme="dark"][data-color] {
+  /* Ensure best solution stays gold in dark mode even with accent active */
+  --color-best-border: #FACC15;
+  --best-card-border: #FACC15;
+  --best-card-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45);
+
   --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.12);
   --info-panel-no-blur-border: rgb(var(--acc-rgb));
 }
