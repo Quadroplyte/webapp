@@ -70,60 +70,45 @@ document.addEventListener('DOMContentLoaded', () => {
       return card;
     };
 
-    // 1. Показываем лучший вариант в верхнем блоке
+    const candidatesFragment = document.createDocumentFragment();
+    const bestFragment = document.createDocumentFragment();
+
     if (bestSolution) {
-      bestWrapper.appendChild(createCard(bestSolution, true));
+      bestFragment.appendChild(createCard(bestSolution, true));
     }
 
-    // 2. Показываем уникальных кандидатов
     const shownVectors = new Set();
     const bestVectorStr = JSON.stringify(bestSolution?.vector_x);
-    if (bestVectorStr) {
-      shownVectors.add(bestVectorStr);
-    }
+    if (bestVectorStr) shownVectors.add(bestVectorStr);
 
     candidates.forEach((sol) => {
-      // Проверка по индексу (на всякий случай)
       if (bestSolution && sol.s_index === bestSolution.s_index) return;
-
       const vStr = JSON.stringify(sol.vector_x);
 
-      // Если этот вектор идентичен оптимальному (по содержанию) - НЕ показываем его в кандидатах
       if (shownVectors.has(vStr)) return;
-
-      // Если F-значение совпадает с оптимальным до 6 знака - скорее всего это дубликат, скрываем
       if (bestSolution && Math.abs(sol.f - bestSolution.f) < 1e-7) {
         if (vStr === bestVectorStr) return;
       }
 
       shownVectors.add(vStr);
-      allWrapper.appendChild(createCard(sol, false));
+      candidatesFragment.appendChild(createCard(sol, false));
     });
+
+    bestWrapper.appendChild(bestFragment);
+    allWrapper.appendChild(candidatesFragment);
 
     // Update fog overlays
     setTimeout(handleCandidatesScroll, 50);
   }
 
-  function handleCandidatesScroll() {
+  const handleCandidatesScroll = () => {
     const wrapper = document.getElementById('allCandidatesWrapper');
     const body = wrapper?.closest('.candidates-body');
     if (!wrapper || !body) return;
 
-    // Check top
-    if (wrapper.scrollTop <= 10) {
-      body.classList.add('at-top');
-    } else {
-      body.classList.remove('at-top');
-    }
-
-    // Check bottom
-    const isAtBottom = wrapper.scrollHeight - wrapper.scrollTop - wrapper.clientHeight <= 10;
-    if (isAtBottom) {
-      body.classList.add('at-bottom');
-    } else {
-      body.classList.remove('at-bottom');
-    }
-  }
+    body.classList.toggle('at-top', wrapper.scrollTop <= 10);
+    body.classList.toggle('at-bottom', (wrapper.scrollHeight - wrapper.scrollTop - wrapper.clientHeight) <= 10);
+  };
 
   const allCandidatesWrapper = document.getElementById('allCandidatesWrapper');
   if (allCandidatesWrapper) {
@@ -200,11 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Global resize listener for all pill sliders globally, so they never break
-  // Global resize listener for all pill sliders globally, so they never break
-  window.addEventListener('resize', () => {
-    refreshAllSliders();
-  });
+  window.addEventListener('resize', refreshAllSliders);
 
   // ── Язык ────────────────────────────────────────────────
   const langSwitcher = document.querySelector('.lang-switcher');
@@ -622,59 +603,54 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Построение сетки ввода ──────────────────────────────
   function buildMatrix(containerId, rows, cols, prefix, initVal = 0) {
     const container = document.getElementById(containerId);
+    if (!container) return;
     container.innerHTML = '';
     const grid = document.createElement('div');
     grid.className = 'matrix-grid';
     grid.style.gridTemplateColumns = `repeat(${cols}, auto)`;
     grid.style.gridTemplateRows = `repeat(${rows}, auto)`;
 
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.className = 'matrix-cell view-only'; // Start in view-only mode
-        input.readOnly = true; // Prevent keyboard input initially
-        input.id = `${prefix}_${i}_${j}`;
-        input.step = 'any';
-        input.value = initVal;
-
-        grid.appendChild(input);
-      }
+    const fragment = document.createDocumentFragment();
+    const count = rows * cols;
+    for (let idx = 0; idx < count; idx++) {
+      const i = Math.floor(idx / cols);
+      const j = idx % cols;
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'matrix-cell view-only';
+      input.readOnly = true;
+      input.id = `${prefix}_${i}_${j}`;
+      input.step = 'any';
+      input.value = initVal;
+      fragment.appendChild(input);
     }
+    grid.appendChild(fragment);
     container.appendChild(grid);
   }
 
-  // Show the data fields section
   const dfw = document.getElementById('dataFieldsWrapper');
   if (dfw) dfw.classList.remove('hidden');
   if (matricesContainer) matricesContainer.classList.remove('hidden');
 
-  // Auto-generate tables when M or N change
-  mInput.addEventListener('input', () => {
-    const m = parseInt(mInput.value);
-    const n = parseInt(nInput.value);
-    if (m > 0 && n > 0) {
-      currentM = m;
-      currentN = n;
-      buildMatrix('matrixA_container', currentM, currentN, 'A');
-      buildMatrix('vectorB_container', currentM, 1, 'b');
-      buildMatrix('vectorC_container', 1, currentN, 'c');
-      buildMatrix('vectorD_container', 1, currentN, 'd');
-    }
-  });
+  let gridDebounceTimeout;
+  const updateGrid = () => {
+    clearTimeout(gridDebounceTimeout);
+    gridDebounceTimeout = setTimeout(() => {
+      const m = parseInt(mInput.value);
+      const n = parseInt(nInput.value);
+      if (m > 0 && n > 0) {
+        currentM = m;
+        currentN = n;
+        buildMatrix('matrixA_container', m, n, 'A');
+        buildMatrix('vectorB_container', m, 1, 'b');
+        buildMatrix('vectorC_container', 1, n, 'c');
+        buildMatrix('vectorD_container', 1, n, 'd');
+      }
+    }, 150);
+  };
 
-  nInput.addEventListener('input', () => {
-    const m = parseInt(mInput.value);
-    const n = parseInt(nInput.value);
-    if (m > 0 && n > 0) {
-      currentM = m;
-      currentN = n;
-      buildMatrix('matrixA_container', currentM, currentN, 'A');
-      buildMatrix('vectorB_container', currentM, 1, 'b');
-      buildMatrix('vectorC_container', 1, currentN, 'c');
-      buildMatrix('vectorD_container', 1, currentN, 'd');
-    }
-  });
+  mInput.addEventListener('input', updateGrid);
+  nInput.addEventListener('input', updateGrid);
 
   // Initial generation
   buildMatrix('matrixA_container', 5, 5, 'A');
@@ -1023,11 +999,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ── Интерактивная подсветка связей в матрицах и векторах ──
-  let activeEditCell = null;
+  // ── Matrix Highlighting & Interaction ──
+  let highlightedCells = [];
+  const clearHighlights = () => {
+    highlightedCells.forEach(el => el.classList.remove('highlight-connection', 'highlight-source'));
+    highlightedCells = [];
+  };
 
   document.addEventListener('mousedown', (e) => {
-    // If clicking outside the currently active edit cell, make it view-only again
     if (activeEditCell && e.target !== activeEditCell) {
       activeEditCell.classList.add('view-only');
       activeEditCell.readOnly = true;
@@ -1039,13 +1018,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!e.target.classList.contains('matrix-cell')) return;
 
     if (e.target.classList.contains('view-only')) {
-      // If the cell is NOT currently focused, this is the FIRST click.
-      // Prevent default to avoid showing text caret, but manually focus.
       if (document.activeElement !== e.target) {
         e.preventDefault();
         e.target.focus();
       } else {
-        // If it IS already focused, this is the SECOND click. Let default behavior happen (caret appears)
         e.target.classList.remove('view-only');
         e.target.readOnly = false;
         activeEditCell = e.target;
@@ -1055,66 +1031,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   matricesContainer.addEventListener('focusin', (e) => {
     if (!e.target.classList.contains('matrix-cell')) return;
+    clearHighlights();
 
-    // Очищаем старую подсветку
-    document.querySelectorAll('.matrix-cell.highlight-connection, .matrix-cell.highlight-source')
-      .forEach(el => {
-        el.classList.remove('highlight-connection');
-        el.classList.remove('highlight-source');
-      });
+    const target = e.target;
+    target.classList.add('highlight-source');
+    highlightedCells.push(target);
 
-    e.target.classList.add('highlight-source');
+    const parts = target.id.split('_');
+    if (parts.length !== 3) return;
 
-    const idParts = e.target.id.split('_'); // формат: A_i_j, b_i_0, c_0_j, d_0_j
-    if (idParts.length !== 3) return;
-
-    const prefix = idParts[0];
-    const row = parseInt(idParts[1]);
-    const col = parseInt(idParts[2]);
+    const [prefix, row, col] = [parts[0], parseInt(parts[1]), parseInt(parts[2])];
 
     if (prefix === 'A') {
-      // 1. При выборе в матрице A:
-      // В векторе b выделяем элемент в той же строке
-      const bCell = document.getElementById(`b_${row}_0`);
-      if (bCell) bCell.classList.add('highlight-connection');
-
-      // В векторах c и d выделяем элемент в том же столбце
-      const cCell = document.getElementById(`c_0_${col}`);
-      const dCell = document.getElementById(`d_0_${col}`);
-      if (cCell) cCell.classList.add('highlight-connection');
-      if (dCell) dCell.classList.add('highlight-connection');
-
+      const b = document.getElementById(`b_${row}_0`);
+      const c = document.getElementById(`c_0_${col}`);
+      const d = document.getElementById(`d_0_${col}`);
+      [b, c, d].forEach(el => { if (el) { el.classList.add('highlight-connection'); highlightedCells.push(el); } });
     } else if (prefix === 'b') {
-      // 2. При выборе в векторе b:
-      // В матрице A выделяем всю строку row, векторы c/d не трогаем
       for (let j = 0; j < currentN; j++) {
-        const aCell = document.getElementById(`A_${row}_${j}`);
-        if (aCell) aCell.classList.add('highlight-connection');
+        const a = document.getElementById(`A_${row}_${j}`);
+        if (a) { a.classList.add('highlight-connection'); highlightedCells.push(a); }
       }
-
     } else if (prefix === 'c' || prefix === 'd') {
-      // 3. При выборе в векторе c или d:
-      // В матрице A выделяем весь столбец col, вектор b не трогаем
       for (let i = 0; i < currentM; i++) {
-        const aCell = document.getElementById(`A_${i}_${col}`);
-        if (aCell) aCell.classList.add('highlight-connection');
+        const a = document.getElementById(`A_${i}_${col}`);
+        if (a) { a.classList.add('highlight-connection'); highlightedCells.push(a); }
       }
-
-      // Также выделяем соответствующую ячейку в другом векторе (c или d)
-      const otherPrefix = prefix === 'c' ? 'd' : 'c';
-      const otherCell = document.getElementById(`${otherPrefix}_0_${col}`);
-      if (otherCell) otherCell.classList.add('highlight-connection');
+      const other = document.getElementById(`${prefix === 'c' ? 'd' : 'c'}_0_${col}`);
+      if (other) { other.classList.add('highlight-connection'); highlightedCells.push(other); }
     }
   });
 
   matricesContainer.addEventListener('focusout', (e) => {
-    if (!e.target.classList.contains('matrix-cell')) return;
-    // Снимаем подсветку при потере фокуса
-    document.querySelectorAll('.matrix-cell.highlight-connection, .matrix-cell.highlight-source')
-      .forEach(el => {
-        el.classList.remove('highlight-connection');
-        el.classList.remove('highlight-source');
-      });
+    if (e.target.classList.contains('matrix-cell')) clearHighlights();
   });
 
   // ── Синхронизированный скролл ──
@@ -1149,23 +1098,24 @@ document.addEventListener('DOMContentLoaded', () => {
     syncScroll(dCont, [aCont, cCont], 'scrollLeft');
   }
 
-  // ── Исправление бага браузера со скроллом при zoom ──
-  document.addEventListener('mousedown', (e) => {
-    if (e.target.tagName === 'INPUT' && e.target.type === 'number') {
-      const aCont = document.getElementById('matrixA_container');
-      const bCont = document.getElementById('vectorB_container');
-      const cCont = document.getElementById('vectorC_container');
-      const dCont = document.getElementById('vectorD_container');
+  // ── Browser Zoom Scroll Bug Fix ──
+  const matrixContainers = {
+    a: document.getElementById('matrixA_container'),
+    b: document.getElementById('vectorB_container'),
+    c: document.getElementById('vectorC_container'),
+    d: document.getElementById('vectorD_container')
+  };
 
-      // Сохраняем все позиции скроллов до фокуса
+  document.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'INPUT' && e.target.type === 'number' && e.target.classList.contains('matrix-cell')) {
       const tops = {
-        a: aCont ? aCont.scrollTop : 0, b: bCont ? bCont.scrollTop : 0,
-        c: cCont ? cCont.scrollTop : 0, d: dCont ? dCont.scrollTop : 0,
+        a: matrixContainers.a?.scrollTop || 0, b: matrixContainers.b?.scrollTop || 0,
+        c: matrixContainers.c?.scrollTop || 0, d: matrixContainers.d?.scrollTop || 0,
         w: window.scrollY
       };
       const lefts = {
-        a: aCont ? aCont.scrollLeft : 0, b: bCont ? bCont.scrollLeft : 0,
-        c: cCont ? cCont.scrollLeft : 0, d: dCont ? dCont.scrollLeft : 0,
+        a: matrixContainers.a?.scrollLeft || 0, b: matrixContainers.b?.scrollLeft || 0,
+        c: matrixContainers.c?.scrollLeft || 0, d: matrixContainers.d?.scrollLeft || 0,
         w: window.scrollX
       };
 
@@ -1174,19 +1124,17 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => e.target.select(), 0);
 
       const restore = () => {
-        if (aCont && aCont.scrollTop !== tops.a) aCont.scrollTop = tops.a;
-        if (bCont && bCont.scrollTop !== tops.b) bCont.scrollTop = tops.b;
-        if (cCont && cCont.scrollTop !== tops.c) cCont.scrollTop = tops.c;
-        if (dCont && dCont.scrollTop !== tops.d) dCont.scrollTop = tops.d;
+        if (matrixContainers.a && matrixContainers.a.scrollTop !== tops.a) matrixContainers.a.scrollTop = tops.a;
+        if (matrixContainers.b && matrixContainers.b.scrollTop !== tops.b) matrixContainers.b.scrollTop = tops.b;
+        if (matrixContainers.c && matrixContainers.c.scrollTop !== tops.c) matrixContainers.c.scrollTop = tops.c;
+        if (matrixContainers.d && matrixContainers.d.scrollTop !== tops.d) matrixContainers.d.scrollTop = tops.d;
 
-        if (aCont && aCont.scrollLeft !== lefts.a) aCont.scrollLeft = lefts.a;
-        if (bCont && bCont.scrollLeft !== lefts.b) bCont.scrollLeft = lefts.b;
-        if (cCont && cCont.scrollLeft !== lefts.c) cCont.scrollLeft = lefts.c;
-        if (dCont && dCont.scrollLeft !== lefts.d) dCont.scrollLeft = lefts.d;
+        if (matrixContainers.a && matrixContainers.a.scrollLeft !== lefts.a) matrixContainers.a.scrollLeft = lefts.a;
+        if (matrixContainers.b && matrixContainers.b.scrollLeft !== lefts.b) matrixContainers.b.scrollLeft = lefts.b;
+        if (matrixContainers.c && matrixContainers.c.scrollLeft !== lefts.c) matrixContainers.c.scrollLeft = lefts.c;
+        if (matrixContainers.d && matrixContainers.d.scrollLeft !== lefts.d) matrixContainers.d.scrollLeft = lefts.d;
 
-        if (window.scrollY !== tops.w || window.scrollX !== lefts.w) {
-          window.scrollTo(lefts.w, tops.w);
-        }
+        if (window.scrollY !== tops.w || window.scrollX !== lefts.w) window.scrollTo(lefts.w, tops.w);
       };
 
       restore();
