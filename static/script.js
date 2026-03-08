@@ -248,7 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const glassDropdowns = document.querySelectorAll('.glass-dropdown');
 
   let currentTheme = localStorage.getItem('appTheme') || 'dark';
-  let currentColor = localStorage.getItem('appColor') || 'slate';
+  // Default for dark is blue (idx 4), default for light is slate (idx 15)
+  let currentColor = localStorage.getItem('appColor') || (currentTheme === 'dark' ? 'blue' : 'slate');
 
   const applyTheme = (theme, enforcePresets = false) => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -289,9 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBgPatternUI('none');
       localStorage.setItem('bgPattern', 'none');
 
-      navbarPos = 'static';
-      localStorage.setItem('navbarPos', 'static');
-      updateNavbarUI('static');
+      navbarPos = 'right';
+      localStorage.setItem('navbarPos', 'right');
+      updateNavbarUI('right');
     }
     // --- End Presets Logic ---
 
@@ -1217,8 +1218,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ensure the UI matches the initial color
   updateColorUI(document.documentElement.getAttribute('data-color') || 'yellow');
 
-  // Initial Apply Theme & Color (Restore saved state, don't enforce presets)
-  applyTheme(currentTheme, false);
-  applyColor(currentColor);
+  // Initial Apply Theme & Color 
+  const isFirstRun = localStorage.getItem('appTheme') === null;
+  if (isFirstRun) {
+    // 1. Set the theme with presets (this will call applyColor('blue'))
+    applyTheme('dark', true);
+  } else {
+    // 2. Restore saved state
+    applyTheme(currentTheme, false);
+    applyColor(currentColor);
+  }
 
 });
