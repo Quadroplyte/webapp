@@ -195,8 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
       settingsPanel.classList.remove('hidden');
 
       setTimeout(() => {
-        refreshAllSliders(true);
-      }, 50);
+        refreshAllSliders();
+      }, 70);
     }
   });
 
@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (typeof updatePageLanguage === 'function') updatePageLanguage();
-    requestAnimationFrame(() => refreshSliders());
+    refreshSliders();
   };
 
   const updateColorUI = (color) => {
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (typeof updatePageLanguage === 'function') updatePageLanguage();
-    requestAnimationFrame(() => refreshSliders());
+    refreshSliders();
   };
 
   // ── Gradient Picker Logic ──────────────────────────────
@@ -434,8 +434,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 
+  let refreshScheduled = false;
   const refreshSliders = () => {
-    refreshAllSliders();
+    if (refreshScheduled) return;
+    refreshScheduled = true;
+    requestAnimationFrame(() => {
+      refreshAllSliders();
+      refreshScheduled = false;
+    });
   };
 
 
@@ -703,34 +709,72 @@ document.addEventListener('DOMContentLoaded', () => {
         </svg>
         <span data-i18n="solving_btn">${t('solving_btn')}</span>`;
 
+    const errorBox = document.getElementById('errorBox');
+    errorBox.classList.add('hidden');
+
     try {
-      // Collect A
+      // Collect and validate A
       let A = [];
       for (let i = 0; i < currentM; i++) {
         let row = [];
         for (let j = 0; j < currentN; j++) {
-          row.push(parseFloat(document.getElementById(`A_${i}_${j}`).value) || 0);
+          const valStr = document.getElementById(`A_${i}_${j}`).value.trim();
+          if (valStr === "") {
+            throw new Error(t('err_empty_field'));
+          }
+          const val = parseFloat(valStr);
+          if (isNaN(val) || val < 0) {
+            throw new Error(t('err_invalid_number'));
+          }
+          row.push(val);
         }
         A.push(row);
       }
 
-      // Collect vectors
+      // Collect and validate vector b
       let b = [];
       for (let i = 0; i < currentM; i++) {
-        b.push(parseFloat(document.getElementById(`b_${i}_0`).value) || 0);
+        const valStr = document.getElementById(`b_${i}_0`).value.trim();
+        if (valStr === "") {
+          throw new Error(t('err_empty_field'));
+        }
+        const val = parseFloat(valStr);
+        if (isNaN(val) || val < 0) {
+          throw new Error(t('err_invalid_number'));
+        }
+        b.push(val);
       }
 
+      // Collect and validate vectors c and d
       let c = [];
       let d = [];
       for (let j = 0; j < currentN; j++) {
-        c.push(parseFloat(document.getElementById(`c_0_${j}`).value) || 0);
-        d.push(parseFloat(document.getElementById(`d_0_${j}`).value) || 0);
+        const cStr = document.getElementById(`c_0_${j}`).value.trim();
+        const dStr = document.getElementById(`d_0_${j}`).value.trim();
+
+        if (cStr === "" || dStr === "") {
+          throw new Error(t('err_empty_field'));
+        }
+
+        const cVal = parseFloat(cStr);
+        const dVal = parseFloat(dStr);
+
+        if (isNaN(cVal) || cVal < 0 || isNaN(dVal) || dVal < 0) {
+          throw new Error(t('err_invalid_number'));
+        }
+        c.push(cVal);
+        d.push(dVal);
+      }
+
+      const lamVal = parseFloat(lamInput.value);
+      if (isNaN(lamVal) || lamVal < 0 || lamVal > 1) {
+        throw new Error(t('err_invalid_number'));
       }
 
       const payload = {
         m: currentM,
         n: currentN,
-        lam: parseFloat(lamInput.value) || 0.5,
+        lam: lamVal,
         A: A,
         b: b,
         c: c,
@@ -764,7 +808,15 @@ document.addEventListener('DOMContentLoaded', () => {
         renderResultCards(lastSolutions);
 
       } else {
-        errorBox.innerText = result.error || t('err_unknown');
+        const msg = t(result.error) || t('err_unknown');
+        errorBox.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>${msg}</span>
+        `;
         errorBox.classList.remove('hidden');
         bestWrapper.classList.add('hidden');
         allWrapper.classList.add('hidden');
@@ -773,7 +825,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (err) {
       console.error(err);
-      errorBox.innerText = t('err_server');
+      const msg = err.message ? err.message : t('err_server');
+      errorBox.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>${msg}</span>
+      `;
       errorBox.classList.remove('hidden');
       resultContainer.classList.remove('hidden');
     } finally {
@@ -942,11 +1002,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderResultCards(lastSolutions);
     }
 
-    // Recalculate all pill sliders after text widths change due to language switch
-    // We use a small timeout to ensure the browser has computed new text widths.
+    // Recalculate all pill sliders with a smooth transition
     setTimeout(() => {
-      refreshAllSliders(true);
-    }, 50);
+      refreshAllSliders();
+    }, 100);
   });
 
   // Scroll handler for header right controls

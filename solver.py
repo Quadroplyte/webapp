@@ -41,12 +41,21 @@ def solve_problem(
     for i in range(m):
         prob0 += pulp.lpSum([A_sorted[i][j] * x0_vars[j] for j in range(n)]) <= b_arr[i]
         
-    prob0.solve(pulp.PULP_CBC_CMD(msg=False))
-    
-    if pulp.LpStatus[prob0.status] != "Optimal":
+    # Если все коэффициенты в целевой функции и ограничениях - нули, решать нечего
+    if np.all(c_sorted == 0) and np.all(d_sorted == 0) and np.all(b_arr == 0):
         return {
             "success": False,
-            "error": "Решение базовой задачи не найдено. Проверьте входные данные и бюджеты.",
+            "error": "err_all_zeros",
+        }
+
+    prob0.solve(pulp.PULP_CBC_CMD(msg=False))
+    
+    # Validation: Solver might return Optimal status but fail to populate values in edge cases (e.g. all-zero problem)
+    # or if the solver executable itself failed.
+    if pulp.LpStatus[prob0.status] != "Optimal" or any(pulp.value(v) is None for v in x0_vars):
+        return {
+            "success": False,
+            "error": "err_no_solution_found",
         }
         
     # Получить оптимальное решение - n-мерный булевый вектор x^0
@@ -95,6 +104,10 @@ def solve_problem(
             prob_s.solve(pulp.PULP_CBC_CMD(msg=False))
             
             if pulp.LpStatus[prob_s.status] == "Optimal":
+                # Validation: check for None values
+                if any(pulp.value(v) is None for v in xs_vars):
+                    continue # Skip this candidate if solver failed to provide values
+
                 # Получить оптимальное решение - (j0 - s)-мерный булевый вектор x^s
                 xs = [int(round(float(pulp.value(var)))) for var in xs_vars]
                 

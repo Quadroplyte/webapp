@@ -21,11 +21,11 @@
     inset 0 -1px 1px rgba(0, 0, 0, 0.03),
     0 2px 8px rgba(0, 0, 0, 0.06);
   gap: 0;
-  transition: background 0s,
-    border-color 0s,
-    box-shadow 0s,
-    backdrop-filter 0s,
-    -webkit-backdrop-filter 0s;
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    -webkit-backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="dark"] .glass-pill-nav {
@@ -311,7 +311,7 @@
     "YTFI" 738,
     "YTLC" 570,
     "YTUC" 712;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   min-width: 130px;
 }
 
