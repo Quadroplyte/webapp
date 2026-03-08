@@ -317,7 +317,7 @@ html[data-no-blur] .color-popover {
 /* Larger text in docs panel */
 .docs-panel .result-card-label,
 .settings-panel .result-card-label {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-transform: none;
   letter-spacing: normal;
   color: var(--text-main);
@@ -337,7 +337,7 @@ html[data-no-blur] .color-popover {
 
 .docs-panel .code-block,
 .docs-panel pre {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
 }
 
 /* Settings Panel — glass cards on dotted grid */
@@ -588,8 +588,8 @@ html[lang="en"] #settingsPanel .best-label-ru {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.75rem;
-  border-radius: 16px;
+  padding: 0.9rem 1.25rem;
+  border-radius: 12px;
   background: linear-gradient(135deg,
       rgba(255, 255, 255, 0.65),
       rgba(255, 255, 255, 0.35));
@@ -653,13 +653,13 @@ html[lang="en"] #settingsPanel .best-label-ru {
 }
 
 .settings-card-title {
-  font-size: 1.85rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--text-main);
 }
 
 .settings-card-desc {
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
   margin: 0;
 }
@@ -744,7 +744,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
 }
 
 .docs-panel .settings-card-title {
-  font-size: 2.15rem;
+  font-size: 1.4rem;
   color: #000000;
 }
 
@@ -753,7 +753,7 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
 }
 
 .docs-panel .settings-card-desc {
-  font-size: 1.75rem;
+  font-size: 1.15rem;
   color: #374151;
   /* Darker than default muted in light mode */
 }
@@ -792,10 +792,10 @@ html[data-no-blur][data-color][data-border-style="accent"] .preview-title-card {
 }
 
 .docs-param-name {
-  flex: 0 0 200px;
+  flex: 0 0 150px;
   padding: 0.75rem 1rem;
   font-weight: 700;
-  font-size: 1.95rem;
+  font-size: 1.2rem;
   color: #000000;
   background: rgba(255, 255, 255, 0.15);
   border-right: 1px solid rgba(255, 255, 255, 0.15);
@@ -1051,21 +1051,26 @@ html .result-card.best-solution,
 html[data-theme] .result-card.best-solution,
 html[data-no-blur] .result-card.best-solution,
 html[data-border-style] .result-card.best-solution,
+html[data-color] .result-card.best-solution,
 body .result-card.best-solution,
 .result-card.best-solution {
-  border: 4px solid var(--best-card-border) !important;
-  box-shadow: var(--best-card-shadow) !important;
+  border: 4px solid #FACC15 !important;
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45) !important;
   outline: none !important;
   z-index: 10 !important;
   transform: none !important;
 }
 
-[data-color="yellow"] .result-card.best-solution {
-  border-color: #FACC15 !important;
-  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.9), 0 0 16px 4px rgba(250, 204, 21, 0.65), 0 0 36px 10px rgba(253, 224, 71, 0.45) !important;
+/* Ensure SZI numbers AND all accent-colored text inside best card are also Gold */
+.best-solution [style*="var(--best-card-border)"],
+.best-solution [style*="color: var(--best-card-border)"],
+.best-solution div[style*="color"] {
+  color: #FACC15 !important;
 }
 
-[data-color="pink"] .result-card.best-solution {
-  border-color: #F472B6 !important;
-  box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.9), 0 0 16px 4px rgba(244, 114, 182, 0.65), 0 0 36px 10px rgba(249, 168, 212, 0.45) !important;
+.best-solution span[style*="border"] {
+  border-color: #FACC15 !important;
 }
+
+
+/* [data-color="yellow"] and [data-color="pink"] overrides removed - now unified under yellow in all themes */

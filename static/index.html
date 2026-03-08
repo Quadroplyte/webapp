@@ -107,22 +107,12 @@
                                         <input type="file" id="fileInput" accept=".txt">
                                         <span data-i18n="load_file_btn">Загрузить из файла (.txt)</span>
                                     </label>
-
-                                    <button id="manualInputBtn" class="action-btn" style="flex: 1;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 20h9" />
-                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-                                        </svg>
-                                        <span data-i18n="manual_input_btn">Ручной ввод</span>
-                                    </button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Config card -->
-                        <div id="configPanel" class="opt-glass-card hidden">
+                        <div id="configPanel" class="opt-glass-card">
                             <div class="opt-card-header">
                                 <h2 data-i18n="config_params_title">Конфигурация параметров</h2>
                             </div>
@@ -146,30 +136,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="config-col action-col">
-                                        <button id="generateTablesBtn" class="action-btn primary"
-                                            style="margin-top: auto;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10" />
-                                                <line x1="12" x2="12" y1="8" y2="16" />
-                                                <line x1="8" x2="16" y1="12" y2="12" />
-                                            </svg>
-                                            <span data-i18n="create_tables_btn">Создать таблицы</span>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Matrices & vectors card -->
-                        <div id="matricesContainer" class="opt-glass-card hidden">
+                        <div id="matricesContainer" class="opt-glass-card">
                             <div class="opt-card-header">
                                 <h2 data-i18n="matrices_data_title">Матрицы и векторы данных</h2>
                             </div>
                             <div class="opt-card-body">
-                                <div id="dataFieldsWrapper" class="hidden">
+                                <div id="dataFieldsWrapper">
                                     <div class="matrix-b-wrapper">
                                         <div class="data-group" style="flex: 1; overflow: hidden;">
                                             <h3 data-i18n="matrix_a_title">Матрица A: Стоимость СЗИ
@@ -213,20 +190,6 @@
                                         </div>
                                     </div>
 
-                                    <div id="cellInfoPanel" class="cell-info-panel">
-                                        <div class="cell-info-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                                            </svg>
-                                        </div>
-                                        <div id="cellInfoContent" class="cell-info-content" data-i18n="info_empty">
-                                            Выберите ячейку для отображения подробной информации
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="calculate-action">
@@ -241,10 +204,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
-                    <!-- Right column wrapper to enforce left-column height parity -->
+                    <!-- Right column wrapper -->
                     <div class="opt-right-col-wrapper">
                         <!-- Right column -->
                         <div class="opt-right-col">
@@ -278,77 +240,88 @@
                     </div>
 
                 </div>
+            </div>
 
-                <section id="docsPanel" class="docs-panel panel hidden">
+            <section id="docsPanel" class="docs-panel panel hidden">
 
-                    <div class="settings-center-wrap">
-                        <div class="docs-cards-list">
+                <div class="settings-center-wrap">
+                    <div class="docs-cards-list">
 
-                            <!-- Model description -->
-                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
-                                <div class="settings-card-title" data-i18n="model_desc_title">Описание модели</div>
-                                <p class="settings-card-desc" data-i18n="model_desc_text"
-                                    style="margin-top: 0.5rem; line-height: 1.7;">
-                                    Система предназначена для оптимального выбора средств защиты информации (СЗИ) при
-                                    заданных финансовых ограничениях для различных групп активов (ГИА).
-                                    Модель минимизирует риски, балансируя между суммарным временем обхода и минимальным
-                                    временем
-                                    реагирования отдела безопасности самого слабого звена через коэффициент λ.
-                                </p>
+                        <!-- Model description -->
+                        <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                            <div class="settings-card-title" data-i18n="model_desc_title">Описание модели</div>
+                            <p class="settings-card-desc" data-i18n="model_desc_text"
+                                style="margin-top: 0.5rem; line-height: 1.7;">
+                                Система предназначена для оптимального выбора средств защиты информации (СЗИ)
+                                при
+                                заданных финансовых ограничениях для различных групп активов (ГИА).
+                                Модель минимизирует риски, балансируя между суммарным временем обхода и
+                                минимальным
+                                временем
+                                реагирования отдела безопасности самого слабого звена через коэффициент λ.
+                            </p>
+                        </div>
+
+                        <!-- Input parameters -->
+                        <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                            <div class="settings-card-title" data-i18n="input_params_title">Параметры ввода
                             </div>
-
-                            <!-- Input parameters -->
-                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
-                                <div class="settings-card-title" data-i18n="input_params_title">Параметры ввода</div>
-                                <div class="docs-params-list">
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name">m</span>
-                                        <span class="docs-param-desc" data-i18n="param_m_desc">Количество групп активов
-                                            (строки матрицы A)</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name">n</span>
-                                        <span class="docs-param-desc" data-i18n="param_n_desc">Количество доступных СЗИ
-                                            (столбцы)</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name">λ</span>
-                                        <span class="docs-param-desc" data-i18n="param_lam_desc">Приоритет: 1.0 = фокус
-                                            на времени обхода, 0.0 = фокус на минимальном времени реагирования</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name" data-i18n="matrix_a_title">Матрица A</span>
-                                        <span class="docs-param-desc" data-i18n="param_a_desc">Стоимость каждого СЗИ для
-                                            каждой ГИА (m × n)</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name" data-i18n="vector_b_title">Вектор b</span>
-                                        <span class="docs-param-desc" data-i18n="param_b_desc">Финансовые ограничения
-                                            для
-                                            каждой ГИА</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name" data-i18n="vector_c_title">Вектор c</span>
-                                        <span class="docs-param-desc" data-i18n="param_c_desc">Время обхода для каждого
-                                            СЗИ</span>
-                                    </div>
-                                    <div class="docs-param-row">
-                                        <span class="docs-param-name" data-i18n="vector_d_title">Вектор d</span>
-                                        <span class="docs-param-desc" data-i18n="param_d_desc">Минимальное время
-                                            реагирования отдела безопасности для каждого
-                                            СЗИ</span>
-                                    </div>
+                            <div class="docs-params-list">
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name">m</span>
+                                    <span class="docs-param-desc" data-i18n="param_m_desc">Количество групп
+                                        активов
+                                        (строки матрицы A)</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name">n</span>
+                                    <span class="docs-param-desc" data-i18n="param_n_desc">Количество доступных
+                                        СЗИ
+                                        (столбцы)</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name">λ</span>
+                                    <span class="docs-param-desc" data-i18n="param_lam_desc">Приоритет: 1.0 =
+                                        фокус
+                                        на времени обхода, 0.0 = фокус на минимальном времени
+                                        реагирования</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name" data-i18n="matrix_a_title">Матрица A</span>
+                                    <span class="docs-param-desc" data-i18n="param_a_desc">Стоимость каждого СЗИ
+                                        для
+                                        каждой ГИА (m × n)</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name" data-i18n="vector_b_title">Вектор b</span>
+                                    <span class="docs-param-desc" data-i18n="param_b_desc">Финансовые
+                                        ограничения
+                                        для
+                                        каждой ГИА</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name" data-i18n="vector_c_title">Вектор c</span>
+                                    <span class="docs-param-desc" data-i18n="param_c_desc">Время обхода для
+                                        каждого
+                                        СЗИ</span>
+                                </div>
+                                <div class="docs-param-row">
+                                    <span class="docs-param-name" data-i18n="vector_d_title">Вектор d</span>
+                                    <span class="docs-param-desc" data-i18n="param_d_desc">Минимальное время
+                                        реагирования отдела безопасности для каждого
+                                        СЗИ</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Import format -->
-                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
-                                <div class="settings-card-title" data-i18n="import_format_title">Формат файла импорта
-                                    (.txt)</div>
-                                <p class="settings-card-desc" data-i18n="import_format_desc"
-                                    style="margin-top: 0.35rem;">
-                                    Каждая строка — одна запись, значения разделяются пробелами:</p>
-                                <pre class="code-block" style="margin-top: 0.75rem;">m n
+                        <!-- Import format -->
+                        <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                            <div class="settings-card-title" data-i18n="import_format_title">Формат файла
+                                импорта
+                                (.txt)</div>
+                            <p class="settings-card-desc" data-i18n="import_format_desc" style="margin-top: 0.35rem;">
+                                Каждая строка — одна запись, значения разделяются пробелами:</p>
+                            <pre class="code-block" style="margin-top: 0.75rem;">m n
 A[0,0] A[0,1] ... A[0,n-1]
 A[1,0] A[1,1] ... A[1,n-1]
 ...
@@ -356,14 +329,15 @@ b[0] b[1] ... b[m-1]
 c[0] c[1] ... c[n-1]
 d[0] d[1] ... d[n-1]
 lambda</pre>
-                            </div>
+                        </div>
 
-                            <!-- Example file -->
-                            <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
-                                <div class="settings-card-title" data-i18n="example_file_title">Пример файла (m=3, n=4)
-                                </div>
-                                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
-                                    <pre class="code-block" style="margin: 0; flex: 0 0 160px; font-size: 1.1rem;">3 4
+                        <!-- Example file -->
+                        <div class="settings-glass-card" style="flex-direction: column; align-items: stretch;">
+                            <div class="settings-card-title" data-i18n="example_file_title">Пример файла (m=3,
+                                n=4)
+                            </div>
+                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 0.75rem;">
+                                <pre class="code-block" style="margin: 0; flex: 0 0 160px; font-size: 1.1rem;">3 4
 10 20 15 25
 12 18 22 10
 8  16 20 30
@@ -371,401 +345,462 @@ lambda</pre>
 30 40 35 45
 5  8  6  9
 0.5</pre>
-                                    <div class="docs-example-guide">
-                                        <p data-i18n="example_guide_intro" style="margin: 0;"></p>
-                                        <div class="docs-guide-divider"></div>
-                                        <p data-i18n="example_guide_matrix" style="margin: 0;"></p>
-                                        <div class="docs-guide-divider"></div>
-                                        <p data-i18n="example_guide_vectors" style="margin: 0;"></p>
-                                        <div class="docs-guide-divider"></div>
-                                        <p data-i18n="example_guide_lambda" style="margin: 0;"></p>
+                                <div class="docs-example-guide">
+                                    <p data-i18n="example_guide_intro" style="margin: 0;"></p>
+                                    <div class="docs-guide-divider"></div>
+                                    <p data-i18n="example_guide_matrix" style="margin: 0;"></p>
+                                    <div class="docs-guide-divider"></div>
+                                    <p data-i18n="example_guide_vectors" style="margin: 0;"></p>
+                                    <div class="docs-guide-divider"></div>
+                                    <p data-i18n="example_guide_lambda" style="margin: 0;"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="settingsPanel" class="settings-panel panel hidden">
+
+                <div class="settings-dual-layout">
+                    <div class="settings-cards-list">
+
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="lang_title">Язык интерфейса</div>
+                                <p class="settings-card-desc" data-i18n="lang_desc">Выберите язык приложения</p>
+                            </div>
+                            <div class="glass-pill-nav settings-lang-pill">
+                                <div class="pill-slider settings-lang-slider"></div>
+                                <span class="pill-item lang-item active" data-lang="ru">RU</span>
+                                <span class="pill-item lang-item" data-lang="en">EN</span>
+                            </div>
+                        </div>
+
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="theme_card_title">Яркость карточек
+                                </div>
+                                <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить цветовую
+                                    схему интерфейса</p>
+                            </div>
+                            <div class="glass-pill-nav theme-pill">
+                                <div class="pill-slider theme-slider"></div>
+                                <span class="pill-item theme-item active" data-theme="dark">
+                                    <span data-i18n="theme_dark">Темная</span>
+                                </span>
+                                <span class="pill-item theme-item" data-theme="light">
+                                    <span data-i18n="theme_light">Светлая</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="theme_color_title">Цветовая схема
+                                </div>
+                                <p class="settings-card-desc" data-i18n="borders_desc">Выберите основной
+                                    акцентный
+                                    цвет</p>
+                            </div>
+                            <div class="gradient-controls">
+                                <div class="gradient-slot-wrapper">
+                                    <div class="gradient-slot" id="accentSlot" title="Accent Color">
+                                        <div class="slot-preview" id="accentPreview"></div>
+                                        <div class="color-popover hidden" id="accentPopover">
+                                            <div class="popover-grid">
+                                                <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                <div class="popover-swatch color-yellow" data-color="yellow">
+                                                </div>
+                                                <div class="popover-swatch color-green" data-color="green">
+                                                </div>
+                                                <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                <div class="popover-swatch color-indigo" data-color="indigo">
+                                                </div>
+                                                <div class="popover-swatch color-purple" data-color="purple">
+                                                </div>
+                                                <div class="popover-swatch color-orange" data-color="orange">
+                                                </div>
+                                                <div class="popover-swatch color-red" data-color="red"></div>
+                                                <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                <div class="popover-swatch color-amber" data-color="amber">
+                                                </div>
+                                                <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                </div>
+                                                <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                <div class="popover-swatch color-slate" data-color="slate">
+                                                </div>
+                                                <div class="popover-swatch color-white" data-color="white">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Background Gradient Settings -->
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="bg_gradient_title">Градиент фона
+                                </div>
+                                <p class="settings-card-desc" data-i18n="bg_gradient_desc">Персонализируйте три
+                                    базовых цвета градиента</p>
+                            </div>
+                            <div class="gradient-controls">
+                                <div class="gradient-slot-wrapper">
+                                    <div class="gradient-slot" id="gradSlot1" title="Color 1">
+                                        <div class="slot-preview" id="gradPreview1"></div>
+                                        <div class="color-popover hidden" id="gradPopover1">
+                                            <div class="popover-grid">
+                                                <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                <div class="popover-swatch color-yellow" data-color="yellow">
+                                                </div>
+                                                <div class="popover-swatch color-green" data-color="green">
+                                                </div>
+                                                <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                <div class="popover-swatch color-indigo" data-color="indigo">
+                                                </div>
+                                                <div class="popover-swatch color-purple" data-color="purple">
+                                                </div>
+                                                <div class="popover-swatch color-orange" data-color="orange">
+                                                </div>
+                                                <div class="popover-swatch color-red" data-color="red"></div>
+                                                <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                <div class="popover-swatch color-amber" data-color="amber">
+                                                </div>
+                                                <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                </div>
+                                                <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                <div class="popover-swatch color-slate" data-color="slate">
+                                                </div>
+                                                <div class="popover-swatch color-white" data-color="white">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gradient-slot-wrapper">
+                                    <div class="gradient-slot" id="gradSlot2" title="Color 2">
+                                        <div class="slot-preview" id="gradPreview2"></div>
+                                        <div class="color-popover hidden" id="gradPopover2">
+                                            <div class="popover-grid">
+                                                <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                <div class="popover-swatch color-yellow" data-color="yellow">
+                                                </div>
+                                                <div class="popover-swatch color-green" data-color="green">
+                                                </div>
+                                                <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                <div class="popover-swatch color-indigo" data-color="indigo">
+                                                </div>
+                                                <div class="popover-swatch color-purple" data-color="purple">
+                                                </div>
+                                                <div class="popover-swatch color-orange" data-color="orange">
+                                                </div>
+                                                <div class="popover-swatch color-red" data-color="red"></div>
+                                                <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                <div class="popover-swatch color-amber" data-color="amber">
+                                                </div>
+                                                <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                </div>
+                                                <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                <div class="popover-swatch color-slate" data-color="slate">
+                                                </div>
+                                                <div class="popover-swatch color-white" data-color="white">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gradient-slot-wrapper">
+                                    <div class="gradient-slot" id="gradSlot3" title="Color 3">
+                                        <div class="slot-preview" id="gradPreview3"></div>
+                                        <div class="color-popover hidden" id="gradPopover3">
+                                            <div class="popover-grid">
+                                                <div class="popover-swatch color-pink" data-color="pink"></div>
+                                                <div class="popover-swatch color-yellow" data-color="yellow">
+                                                </div>
+                                                <div class="popover-swatch color-green" data-color="green">
+                                                </div>
+                                                <div class="popover-swatch color-blue" data-color="blue"></div>
+                                                <div class="popover-swatch color-indigo" data-color="indigo">
+                                                </div>
+                                                <div class="popover-swatch color-purple" data-color="purple">
+                                                </div>
+                                                <div class="popover-swatch color-orange" data-color="orange">
+                                                </div>
+                                                <div class="popover-swatch color-red" data-color="red"></div>
+                                                <div class="popover-swatch color-cyan" data-color="cyan"></div>
+                                                <div class="popover-swatch color-teal" data-color="teal"></div>
+                                                <div class="popover-swatch color-lime" data-color="lime"></div>
+                                                <div class="popover-swatch color-amber" data-color="amber">
+                                                </div>
+                                                <div class="popover-swatch color-fuchsia" data-color="fuchsia">
+                                                </div>
+                                                <div class="popover-swatch color-rose" data-color="rose"></div>
+                                                <div class="popover-swatch color-slate" data-color="slate">
+                                                </div>
+                                                <div class="popover-swatch color-white" data-color="white">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transparency mode card -->
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="perf_mode_title">Прозрачность
+                                </div>
+                                <p class="settings-card-desc" data-i18n="perf_mode_desc">Включить размытие и
+                                    прозрачность интерфейса</p>
+                            </div>
+                            <label class="glass-toggle">
+                                <input type="checkbox" id="transparencyToggle" class="glass-toggle-input">
+                                <span class="glass-toggle-track">
+                                    <span class="glass-toggle-knob"></span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Header Transparency card -->
+                        <div class="settings-glass-card">
+                            <div class="settings-card-info">
+                                <div class="settings-card-title" data-i18n="header_trans_title">Прозрачность
+                                    заголовка
+                                </div>
+                                <p class="settings-card-desc" data-i18n="header_trans_desc">Отдельное управление
+                                    эффектом стекла для названия системы</p>
+                            </div>
+                            <label class="glass-toggle">
+                                <input type="checkbox" id="headerTransToggle" class="glass-toggle-input">
+                                <span class="glass-toggle-track">
+                                    <span class="glass-toggle-knob"></span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Accent Borders card -->
+                        <div class="settings-glass-card"
+                            style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                            <div class="settings-card-info" style="padding-right: 0;">
+                                <div class="settings-card-title" data-i18n="borders_title">Акцентные границы
+                                </div>
+                                <p class="settings-card-desc" data-i18n="borders_desc">Выберите стиль обводки
+                                    блоков
+                                    интерфейса</p>
+                            </div>
+                            <div class="glass-pill-nav borders-style-pill"
+                                style="font-size: 0.95rem; justify-content: space-between;">
+                                <div class="pill-slider borders-style-slider"></div>
+                                <span class="pill-item border-style-item active" data-style="none"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="borders_off">Выкл</span>
+                                </span>
+                                <span class="pill-item border-style-item" data-style="neutral"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="borders_neutral">Нейтральный</span>
+                                </span>
+                                <span class="pill-item border-style-item" data-style="accent"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="borders_accent">Акцентный</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="settings-glass-card"
+                            style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                            <div class="settings-card-info" style="padding-right: 0;">
+                                <div class="settings-card-title" data-i18n="bg_pattern_title">Орнамент фона
+                                </div>
+                                <p class="settings-card-desc" data-i18n="bg_pattern_desc">Выберите узор
+                                    заднего фона
+                                </p>
+                            </div>
+                            <div class="glass-pill-nav bg-pattern-pill"
+                                style="font-size: 0.95rem; justify-content: space-between;">
+                                <div class="pill-slider bg-pattern-slider"></div>
+                                <span class="pill-item bg-pattern-item active" data-pattern="dots"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="pattern_dots">Точки</span>
+                                </span>
+                                <span class="pill-item bg-pattern-item" data-pattern="plus"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="pattern_plus">Плюсики</span>
+                                </span>
+                                <span class="pill-item bg-pattern-item" data-pattern="cross"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="pattern_cross">Крестики</span>
+                                </span>
+                                <span class="pill-item bg-pattern-item" data-pattern="none"
+                                    style="flex: 1; text-align: center;">
+                                    <span data-i18n="pattern_none">Нет</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="settings-glass-card"
+                            style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                            <div class="settings-card-info" style="padding-right: 0;">
+                                <div class="settings-card-title" data-i18n="navbar_pos_title">Позиция панели
+                                    навигации</div>
+                                <p class="settings-card-desc" data-i18n="navbar_pos_desc">Как ведет себя
+                                    панель при
+                                    прокрутке страницы</p>
+                            </div>
+                            <div class="glass-pill-nav navbar-pos-pill"
+                                style="font-size: 0.95rem; justify-content: space-between;">
+                                <div class="pill-slider navbar-pos-slider"></div>
+                                <span class="pill-item navbar-pos-item" data-pos="static"
+                                    style="flex: 1; text-align: center;">
+                                    <span class="d-text" data-i18n="nav_pos_static">Статично</span>
+                                    <span class="m-text" data-i18n="nav_pos_static_m">В самом низу</span>
+                                </span>
+                                <span class="pill-item navbar-pos-item" data-pos="center"
+                                    style="flex: 1; text-align: center;">
+                                    <span class="d-text" data-i18n="nav_pos_center">По центру</span>
+                                    <span class="m-text" data-i18n="nav_pos_center_m">По центру
+                                        экрана</span>
+                                </span>
+                                <span class="pill-item navbar-pos-item hide-on-mobile" data-pos="right"
+                                    style="flex: 1; text-align: center;">
+                                    <span class="d-text" data-i18n="nav_pos_right">Справа</span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Preview Area for PC -->
+                    <div class="settings-preview-area">
+                        <div class="opt-glass-card" style="margin: 0; padding: 1.25rem 1.5rem; text-align: center;">
+                            <h2 class="preview-header" data-i18n="preview_title">Предпросмотр</h2>
+                        </div>
+
+                        <div class="preview-mockups" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                            <!-- Mockup 1: Action Buttons & Inputs -->
+                            <div class="opt-glass-card">
+                                <div class="opt-card-header">
+                                    <h2 data-i18n="preview_elements"
+                                        style="font-size: 1.35rem; margin: 0; font-weight: 700; color: var(--text-main);">
+                                        Элементы управления</h2>
+                                </div>
+                                <div class="opt-card-body">
+                                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                                        <button class="action-btn primary" style="flex: 1;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                <polyline points="17 8 12 3 7 8" />
+                                                <line x1="12" x2="12" y1="3" y2="15" />
+                                            </svg>
+                                            <span data-i18n="button_example">Кнопка</span>
+                                        </button>
+                                        <button class="action-btn" style="flex: 1;">
+                                            <span data-i18n="action_example">Действие</span>
+                                        </button>
+                                    </div>
+                                    <div class="params-table">
+                                        <div class="input-row">
+                                            <div class="row-label"><label data-i18n="param_x">Параметр X</label>
+                                            </div>
+                                            <div class="row-value"><input type="number" id="preview_param_x" value="42">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- Mockup 2: Matrix Table -->
+                            <div class="opt-glass-card">
+                                <div class="opt-card-header">
+                                    <h2 data-i18n="preview_grid"
+                                        style="font-size: 1.35rem; margin: 0; font-weight: 700; color: var(--text-main);">
+                                        Интерактивная сетка</h2>
+                                </div>
+                                <div class="opt-card-body">
+                                    <div class="scroll-wrapper"
+                                        style="border: 1px solid var(--panel-border); border-radius: 12px; max-height: 250px; overflow: auto;">
+                                        <div class="matrix-grid"
+                                            style="grid-template-columns: repeat(20, auto); width: max-content;">
+                                            <!-- Generate a 20x20 grid (400 items) via repeated structure -->
+                                            <script>
+                                                for (let i = 0; i < 400; i++) {
+                                                    const val = Math.floor(Math.random() * 90 + 10);
+                                                    let cls = "matrix-cell";
+                                                    // Add dummy highlights at row 5, col 5
+                                                    const row = Math.floor(i / 20);
+                                                    const col = i % 20;
+                                                    if (row === 4 && col === 4) cls += " highlight-source";
+                                                    else if (row === 4 || col === 4) cls += " highlight-connection";
+                                                    document.write(`<input class="${cls}" value="${val}">`);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mockup 3: Result Card inside Result List context -->
+                            <div class="opt-glass-card"
+                                style="min-height: 380px; display: flex; flex-direction: column;">
+                                <div class="opt-card-header">
+                                    <h2 data-i18n="results_title">Лучшее решение</h2>
+                                </div>
+                                <div class="opt-card-body result-body"
+                                    style="padding: 2.5rem; display: flex; flex: 1; align-items: center; justify-content: center; background: rgba(0,0,0,0.02);">
+                                    <div class="result-card solver-card best-solution"
+                                        style="margin: 0; width: 90%; max-width: 550px; transform: scale(0.95);">
+                                        <div
+                                            style="padding: 0.9rem 1.1rem 0.9rem 1.9rem; border-bottom: 1px solid var(--card-inner-divider); min-height: 4.8rem; display: flex; align-items: center;">
+                                            <div style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
+                                                <span class="best-label-ru best-label-en"
+                                                    style="color:var(--best-card-border); font-weight:700; font-size: 1.25rem; border: 2px solid var(--best-card-border); padding: 5px 12px; border-radius: 6px; white-space: nowrap; text-transform: uppercase;"></span>
+                                                <span
+                                                    style="font-size: 1.8rem; font-weight: 700; color: var(--best-card-border); line-height: 1.65; flex: 1; word-break: break-all;">
+                                                    <span data-i18n="vector_x">Вектор x</span><sub
+                                                        style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;">1</sub>
+                                                    [1, 0, 1, 1, 0, 0, 1, 0]
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="card-bottom-row">
+                                            <div>
+                                                <div
+                                                    style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">
+                                                    <span data-i18n="val_fx">F(x</span><sub
+                                                        style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;">1</sub>)
+                                                </div>
+                                                <div
+                                                    style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">
+                                                    0.8742</div>
+                                            </div>
+                                            <div>
+                                                <div data-i18n="chosen_szi"
+                                                    style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">
+                                                    Выбрано СЗИ</div>
+                                                <div
+                                                    style="font-size: 2.25rem; font-weight: 700; color: var(--best-card-border); line-height: 1.5; word-break: break-word;">
+                                                    1, 3, 4, 7</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </section>
-
-                <section id="settingsPanel" class="settings-panel panel hidden">
-
-                    <div class="settings-dual-layout">
-                        <div class="settings-cards-list">
-
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="lang_title">Язык интерфейса</div>
-                                    <p class="settings-card-desc" data-i18n="lang_desc">Выберите язык приложения</p>
-                                </div>
-                                <div class="glass-pill-nav settings-lang-pill">
-                                    <div class="pill-slider settings-lang-slider"></div>
-                                    <span class="pill-item lang-item active" data-lang="ru">RU</span>
-                                    <span class="pill-item lang-item" data-lang="en">EN</span>
-                                </div>
-                            </div>
-
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="theme_card_title">Яркость карточек</div>
-                                    <p class="settings-card-desc" data-i18n="toggle_theme_desc">Переключить цветовую
-                                        схему интерфейса</p>
-                                </div>
-                                <div class="glass-pill-nav theme-pill">
-                                    <div class="pill-slider theme-slider"></div>
-                                    <span class="pill-item theme-item active" data-theme="dark">
-                                        <span data-i18n="theme_dark">Темная</span>
-                                    </span>
-                                    <span class="pill-item theme-item" data-theme="light">
-                                        <span data-i18n="theme_light">Светлая</span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="theme_color_title">Цветовая схема</div>
-                                    <p class="settings-card-desc" data-i18n="borders_desc">Выберите основной акцентный
-                                        цвет</p>
-                                </div>
-                                <div class="gradient-controls">
-                                    <div class="gradient-slot-wrapper">
-                                        <div class="gradient-slot" id="accentSlot" title="Accent Color">
-                                            <div class="slot-preview" id="accentPreview"></div>
-                                            <div class="color-popover hidden" id="accentPopover">
-                                                <div class="popover-grid">
-                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
-                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
-                                                    <div class="popover-swatch color-green" data-color="green"></div>
-                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
-                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
-                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
-                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
-                                                    <div class="popover-swatch color-red" data-color="red"></div>
-                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
-                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
-                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
-                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
-                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
-                                                    </div>
-                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
-                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
-                                                    <div class="popover-swatch color-white" data-color="white"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Background Gradient Settings -->
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="bg_gradient_title">Градиент фона</div>
-                                    <p class="settings-card-desc" data-i18n="bg_gradient_desc">Персонализируйте два
-                                        базовых цвета градиента</p>
-                                </div>
-                                <div class="gradient-controls">
-                                    <div class="gradient-slot-wrapper">
-                                        <div class="gradient-slot" id="gradSlot1" title="Color 1">
-                                            <div class="slot-preview" id="gradPreview1"></div>
-                                            <div class="color-popover hidden" id="gradPopover1">
-                                                <div class="popover-grid">
-                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
-                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
-                                                    <div class="popover-swatch color-green" data-color="green"></div>
-                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
-                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
-                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
-                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
-                                                    <div class="popover-swatch color-red" data-color="red"></div>
-                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
-                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
-                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
-                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
-                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
-                                                    </div>
-                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
-                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
-                                                    <div class="popover-swatch color-white" data-color="white"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gradient-slot-wrapper">
-                                        <div class="gradient-slot" id="gradSlot2" title="Color 2">
-                                            <div class="slot-preview" id="gradPreview2"></div>
-                                            <div class="color-popover hidden" id="gradPopover2">
-                                                <div class="popover-grid">
-                                                    <div class="popover-swatch color-pink" data-color="pink"></div>
-                                                    <div class="popover-swatch color-yellow" data-color="yellow"></div>
-                                                    <div class="popover-swatch color-green" data-color="green"></div>
-                                                    <div class="popover-swatch color-blue" data-color="blue"></div>
-                                                    <div class="popover-swatch color-indigo" data-color="indigo"></div>
-                                                    <div class="popover-swatch color-purple" data-color="purple"></div>
-                                                    <div class="popover-swatch color-orange" data-color="orange"></div>
-                                                    <div class="popover-swatch color-red" data-color="red"></div>
-                                                    <div class="popover-swatch color-cyan" data-color="cyan"></div>
-                                                    <div class="popover-swatch color-teal" data-color="teal"></div>
-                                                    <div class="popover-swatch color-lime" data-color="lime"></div>
-                                                    <div class="popover-swatch color-amber" data-color="amber"></div>
-                                                    <div class="popover-swatch color-fuchsia" data-color="fuchsia">
-                                                    </div>
-                                                    <div class="popover-swatch color-rose" data-color="rose"></div>
-                                                    <div class="popover-swatch color-slate" data-color="slate"></div>
-                                                    <div class="popover-swatch color-white" data-color="white"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Transparency mode card -->
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="perf_mode_title">Прозрачность
-                                    </div>
-                                    <p class="settings-card-desc" data-i18n="perf_mode_desc">Включить размытие и
-                                        прозрачность интерфейса</p>
-                                </div>
-                                <label class="glass-toggle">
-                                    <input type="checkbox" id="transparencyToggle" class="glass-toggle-input">
-                                    <span class="glass-toggle-track">
-                                        <span class="glass-toggle-knob"></span>
-                                    </span>
-                                </label>
-                            </div>
-
-                            <!-- Header Transparency card -->
-                            <div class="settings-glass-card">
-                                <div class="settings-card-info">
-                                    <div class="settings-card-title" data-i18n="header_trans_title">Прозрачность
-                                        заголовка
-                                    </div>
-                                    <p class="settings-card-desc" data-i18n="header_trans_desc">Отдельное управление
-                                        эффектом стекла для названия системы</p>
-                                </div>
-                                <label class="glass-toggle">
-                                    <input type="checkbox" id="headerTransToggle" class="glass-toggle-input">
-                                    <span class="glass-toggle-track">
-                                        <span class="glass-toggle-knob"></span>
-                                    </span>
-                                </label>
-                            </div>
-
-                            <!-- Accent Borders card -->
-                            <div class="settings-glass-card"
-                                style="flex-direction: column; align-items: stretch; gap: 1rem;">
-                                <div class="settings-card-info" style="padding-right: 0;">
-                                    <div class="settings-card-title" data-i18n="borders_title">Акцентные границы
-                                    </div>
-                                    <p class="settings-card-desc" data-i18n="borders_desc">Выберите стиль обводки блоков
-                                        интерфейса</p>
-                                </div>
-                                <div class="glass-pill-nav borders-style-pill"
-                                    style="font-size: 0.95rem; justify-content: space-between;">
-                                    <div class="pill-slider borders-style-slider"></div>
-                                    <span class="pill-item border-style-item active" data-style="none"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="borders_off">Выкл</span>
-                                    </span>
-                                    <span class="pill-item border-style-item" data-style="neutral"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="borders_neutral">Нейтральный</span>
-                                    </span>
-                                    <span class="pill-item border-style-item" data-style="accent"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="borders_accent">Акцентный</span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="settings-glass-card"
-                                style="flex-direction: column; align-items: stretch; gap: 1rem;">
-                                <div class="settings-card-info" style="padding-right: 0;">
-                                    <div class="settings-card-title" data-i18n="bg_pattern_title">Орнамент фона
-                                    </div>
-                                    <p class="settings-card-desc" data-i18n="bg_pattern_desc">Выберите узор
-                                        заднего фона
-                                    </p>
-                                </div>
-                                <div class="glass-pill-nav bg-pattern-pill"
-                                    style="font-size: 0.95rem; justify-content: space-between;">
-                                    <div class="pill-slider bg-pattern-slider"></div>
-                                    <span class="pill-item bg-pattern-item active" data-pattern="dots"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="pattern_dots">Точки</span>
-                                    </span>
-                                    <span class="pill-item bg-pattern-item" data-pattern="plus"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="pattern_plus">Плюсики</span>
-                                    </span>
-                                    <span class="pill-item bg-pattern-item" data-pattern="cross"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="pattern_cross">Крестики</span>
-                                    </span>
-                                    <span class="pill-item bg-pattern-item" data-pattern="none"
-                                        style="flex: 1; text-align: center;">
-                                        <span data-i18n="pattern_none">Нет</span>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="settings-glass-card"
-                                style="flex-direction: column; align-items: stretch; gap: 1rem;">
-                                <div class="settings-card-info" style="padding-right: 0;">
-                                    <div class="settings-card-title" data-i18n="navbar_pos_title">Позиция панели
-                                        навигации</div>
-                                    <p class="settings-card-desc" data-i18n="navbar_pos_desc">Как ведет себя
-                                        панель при
-                                        прокрутке страницы</p>
-                                </div>
-                                <div class="glass-pill-nav navbar-pos-pill"
-                                    style="font-size: 0.95rem; justify-content: space-between;">
-                                    <div class="pill-slider navbar-pos-slider"></div>
-                                    <span class="pill-item navbar-pos-item" data-pos="static"
-                                        style="flex: 1; text-align: center;">
-                                        <span class="d-text" data-i18n="nav_pos_static">Статично</span>
-                                        <span class="m-text" data-i18n="nav_pos_static_m">В самом низу</span>
-                                    </span>
-                                    <span class="pill-item navbar-pos-item" data-pos="center"
-                                        style="flex: 1; text-align: center;">
-                                        <span class="d-text" data-i18n="nav_pos_center">По центру</span>
-                                        <span class="m-text" data-i18n="nav_pos_center_m">По центру
-                                            экрана</span>
-                                    </span>
-                                    <span class="pill-item navbar-pos-item hide-on-mobile" data-pos="right"
-                                        style="flex: 1; text-align: center;">
-                                        <span class="d-text" data-i18n="nav_pos_right">Справа</span>
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Preview Area for PC -->
-                        <div class="settings-preview-area">
-                            <div class="opt-glass-card" style="margin: 0; padding: 1.25rem 1.5rem; text-align: center;">
-                                <h2 class="preview-header" data-i18n="preview_title">Предпросмотр</h2>
-                            </div>
-
-                            <div class="preview-mockups" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                                <!-- Mockup 1: Action Buttons & Inputs -->
-                                <div class="opt-glass-card">
-                                    <div class="opt-card-header">
-                                        <h2 data-i18n="preview_elements"
-                                            style="font-size: 1.35rem; margin: 0; font-weight: 700; color: var(--text-main);">
-                                            Элементы управления</h2>
-                                    </div>
-                                    <div class="opt-card-body">
-                                        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                                            <button class="action-btn primary" style="flex: 1;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                    <polyline points="17 8 12 3 7 8" />
-                                                    <line x1="12" x2="12" y1="3" y2="15" />
-                                                </svg>
-                                                <span data-i18n="button_example">Кнопка</span>
-                                            </button>
-                                            <button class="action-btn" style="flex: 1;">
-                                                <span data-i18n="action_example">Действие</span>
-                                            </button>
-                                        </div>
-                                        <div class="params-table">
-                                            <div class="input-row">
-                                                <div class="row-label"><label data-i18n="param_x">Параметр X</label>
-                                                </div>
-                                                <div class="row-value"><input type="number" id="preview_param_x"
-                                                        value="42"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Mockup 2: Matrix Table -->
-                                <div class="opt-glass-card">
-                                    <div class="opt-card-header">
-                                        <h2 data-i18n="preview_grid"
-                                            style="font-size: 1.35rem; margin: 0; font-weight: 700; color: var(--text-main);">
-                                            Интерактивная сетка</h2>
-                                    </div>
-                                    <div class="opt-card-body">
-                                        <div class="scroll-wrapper"
-                                            style="border: 1px solid var(--panel-border); border-radius: 12px; max-height: 250px; overflow: auto;">
-                                            <div class="matrix-grid"
-                                                style="grid-template-columns: repeat(20, auto); width: max-content;">
-                                                <!-- Generate a 20x20 grid (400 items) via repeated structure -->
-                                                <script>
-                                                    for (let i = 0; i < 400; i++) {
-                                                        const val = Math.floor(Math.random() * 90 + 10);
-                                                        let cls = "matrix-cell";
-                                                        // Add dummy highlights at row 5, col 5
-                                                        const row = Math.floor(i / 20);
-                                                        const col = i % 20;
-                                                        if (row === 4 && col === 4) cls += " highlight-source";
-                                                        else if (row === 4 || col === 4) cls += " highlight-connection";
-                                                        document.write(`<input class="${cls}" value="${val}">`);
-                                                    }
-                                                </script>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Mockup 3: Result Card inside Result List context -->
-                                <div class="opt-glass-card"
-                                    style="min-height: 380px; display: flex; flex-direction: column;">
-                                    <div class="opt-card-header">
-                                        <h2 data-i18n="results_title">Лучшее решение</h2>
-                                    </div>
-                                    <div class="opt-card-body result-body"
-                                        style="padding: 2.5rem; display: flex; flex: 1; align-items: center; justify-content: center; background: rgba(0,0,0,0.02);">
-                                        <div class="result-card solver-card best-solution"
-                                            style="margin: 0; width: 90%; max-width: 550px; transform: scale(0.95);">
-                                            <div
-                                                style="padding: 0.9rem 1.1rem 0.9rem 1.9rem; border-bottom: 1px solid var(--card-inner-divider); min-height: 4.8rem; display: flex; align-items: center;">
-                                                <div
-                                                    style="display:flex; align-items:center; gap: 0.75rem; width: 100%;">
-                                                    <span class="best-label-ru best-label-en"
-                                                        style="color:var(--best-card-border); font-weight:700; font-size: 1.25rem; border: 2px solid var(--best-card-border); padding: 5px 12px; border-radius: 6px; white-space: nowrap; text-transform: uppercase;"></span>
-                                                    <span
-                                                        style="font-size: 1.8rem; font-weight: 700; color: var(--best-card-border); line-height: 1.65; flex: 1; word-break: break-all;">
-                                                        <span data-i18n="vector_x">Вектор x</span><sub
-                                                            style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;">1</sub>
-                                                        [1, 0, 1, 1, 0, 0, 1, 0]
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="card-bottom-row">
-                                                <div>
-                                                    <div
-                                                        style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">
-                                                        <span data-i18n="val_fx">F(x</span><sub
-                                                            style="line-height:0; position:relative; vertical-align:baseline; bottom:-0.1em; font-size: 0.7em;">1</sub>)
-                                                    </div>
-                                                    <div
-                                                        style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">
-                                                        0.8742</div>
-                                                </div>
-                                                <div>
-                                                    <div data-i18n="chosen_szi"
-                                                        style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">
-                                                        Выбрано СЗИ</div>
-                                                    <div
-                                                        style="font-size: 2.25rem; font-weight: 700; color: var(--best-card-border); line-height: 1.5; word-break: break-word;">
-                                                        1, 3, 4, 7</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </section>
-                <div style="height: 4rem;"></div>
-            </div>
+            </section>
+            <div style="height: 4rem;"></div>
         </main>
     </div>
 

@@ -236,7 +236,8 @@ html[data-header-no-blur] .main-title {
   text-shadow: none !important;
 }
 
-.workspace {
+.workspace,
+.panel {
   display: flex;
   flex-direction: column;
   flex: 1;

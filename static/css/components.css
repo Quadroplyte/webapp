@@ -216,6 +216,7 @@ input[type="text"]:focus,
 /* Range input styling */
 input[type="range"] {
   -webkit-appearance: none;
+  appearance: none;
   width: 100%;
   background: transparent;
   outline: none;
@@ -386,7 +387,7 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
   margin-top: 0.2rem;
-  max-height: 250px;
+  max-height: 450px;
   width: 100%;
   max-width: 100%;
   background: rgba(255, 255, 255, 0.05);
@@ -427,7 +428,7 @@ html[data-no-blur][data-theme="dark"] .action-btn.success {
 }
 
 .matrix-b-wrapper .scroll-wrapper {
-  height: 250px;
+  height: 450px;
 }
 
 .matrix-b-wrapper .data-group:first-child .scroll-wrapper {
@@ -870,107 +871,6 @@ input:checked+.slider:before {
 
 .modal-body {
   padding: 1.25rem;
-}
-
-/* Cell Info Panel */
-.cell-info-panel,
-#cellInfoPanel {
-  display: flex !important;
-  align-items: center !important;
-  gap: 16px !important;
-  padding: 16px !important;
-  margin-top: 1rem !important;
-  background: var(--info-panel-bg) !important;
-  border: 1px solid var(--info-panel-border) !important;
-  border-radius: 12px !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  min-height: 72px !important;
-  color: var(--text-main) !important;
-  transition: all 0.3s ease !important;
-}
-
-/* Performance (Solid) mode overrides — ID-specific for maximum priority */
-html[data-no-blur] #cellInfoPanel {
-  background: var(--info-panel-no-blur-bg) !important;
-  border-color: var(--info-panel-no-blur-border) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
-}
-
-
-
-
-
-
-
-.cell-info-icon {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 10px !important;
-  border-radius: 50% !important;
-  background: var(--info-panel-bg) !important;
-  color: var(--color-best-border) !important;
-  font-size: 1.4rem !important;
-}
-
-.cell-info-content {
-  flex: 1;
-  font-size: 0.95rem;
-  color: var(--text-main);
-  line-height: 1.4;
-}
-
-.info-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  width: 100%;
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-  background: var(--color-bg-alt);
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--color-border-subtle);
-  flex: 1;
-  min-width: 175px;
-}
-
-[data-theme="dark"] .info-item {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-.info-item span {
-  font-size: 0.75rem;
-  color: #000000;
-  margin-bottom: 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 600;
-}
-
-[data-theme="dark"] .info-item span {
-  color: #FFFFFF !important;
-}
-
-.info-item b {
-  font-size: 1.25rem;
-  color: var(--text-main);
-  font-weight: 700;
-}
-
-.cell-info-panel .highlight-val {
-  border: 1px solid var(--info-panel-border) !important;
-  background: var(--info-panel-bg) !important;
-  padding: 6px 14px !important;
-  border-radius: 8px !important;
-  margin: 4px 0 !important;
 }
 
 /* Specific rounding for calculation inputs to match table corners */

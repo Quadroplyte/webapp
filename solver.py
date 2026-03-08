@@ -120,7 +120,7 @@ def solve_problem(
         f_total = lam * f1 + (1 - lam) * f2
         
         # Восстановить оригинальные индексы СЗИ (1-based), так как мы возвращаем их для отображения
-        original_szi = sorted(int(indices[i] + 1) for i, val in enumerate(x) if val == 1)
+        original_szi = sorted(int(indices[i]) + 1 for i, val in enumerate(x) if val == 1)
         
         # Восстановить вектор x в оригинальном порядке (до сортировки)
         original_x = [0] * n

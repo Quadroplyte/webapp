@@ -18,7 +18,7 @@ const translations = {
     theme_card_title: "Яркость карточек",
     theme_color_title: "Акцент интерфейса",
     bg_gradient_title: "Градиент фона",
-    bg_gradient_desc: "Выберите два цвета для фона",
+    bg_gradient_desc: "Выберите три цвета для фона",
 
     // Input Panel
     data_input_title: "Ввод данных",
@@ -149,7 +149,7 @@ const translations = {
     theme_card_title: "Card Brightness",
     theme_color_title: "Interface Accent",
     bg_gradient_title: "Background Gradient",
-    bg_gradient_desc: "Pick two colors for the background",
+    bg_gradient_desc: "Pick three colors for the background",
 
     // Input Panel
     data_input_title: "Data input",

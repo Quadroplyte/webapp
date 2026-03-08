@@ -8,9 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mInput = document.getElementById('m_input');
   const nInput = document.getElementById('n_input');
   const lamInput = document.getElementById('lam_input');
-  const generateTablesBtn = document.getElementById('generateTablesBtn');
   const solveBtn = document.getElementById('solveBtn');
-  const manualInputBtn = document.getElementById('manualInputBtn');
 
   const dataInputPanel = document.getElementById('dataInputPanel');
   const configPanel = document.getElementById('configPanel');
@@ -51,13 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
               <div style="display:flex; align-items:center; gap: 1.1rem; width: 100%;">
                   ${isBestHighlight ? '<span style="color:var(--best-card-border); font-weight:700; font-size: 1.25rem; border: 2px solid var(--best-card-border); padding: 5px 12px; border-radius: 6px; white-space: nowrap;">' + t('best_solution') + '</span>' : ''}
                   <span style="font-size: 1.8rem; font-weight: 700; color: ${isBestHighlight ? 'var(--best-card-border)' : 'var(--text-main)'}; line-height: 1.65; flex: 1; word-break: break-all;">
-                      ${t('vector_x')}<sub style="${subStyle}">${sol.s_index}</sub> [${sol.vector_x.join(', ')}]
+                      ${t('vector_x')}<sub style="${subStyle}">${sol.s_index - 1}</sub> [${sol.vector_x.join(', ')}]
                   </span>
               </div>
           </div>
           <div class="card-bottom-row">
               <div>
-                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index}</sub>)</div>
+                  <div style="font-size: 1.5rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.45rem;">${t('val_fx')}<sub style="${subStyle}">${sol.s_index - 1}</sub>)</div>
                   <div style="font-size: 2.5rem; font-weight: 700; color: var(--text-main); line-height: 1.2;">${parseFloat(sol.f.toFixed(4))}</div>
               </div>
               <div>
@@ -295,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Gradient Picker Logic ──────────────────────────────
   let gradColor1 = localStorage.getItem('gradColor1') || 'slate';
   let gradColor2 = localStorage.getItem('gradColor2') || 'slate';
+  let gradColor3 = localStorage.getItem('gradColor3') || 'slate';
 
   const paletteColors = {
     pink: '#F472B6', yellow: '#FACC15', green: '#10B981',
@@ -374,8 +373,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial Apply for Gradient
   applyGradient(1, gradColor1);
   applyGradient(2, gradColor2);
+  applyGradient(3, gradColor3);
   setupPopover(1);
   setupPopover(2);
+  setupPopover(3);
   setupAccentPopover();
   // Ensure the UI matches the initial color
   updateColorUI(document.documentElement.getAttribute('data-color') || 'yellow');
@@ -587,30 +588,45 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(grid);
   }
 
-  // ── Ручной ввод ─────────────────────────────────────────
-  manualInputBtn.addEventListener('click', () => {
-    configPanel.classList.remove('hidden');
-  });
+  // Show the data fields section
+  const dfw = document.getElementById('dataFieldsWrapper');
+  if (dfw) dfw.classList.remove('hidden');
+  if (matricesContainer) matricesContainer.classList.remove('hidden');
 
-  // ── Генерация матрицы ───────────────────────────────────
-  generateTablesBtn.addEventListener('click', () => {
-    currentM = parseInt(mInput.value);
-    currentN = parseInt(nInput.value);
-
-    if (currentM <= 0 || currentN <= 0) {
-      alert(t('err_dimensions'));
-      return;
+  // Auto-generate tables when M or N change
+  mInput.addEventListener('input', () => {
+    const m = parseInt(mInput.value);
+    const n = parseInt(nInput.value);
+    if (m > 0 && n > 0) {
+      currentM = m;
+      currentN = n;
+      buildMatrix('matrixA_container', currentM, currentN, 'A');
+      buildMatrix('vectorB_container', currentM, 1, 'b');
+      buildMatrix('vectorC_container', 1, currentN, 'c');
+      buildMatrix('vectorD_container', 1, currentN, 'd');
     }
-
-    buildMatrix('matrixA_container', currentM, currentN, 'A');
-    buildMatrix('vectorB_container', currentM, 1, 'b');
-    buildMatrix('vectorC_container', 1, currentN, 'c');
-    buildMatrix('vectorD_container', 1, currentN, 'd');
-
-    // Show the data fields section
-    document.getElementById('dataFieldsWrapper').classList.remove('hidden');
-    matricesContainer.classList.remove('hidden');
   });
+
+  nInput.addEventListener('input', () => {
+    const m = parseInt(mInput.value);
+    const n = parseInt(nInput.value);
+    if (m > 0 && n > 0) {
+      currentM = m;
+      currentN = n;
+      buildMatrix('matrixA_container', currentM, currentN, 'A');
+      buildMatrix('vectorB_container', currentM, 1, 'b');
+      buildMatrix('vectorC_container', 1, currentN, 'c');
+      buildMatrix('vectorD_container', 1, currentN, 'd');
+    }
+  });
+
+  // Initial generation
+  buildMatrix('matrixA_container', 3, 4, 'A');
+  buildMatrix('vectorB_container', 3, 1, 'b');
+  buildMatrix('vectorC_container', 1, 4, 'c');
+  buildMatrix('vectorD_container', 1, 4, 'd');
+  currentM = 3;
+  currentN = 4;
 
   // ── Запуск расчёта ──────────────────────────────────────
   // Хак: Если кликаем по кнопке расчета пока активна матрица, фокус теряется,
@@ -790,20 +806,20 @@ document.addEventListener('DOMContentLoaded', () => {
     reader.readAsText(file);
   });
 
-  // ── Быстрая загрузка 20x20 по двойному клику ────────────────
-  const load20x20 = async () => {
+  // ── Быстрая загрузка 10x10 по двойному клику ────────────────
+  const load10x10 = async () => {
     try {
-      const resp = await fetch('/static/task_20x20.txt');
+      const resp = await fetch(`/static/task_10x10.txt?t=${Date.now()}`);
       if (!resp.ok) return;
       const text = await resp.text();
       loadDataFromText(text);
     } catch (err) {
-      console.error("Failed to load 20x20 task:", err);
+      console.error("Failed to load 10x10 task:", err);
     }
   };
 
   const dataInputHeader = document.getElementById('dataInputHeader');
-  if (dataInputHeader) dataInputHeader.addEventListener('dblclick', load20x20);
+  if (dataInputHeader) dataInputHeader.addEventListener('dblclick', load10x10);
 
   // ── Info Modal & Demo Data ──────────────────────────────
   // ── Модалка формат импорта ───────────────────────────────
@@ -1009,56 +1025,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const otherCell = document.getElementById(`${otherPrefix}_0_${col}`);
       if (otherCell) otherCell.classList.add('highlight-connection');
     }
-
-    // --- Отображение информации о ячейке ---
-    const infoContent = document.getElementById('cellInfoContent');
-    if (!infoContent) return;
-
-    const getVal = (id) => {
-      const el = document.getElementById(id);
-      return el ? parseFloat(el.value || 0) : 0;
-    };
-
-    let infoHtml = '';
-
-    if (prefix === 'A') {
-      const cost = getVal(`A_${row}_${col}`);
-      const limit = getVal(`b_${row}_0`);
-      const hTime = getVal(`c_0_${col}`);
-      const rTime = getVal(`d_0_${col}`);
-
-      infoHtml = `
-        <div class="info-grid">
-          <div class="info-item highlight-val"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_cost')}</span> <b>${cost}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_react_time')}</span> <b>${rTime}</b></div>
-        </div>
-      `;
-    } else if (prefix === 'b') {
-      const limit = getVal(`b_${row}_0`);
-      infoHtml = `
-        <div class="info-grid">
-          <div class="info-item highlight-val"><span>${t('info_gia_num')}</span> <b>${row + 1}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_limit')}</span> <b>${limit}</b></div>
-        </div>
-      `;
-    } else if (prefix === 'c' || prefix === 'd') {
-      const hTime = getVal(`c_0_${col}`);
-      const rTime = getVal(`d_0_${col}`);
-      infoHtml = `
-        <div class="info-grid">
-          <div class="info-item highlight-val"><span>${t('info_szi_num')}</span> <b>${col + 1}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_hack_time')}</span> <b>${hTime}</b></div>
-          <div class="info-item highlight-val"><span>${t('info_react_time')}</span> <b>${rTime}</b></div>
-        </div>
-      `;
-    }
-
-    infoContent.innerHTML = infoHtml;
-
   });
 
   matricesContainer.addEventListener('focusout', (e) => {
@@ -1069,12 +1035,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.remove('highlight-connection');
         el.classList.remove('highlight-source');
       });
-
-    const infoContent = document.getElementById('cellInfoContent');
-    if (infoContent) {
-      // Вернуть дефолтный текст
-      infoContent.innerHTML = t('info_empty');
-    }
   });
 
   // ── Синхронизированный скролл ──
