@@ -387,21 +387,99 @@ html[data-no-blur] .color-popover {
 
 .settings-dual-layout {
   display: grid;
-  grid-template-columns: 520px 1fr;
+  grid-template-columns: 760px 1fr;
   align-items: flex-start;
-  gap: 4rem;
+  gap: 5rem;
   width: 100%;
   margin: 0;
   padding: 0.5rem 2rem 3rem 2rem;
+}
+
+#interfaceParametersCard {
+  height: 1163.27px !important;
+  min-height: 1163.27px !important;
+  max-height: 1163.27px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 760px !important;
+  box-sizing: border-box !important;
+}
+
+.settings-list-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 100% !important;
+  flex: 1;
+  border-radius: 0 0 20px 20px;
 }
 
 .settings-cards-list {
   grid-column: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1.25rem;
   width: 100%;
-  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.5rem 2rem 1.5rem 2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+[data-theme="dark"] .settings-cards-list {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+#interfaceParametersCard .opt-card-header h2 {
+  font-size: 1.35rem !important;
+}
+
+/* Glass fog overlays for Settings list */
+.settings-list-container::before,
+.settings-list-container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6rem;
+  z-index: 10;
+  pointer-events: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.settings-list-container.at-top::before {
+  opacity: 0;
+}
+
+.settings-list-container.at-bottom::after {
+  opacity: 0;
+}
+
+.settings-list-container::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+}
+
+.settings-list-container::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  mask-image: linear-gradient(to top, black 0%, transparent 100%);
+}
+
+[data-theme="dark"] .settings-list-container::before {
+  background: linear-gradient(to bottom, rgba(20, 20, 20, 0.55) 0%, rgba(20, 20, 20, 0) 100%);
+}
+
+[data-theme="dark"] .settings-list-container::after {
+  background: linear-gradient(to top, rgba(20, 20, 20, 0.55) 0%, rgba(20, 20, 20, 0) 100%);
 }
 
 .settings-preview-area {

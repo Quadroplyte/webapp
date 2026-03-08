@@ -11,7 +11,7 @@
 
 html {
   font-size: 80%;
-  /* Reduced from 85% to 80% (another 5% reduction) */
+  height: 100%;
 }
 
 body {
@@ -22,11 +22,12 @@ body {
   background-attachment: fixed, fixed;
   color: var(--text-main);
   font-size: 14.25px;
-  /* Reduced from 15px to 14.25px (5% reduction) */
   line-height: 1.5;
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   overflow-x: hidden;
-  min-height: 100vh;
+  overflow-y: auto;
+  height: auto;
+  min-height: 100%;
 }
 
 html[data-pattern="plus"] body {
@@ -51,7 +52,8 @@ html[data-pattern="none"] body {
 .app-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
+  height: auto;
   position: relative;
 }
 

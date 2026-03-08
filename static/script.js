@@ -110,11 +110,30 @@ document.addEventListener('DOMContentLoaded', () => {
     body.classList.toggle('at-bottom', (wrapper.scrollHeight - wrapper.scrollTop - wrapper.clientHeight) <= 10);
   };
 
+  const handleSettingsScroll = () => {
+    const wrapper = document.getElementById('settingsCardsList');
+    const container = document.getElementById('settingsListContainer');
+    if (!wrapper || !container) return;
+
+    container.classList.toggle('at-top', wrapper.scrollTop <= 10);
+    container.classList.toggle('at-bottom', (wrapper.scrollHeight - wrapper.scrollTop - wrapper.clientHeight) <= 10);
+  };
+
   const allCandidatesWrapper = document.getElementById('allCandidatesWrapper');
   if (allCandidatesWrapper) {
     allCandidatesWrapper.addEventListener('scroll', handleCandidatesScroll);
-    window.addEventListener('resize', handleCandidatesScroll);
   }
+
+  const settingsCardsList = document.getElementById('settingsCardsList');
+  if (settingsCardsList) {
+    settingsCardsList.addEventListener('scroll', handleSettingsScroll);
+  }
+
+  window.addEventListener('resize', () => {
+    refreshAllSliders();
+    handleCandidatesScroll();
+    handleSettingsScroll();
+  });
 
   function updatePillSlider(container, instant = false) {
     const slider = container.querySelector('.pill-slider');
@@ -181,11 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         refreshAllSliders();
+        handleSettingsScroll();
       }, 70);
     }
   });
 
-  window.addEventListener('resize', refreshAllSliders);
+
 
   // ── Язык ────────────────────────────────────────────────
   const langSwitcher = document.querySelector('.lang-switcher');
