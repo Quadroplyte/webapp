@@ -761,12 +761,12 @@ input:checked+.slider:before {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-best-border);
+  background: rgb(var(--acc-rgb));
   opacity: 0.7;
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: var(--color-best-border);
+  background: rgb(var(--acc-rgb));
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb {
@@ -775,12 +775,12 @@ input:checked+.slider:before {
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-best-border);
+  background: rgb(var(--acc-rgb));
   opacity: 0.8;
 }
 
 [data-theme="dark"] ::-webkit-scrollbar-thumb:active {
-  background: var(--color-best-border);
+  background: rgb(var(--acc-rgb));
 }
 
 /* Specific wider and accented scrollbar for candidates */

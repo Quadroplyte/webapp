@@ -37,8 +37,8 @@ if __name__ == "__main__":
     webview.create_window(
         "SZI Optimization Application",
         f"http://127.0.0.1:{port}",
-        width=1200,
-        height=1020,
+        width=1300,
+        height=1040,
         background_color="#f4f6f8",
     )
     webview.start()

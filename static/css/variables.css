@@ -34,15 +34,15 @@
   --color-warning: #F59E0B;
 
   /* Special Components (Defaults) */
-  --color-best-border: #D9B11B;
-  --color-best-shadow: rgba(217, 177, 27, 0.6);
+  --color-best-border: #E8A612;
+  --color-best-shadow: rgba(232, 166, 18, 0.6);
   --color-blur-bg: rgba(255, 255, 255, 0.92);
-  --best-card-shadow: 0 0 0 1px rgba(217, 177, 27, 0.9), 0 0 16px 4px rgba(217, 177, 27, 0.65), 0 0 36px 10px rgba(217, 177, 27, 0.45);
+  --best-card-shadow: 0 0 0 2px rgba(232, 166, 18, 0.9), 0 0 14px 2px rgba(232, 166, 18, 0.45), 0 0 28px 6px rgba(232, 166, 18, 0.25);
 
-  --info-panel-bg: rgba(250, 204, 21, 0.1);
-  --info-panel-border: rgba(250, 204, 21, 0.2);
-  --info-panel-no-blur-bg: rgba(250, 204, 21, 0.1);
-  --info-panel-no-blur-border: rgba(250, 204, 21, 0.25);
+  --info-panel-bg: rgba(232, 166, 18, 0.1);
+  --info-panel-border: rgba(232, 166, 18, 0.2);
+  --info-panel-no-blur-bg: rgba(232, 166, 18, 0.1);
+  --info-panel-no-blur-border: rgba(232, 166, 18, 0.25);
 
   /* Layout */
   --sidebar-width: 147px;
@@ -91,7 +91,7 @@
   /* Muted Gradient Palette Values (Light & Dark variations) - Max Saturated variant */
   --pal-pink-l: #F472B6;
   --pal-pink-d: #641635;
-  --pal-yellow-l: #FACC15;
+  --pal-yellow-l: #E8A612;
   --pal-yellow-d: #4D4010;
   --pal-green-l: #34D399;
   --pal-green-d: #1A523A;
@@ -111,7 +111,7 @@
   --pal-teal-d: #1A544F;
   --pal-lime-l: #A3E635;
   --pal-lime-d: #3E541A;
-  --pal-amber-l: #FBBF24;
+  --pal-amber-l: #D98E0B;
   --pal-amber-d: #5A4A1A;
   --pal-fuchsia-l: #E879F9;
   --pal-fuchsia-d: #542361;
@@ -251,9 +251,9 @@
 
 [data-theme="light"][data-color] {
   /* Force Best Solution to always be true yellow in light mode */
-  --color-best-border: #D9B11B;
-  --best-card-border: #D9B11B;
-  --best-card-shadow: 0 0 0 1px rgba(217, 177, 27, 0.9), 0 0 16px 4px rgba(217, 177, 27, 0.65), 0 0 36px 10px rgba(217, 177, 27, 0.45);
+  --color-best-border: #E8A612;
+  --best-card-border: #E8A612;
+  --best-card-shadow: 0 0 0 2px rgba(232, 166, 18, 0.9), 0 0 14px 2px rgba(232, 166, 18, 0.45), 0 0 28px 6px rgba(232, 166, 18, 0.25);
 
   --info-panel-no-blur-bg: rgba(var(--acc-rgb), 0.06);
   --info-panel-no-blur-border: rgb(var(--acc-rgb));
@@ -285,8 +285,8 @@
 }
 
 [data-color="yellow"] {
-  --acc-rgb: 238, 198, 48;
-  --acc-rgb-dark: 212, 168, 25;
+  --acc-rgb: 232, 166, 18;
+  --acc-rgb-dark: 200, 140, 15;
   --accent-text: #111827;
 }
 
